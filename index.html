@@ -94,7 +94,7 @@ const aiEvolutionData = {
                     生成AIは、単なるツールから自律的に思考・行動するパートナーへと劇的に進化しています。この潮流は、ビジネスのあらゆる側面を根底から変える可能性を秘めています。このダッシュボードは、その進化の軌跡を「対話」から「創造」までの7つのステージに分解し、各技術の本質とビジネスへのインパクトを探求するためのガイドです。
                 </p>
                 <p class="text-gray-600 leading-relaxed mb-6">
-                    上部の「進化の道筋」から関心のあるステージを選択するか、下のチャートをクリックして、AIと人間の役割がどのように変化してきたかをご覧ください。このインタラクティブな旅を通じて、AI時代のビジネスリーダーに求められる羅針盤を手に入れましょう。
+                    上部の「進化の道筋」から関心のあるステージを選択するか、下のチャートで、AIの自律性が向上するにつれて、人間に求められる指示の具体性がどのように変化するのかをご覧ください。このインタラクティブな旅を通じて、AI時代のビジネスリーダーに求められる羅針盤を手に入れましょう。
                 </p>
                 <div class="chart-container">
                     <canvas id="evolutionChart"></canvas>
@@ -208,7 +208,7 @@ const aiEvolutionData = {
                     <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
                         <li><strong>計画立案：</strong>必要なタスク（交通手段検索、宿泊先検索、スケジュール確保）をリストアップ。</li>
                         <li><strong>ツール利用(1)：</strong><code>search_flights('TYO')</code>を呼び出し、フライト情報を検索。</li>
-                        <li><strong>ツール利用(2)：</strong><code>Google Hotels('TYO')</code>を呼び出し、ホテル情報を検索。</li>
+                        <li><strong>ツール利用(2)：</strong><code>search_hotels('TYO')</code>を呼び出し、ホテル情報を検索。</li>
                         <li><strong>ツール利用(3)：</strong><code>book_flight(...)</code>, <code>book_hotel(...)</code>を呼び出し、予約を確定。</li>
                         <li><strong>ツール利用(4)：</strong><code>add_to_calendar(...)</code>を呼び出し、スケジュールをカレンダーに登録。</li>
                         <li><strong>報告：</strong>ユーザーに予約完了を報告。</li>
@@ -339,7 +339,7 @@ const renderEvolutionChart = () => {
 
     const labels = ['対話', '知識拡張', '思考', '自律実行', '協調', '創造', '責任'];
     const aiAutonomyData = [10, 25, 45, 70, 85, 95, 100];
-    const humanRoleAbstractionData = [15, 30, 50, 75, 90, 100, 100];
+    const instructionSpecificityData = [95, 80, 60, 30, 15, 10, 5];
 
     if(evolutionChart) {
         evolutionChart.destroy();
@@ -360,10 +360,10 @@ const renderEvolutionChart = () => {
                     tension: 0.3,
                 },
                 {
-                    label: '人間の役割の抽象度',
-                    data: humanRoleAbstractionData,
-                    borderColor: '#F59E0B',
-                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    label: '必要な指示の具体性',
+                    data: instructionSpecificityData,
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
                     yAxisID: 'y',
                     fill: true,
                     tension: 0.3,
@@ -386,7 +386,7 @@ const renderEvolutionChart = () => {
                     max: 110,
                     title: {
                         display: true,
-                        text: '能力・抽象度のレベル'
+                        text: 'レベル (高/低)'
                     }
                 }
             },

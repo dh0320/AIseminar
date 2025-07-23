@@ -14,6 +14,10 @@
     <!-- Visualization & Content Choices: レポートの各概念を効果的に伝えるため、多様な表現手法を選択しました。進化の段階と人間の役割の変化という「関係性」を示すために、Chart.jsを用いた複合チャートを採用。これにより、AIの自律性向上と人間の役割の変化が連動していることを一目で理解できます。「RAG」や「CoT」のようなプロセスの「流れ」を説明する部分では、HTMLとTailwind CSSを駆使したシンプルなシーケンス図を用い、視覚的な理解を促進します。「ファインチューニング vs RAG」のような「比較」が重要な項目では、クリックで表示されるサイドバイサイドのテーブル形式を採用し、差異を明確に提示します。これらの選択はすべて、静的なテキスト情報を、ユーザーが操作し、発見し、理解を深めることができる対話的な要素へと転換することを目的としており、SVGやMermaid JSは一切使用していません。 -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling on the body */
+        }
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             background-color: #111827; /* bg-gray-900 */
@@ -43,6 +47,8 @@
         .content-card {
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
             animation: fadeIn 0.7s ease-out;
+            height: 100%;
+            overflow-y: auto;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -61,15 +67,15 @@
 </head>
 <body class="bg-gray-900 text-gray-100">
 
-    <div class="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
+    <div class="h-full w-full flex flex-col items-center p-4 md:p-6">
         <div class="w-full max-w-7xl h-full flex flex-col">
-            <header class="text-center mb-6 md:mb-10">
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-100">生成AIの進化とビジネス変革</h1>
-                <p class="text-lg md:text-2xl text-gray-400 mt-3">プロンプトエンジニアリングからAIイノベーターへの潮流を探る</p>
+            <header class="text-center mb-4 md:mb-6 flex-shrink-0">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-100">生成AIの進化とビジネス変革</h1>
+                <p class="text-base md:text-lg text-gray-400 mt-2">プロンプトエンジニアリングからAIイノベーターへの潮流を探る</p>
             </header>
 
-            <nav id="evolution-path" class="mb-8 md:mb-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-300">進化の道筋：ステージを選択してください</h2>
+            <nav id="evolution-path" class="mb-6 md:mb-8 flex-shrink-0">
+                <h2 class="text-lg md:text-xl font-bold text-center mb-6 text-gray-300">進化の道筋：ステージを選択してください</h2>
                 <div class="relative w-full">
                     <div class="path-line"></div>
                     <div class="flex justify-between items-center relative">
@@ -78,7 +84,7 @@
                 </div>
             </nav>
 
-            <main id="content-display" class="w-full flex-grow">
+            <main id="content-display" class="w-full flex-grow h-0">
                 <!-- Content will be injected here by JS -->
             </main>
         </div>
@@ -141,7 +147,7 @@ const aiEvolutionData = {
     },
     "knowledge": {
         "title": "知識拡張",
-        "icon": "📚",
+        "icon": "�",
         "content": `
             <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
                 <h3 class="text-3xl md:text-4xl font-bold text-emerald-300 mb-4">ステージ2：知識の拡張 - 信頼性と専門性の獲得</h3>
@@ -196,7 +202,7 @@ const aiEvolutionData = {
     },
     "action": {
         "title": "自律実行",
-        "icon": "�",
+        "icon": "🚀",
         "content": `
             <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
                 <h3 class="text-3xl md:text-4xl font-bold text-indigo-400 mb-4">ステージ4：自律的実行 - AIエージェントの台頭</h3>
@@ -308,9 +314,9 @@ const renderNav = () => {
         const item = aiEvolutionData[key];
         navHtml += `
             <div class="flex flex-col items-center flex-1">
-                <div id="nav-${key}" data-key="${key}" class="nav-item bg-gray-800 w-24 h-24 md:w-32 md:h-32 rounded-full shadow-lg flex flex-col justify-center items-center p-2 text-center border-2 border-gray-700">
-                    <span class="text-3xl md:text-4xl">${item.icon}</span>
-                    <span class="text-base md:text-lg font-semibold mt-1">${item.title}</span>
+                <div id="nav-${key}" data-key="${key}" class="nav-item bg-gray-800 w-20 h-20 md:w-28 md:h-28 rounded-full shadow-lg flex flex-col justify-center items-center p-2 text-center border-2 border-gray-700">
+                    <span class="text-2xl md:text-3xl">${item.icon}</span>
+                    <span class="text-sm md:text-base font-semibold mt-1">${item.title}</span>
                 </div>
             </div>
         `;
@@ -321,13 +327,16 @@ const renderNav = () => {
 const renderContent = (key) => {
     const contentDisplay = document.getElementById('content-display');
     const contentData = aiEvolutionData[key];
-    contentDisplay.innerHTML = contentData.content;
+    contentDisplay.innerHTML = `<div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">${contentData.content}</div>`;
     
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.toggle('active', item.dataset.key === key);
     });
 
     if (key === 'introduction') {
+        const introCard = document.querySelector('#content-display .content-card');
+        introCard.classList.add('flex', 'flex-col');
+        introCard.innerHTML = aiEvolutionData.introduction.content;
         renderEvolutionChart();
     }
 };
@@ -444,14 +453,42 @@ const renderEvolutionChart = () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    // A bit of a refactor to handle content structure better
+    const originalContent = {};
+    Object.keys(aiEvolutionData).forEach(key => {
+        originalContent[key] = {
+            title: aiEvolutionData[key].title,
+            icon: aiEvolutionData[key].icon,
+            content: aiEvolutionData[key].content
+        };
+    });
+
     renderNav();
-    renderContent('introduction');
+    
+    // Initial content render
+    const contentDisplay = document.getElementById('content-display');
+    const key = 'introduction';
+    contentDisplay.innerHTML = originalContent[key].content;
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.key === key);
+    });
+    renderEvolutionChart();
+
 
     document.querySelector('#evolution-path').addEventListener('click', (e) => {
         const navItem = e.target.closest('.nav-item');
         if (navItem) {
             const key = navItem.dataset.key;
-            renderContent(key);
+            const contentDisplay = document.getElementById('content-display');
+            contentDisplay.innerHTML = originalContent[key].content;
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.key === key);
+            });
+
+            if (key === 'introduction') {
+                renderEvolutionChart();
+            }
         }
     });
 });

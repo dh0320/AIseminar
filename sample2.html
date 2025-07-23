@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【経営層向けプレゼン資料】クミタス事業企画</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Basic setup for presentation */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .presentation-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FDF8F0;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+        /* Enforce 16:9 aspect ratio for the content area */
+        .slide-content {
+            width: 90vw;
+            height: calc(90vw * 9 / 16);
+            max-height: 90vh;
+            max-width: calc(90vh * 16 / 9);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 3vw;
+            box-sizing: border-box;
+        }
+        h1, h2, h3, .deck-title {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-weight: 800;
+        }
+        .slide-header {
+            position: absolute;
+            top: 1.5vw;
+            left: 3vw;
+            font-size: 1.5rem; /* Increased */
+            font-weight: bold;
+            color: #f97316;
+        }
+        .slide-footer {
+            position: absolute;
+            bottom: 1.5vw;
+            right: 3vw;
+            font-size: 1.2rem; /* Increased */
+            color: #666;
+        }
+        /* Navigation */
+        .nav-button {
+            position: fixed;
+            bottom: 2rem;
+            z-index: 10;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 3.5rem; /* Increased */
+            height: 3.5rem; /* Increased */
+            font-size: 2rem; /* Increased */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        #prev-btn {
+            left: 2rem;
+        }
+        #next-btn {
+            right: 2rem;
+        }
+        /* Specific slide styles */
+        .title-slide .slide-content {
+            text-align: center;
+            justify-content: center;
+        }
+        .image-bg {
+            background-size: cover;
+            background-position: center;
+        }
+        .table-auto th, .table-auto td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            font-size: 1.1rem; /* Increased table font size */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container" id="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide image-bg" style="background-image: linear-gradient(rgba(253, 248, 240, 0.8), rgba(253, 248, 240, 0.8)), url('https://image.pollinations.ai/prompt/A%20beautiful%20abstract%20logo%20with%20two%20hands%20coming%20together%20to%20assemble%20a%20glowing%20gear,%20symbolizing%20creation%20and%20collaboration.%20minimalist,%20warm%20colors,%20style%20of%20studio%20ghibli?w=1200&h=800&seed=445');">
+            <div class="slide-content">
+                <h1 class="text-6xl md:text-8xl font-black text-gray-800 mb-4 deck-title">新規事業企画提案</h1>
+                <p class="text-7xl md:text-9xl font-black text-orange-500 mb-8 deck-title">クミタス</p>
+                <p class="text-3xl text-gray-700">2025年7月17日</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">エグゼクティブサマリー</div>
+                <div class="grid grid-cols-2 gap-10 h-full items-center">
+                    <div class="space-y-8">
+                        <div class="bg-white p-5 rounded-lg shadow-md">
+                            <h3 class="font-bold text-2xl text-red-600 mb-2">課題</h3>
+                            <p class="text-xl">「正解」のある遊びが子供の創造性を奪っている現状</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow-md">
+                            <h3 class="font-bold text-2xl text-green-600 mb-2">提案</h3>
+                            <p class="text-xl">“遊びを発明する”サブスクリプション型玩具「クミタス」の事業化</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow-md">
+                            <h3 class="font-bold text-2xl text-blue-600 mb-2">ROIと戦略整合性</h3>
+                            <p class="text-xl">3年で営業利益6億円、5年で15億円を目指す。当社の教育分野におけるブランド価値向上に直結。</p>
+                        </div>
+                    </div>
+                    <div class="bg-orange-50 p-8 rounded-lg shadow-inner">
+                        <h3 class="font-bold text-3xl text-center mb-6 text-orange-600">決裁依頼事項</h3>
+                        <ul class="text-xl space-y-4">
+                            <li><strong>1. 事業化の正式承認</strong></li>
+                            <li><strong>2. 初期予算の承認</strong>
+                                <ul class="list-disc pl-8 text-lg">
+                                    <li>プロトタイプ開発・金型製作費: XXX万円</li>
+                                    <li>初期マーケティング費: XXX万円</li>
+                                </ul>
+                            </li>
+                            <li><strong>3. プロジェクト人員のアサイン</strong>
+                                <ul class="list-disc pl-8 text-lg">
+                                    <li>事業責任者1名、企画・開発2名、マーケティング1名</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">1</div>
+        </div>
+
+        <!-- Slide 3: Market Opportunity & Challenges -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">市場機会と課題</div>
+                 <div class="grid grid-cols-2 gap-10 h-full items-center">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-6">なぜ「今」なのか？</h2>
+                        <p class="text-2xl mb-8">少子化の一方で、子供一人への教育投資は増加。<br>特に**「非認知能力」**への関心が高まっています。</p>
+                        <div class="bg-white p-6 rounded-lg shadow-xl">
+                            <h3 class="text-3xl font-bold mb-4 text-center">顧客の未充足ニーズ</h3>
+                            <ul class="space-y-4 text-xl">
+                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3 text-2xl">×</span> <span>子供の本当の創造性をどう伸ばせばいいか分からない</span></li>
+                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3 text-2xl">×</span> <span>ゲームや動画ばかりで、試行錯誤する体験が不足</span></li>
+                                <li class="flex items-start"><span class="text-red-500 font-bold mr-3 text-2xl">×</span> <span>既存の知育玩具はすぐに飽きてしまい、物が増える</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4 text-center">知育関連市場の構造</h3>
+                        <div class="w-full bg-gray-200 rounded-lg p-6 space-y-3">
+                             <div class="text-center font-bold text-xl">市場規模: 約9,000億円</div>
+                             <div class="h-32 bg-blue-300 flex items-center justify-center rounded-t-lg font-bold text-2xl text-blue-800">学習塾・通信教育 (約80%)</div>
+                             <div class="h-20 bg-teal-300 flex items-center justify-center font-bold text-2xl text-teal-800">知育玩具・教材 (約15%)</div>
+                             <div class="h-16 bg-orange-300 flex items-center justify-center rounded-b-lg font-bold text-2xl text-orange-800">その他 (約5%) ← 我々の主戦場</div>
+                        </div>
+                        <p class="text-center mt-4 text-lg text-gray-600">従来の「玩具」の枠を超え、継続的な「教育サービス」として新しい市場を創造する。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">2</div>
+        </div>
+
+        <!-- Slide 4: Solution -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">解決策：クミタス</div>
+                <div class="text-center mb-8">
+                    <h2 class="text-5xl font-bold">遊びを「消費」から「発明」へ</h2>
+                    <p class="text-2xl text-gray-600 mt-2">「クミタス」は、パーツ、体験、コミュニティを統合した新しい教育サービスです。</p>
+                </div>
+                <div class="grid grid-cols-5 gap-4 text-center items-center">
+                    <div class="bg-white p-4 rounded-lg shadow-lg col-span-2">
+                        <img src="https://image.pollinations.ai/prompt/A%20beautiful%20cinematic%20photo%20of%20a%20collection%20of%20whimsical,%20mismatched%20toy%20parts%20on%20a%20rustic%20wooden%20surface?w=400&h=300&seed=234" class="w-full rounded-md mb-3 h-48 object-cover">
+                        <h3 class="text-2xl font-bold">① 発明のタネBOX</h3>
+                        <p>毎月届く、用途不明なパーツ群。子供の好奇心を刺激する。</p>
+                    </div>
+                    <div class="text-6xl text-orange-400 font-black">→</div>
+                    <div class="bg-white p-4 rounded-lg shadow-lg col-span-2">
+                        <img src="https://image.pollinations.ai/prompt/A%20beautiful%20cinematic%20photo%20of%20a%20whimsical,%20charming%20homemade%20instrument%20created%20by%20a%20child?w=400&h=300&seed=567" class="w-full rounded-md mb-3 h-48 object-cover">
+                        <h3 class="text-2xl font-bold">② 発明体験</h3>
+                        <p>試行錯誤を通じて、世界に一つの「遊び」を創造する。</p>
+                    </div>
+                </div>
+                 <div class="text-6xl text-orange-400 text-center my-2 font-black">↓</div>
+                <div class="bg-white p-4 rounded-lg shadow-lg max-w-md mx-auto">
+                    <h3 class="text-2xl font-bold text-center">③ 発明共有コミュニティ</h3>
+                    <p class="text-center">他者のアイデアに刺激を受け、次の発明のヒントを得る。</p>
+                </div>
+            </div>
+            <div class="slide-footer">3</div>
+        </div>
+
+        <!-- Slide 5: Business Model -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">ビジネスモデル</div>
+                <div class="grid grid-cols-2 gap-12 h-full items-center">
+                    <div>
+                        <h2 class="text-4xl font-bold mb-8 text-center">収益構造</h2>
+                        <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+                            <p class="text-2xl">月額サブスクリプション</p>
+                            <p class="text-7xl font-black text-orange-500 my-3">¥2,980</p>
+                            <p class="text-xl text-gray-600">(税込)</p>
+                            <hr class="my-6">
+                            <p class="text-2xl font-bold">アップセル/クロスセル機会</p>
+                            <p class="text-lg text-gray-600">特別パーツBOX、オンラインワークショップ等</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-4xl font-bold mb-8 text-center">バリューチェーン</h2>
+                        <div class="space-y-4 text-xl">
+                            <div class="bg-blue-100 p-4 rounded-lg shadow-sm"><strong>企画・開発 (自社):</strong> 遊びの「問い」となるパーツセットを設計</div>
+                            <div class="text-center font-bold text-2xl">↓</div>
+                            <div class="bg-teal-100 p-4 rounded-lg shadow-sm"><strong>製造 (パートナー):</strong> 国内外の提携工場でパーツを生産</div>
+                            <div class="text-center font-bold text-2xl">↓</div>
+                             <div class="bg-green-100 p-4 rounded-lg shadow-sm"><strong>マーケティング・販売 (自社):</strong> D2Cモデルで顧客と直接繋がる</div>
+                             <div class="text-center font-bold text-2xl">↓</div>
+                            <div class="bg-purple-100 p-4 rounded-lg shadow-sm"><strong>コミュニティ運営 (自社):</strong> 顧客エンゲージメントを高め、LTVを最大化</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">4</div>
+        </div>
+
+        <!-- Slide 6: Competitor Analysis -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">競合分析</div>
+                <h2 class="text-4xl font-bold text-center mb-6">主要プレイヤーとの比較</h2>
+                <table class="table-auto w-full text-base">
+                    <thead class="bg-gray-700 text-white text-lg">
+                        <tr><th class="p-3"></th><th class="bg-orange-500 p-3">クミタス</th><th class="p-3">LEGO</th><th class="p-3">通信教育</th><th class="p-3">Nintendo Labo</th><th class="p-3">Minecraft</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white"><td class="font-bold p-3">コア価値</td><td class="font-bold bg-orange-50 p-3">遊びの「発明」</td><td class="p-3">体系的な「再現」</td><td class="p-3">知識の「習得」</td><td class="p-3">デジタルな「工作」</td><td class="p-3">無限の「創造」</td></tr>
+                        <tr class="bg-gray-50"><td class="font-bold p-3">価格帯</td><td class="font-bold bg-orange-50 p-3">¥2,980/月</td><td class="p-3">¥3k-¥20k</td><td class="p-3">¥4k-/月</td><td class="p-3">¥7k-</td><td class="p-3">¥3k-</td></tr>
+                        <tr class="bg-white"><td class="font-bold p-3">強み</td><td class="font-bold bg-orange-50 p-3">非認知能力の育成<br>継続的な探求心</td><td class="p-3">ブランド力<br>コレクション性</td><td class="p-3">学習習慣の定着</td><td class="p-3">驚きの体験</td><td class="p-3">圧倒的自由度</td></tr>
+                        <tr class="bg-gray-50"><td class="font-bold p-3">弱み</td><td class="font-bold bg-orange-50 p-3">新規ブランド<br>効果の可視化</td><td class="p-3">創造性の制約</td><td class="p-3">受動的になりがち</td><td class="p-3">コンテンツ不足</td><td class="p-3">デジタル依存</td></tr>
+                    </tbody>
+                </table>
+                <p class="text-center mt-6 font-bold text-green-700 text-2xl">優位性：物理的な「制約」の中で、答えのない問いに挑む体験は、他社にはない独自の価値を提供する。</p>
+            </div>
+            <div class="slide-footer">5</div>
+        </div>
+
+        <!-- Slide 7: Marketing & Sales Strategy -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">マーケティング・販売戦略</div>
+                <h2 class="text-4xl font-bold text-center mb-6">顧客獲得戦略とKPI</h2>
+                <div class="grid grid-cols-3 gap-6 h-4/5">
+                    <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col">
+                        <h3 class="text-2xl font-bold text-center mb-3 bg-orange-200 rounded p-2">Phase 1: 立ち上げ期</h3>
+                        <ul class="space-y-3 text-lg flex-grow">
+                            <li><strong>施策:</strong> クラウドファンディング、インフルエンサーPR</li>
+                            <li><strong>KPI:</strong> 支援者数 2,000人、初期会員 5,000人</li>
+                            <li><strong>コスト/期待売上:</strong> 予算XXX万 / 売上XXX万</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col">
+                        <h3 class="text-2xl font-bold text-center mb-3 bg-orange-300 rounded p-2">Phase 2: 成長期</h3>
+                        <ul class="space-y-3 text-lg flex-grow">
+                            <li><strong>施策:</strong> Web広告(SNS,リスティング)、BtoB連携</li>
+                            <li><strong>KPI:</strong> CPA ¥8,000以下、会員数 50,000人</li>
+                            <li><strong>コスト/期待売上:</strong> 予算XXX万 / 売上XXX万</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col">
+                        <h3 class="text-2xl font-bold text-center mb-3 bg-orange-400 rounded p-2">Phase 3: 発展期</h3>
+                        <ul class="space-y-3 text-lg flex-grow">
+                            <li><strong>施策:</strong> マス広告、海外展開、商品拡充</li>
+                            <li><strong>KPI:</strong> 会員数 300,000人(大ヒット)</li>
+                            <li><strong>コスト/期待売上:</strong> 予算XXX万 / 売上XXX万</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">6</div>
+        </div>
+
+        <!-- Slide 8: Execution Plan / Roadmap -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">実行計画・ロードマップ</div>
+                <h2 class="text-4xl font-bold text-center mb-6">事業化に向けたマイルストーン</h2>
+                <div class="space-y-3 text-lg">
+                    <!-- Gantt Chart Header -->
+                    <div class="grid grid-cols-5 gap-2 text-center font-bold text-xl">
+                        <div></div>
+                        <div>Q1 (1-3月)</div>
+                        <div>Q2 (4-6月)</div>
+                        <div>Q3 (7-9月)</div>
+                        <div>Q4 (10-12月)</div>
+                    </div>
+                    <!-- Row 1 -->
+                    <div class="grid grid-cols-5 gap-2 items-center">
+                        <div class="font-bold text-right pr-3">調査・PoC</div>
+                        <div class="col-span-2 bg-teal-400 text-white p-3 rounded-lg text-center">プロトタイプ開発 & ユーザーテスト</div>
+                        <div class="col-span-2"></div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="grid grid-cols-5 gap-2 items-center">
+                        <div class="font-bold text-right pr-3">ローンチ準備</div>
+                        <div></div>
+                        <div class="col-span-2 bg-blue-500 text-white p-3 rounded-lg text-center">クラウドファンディング / 先行予約</div>
+                         <div></div>
+                    </div>
+                     <!-- Row 3 -->
+                    <div class="grid grid-cols-5 gap-2 items-center">
+                        <div class="font-bold text-right pr-3">ローンチ・拡大</div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="col-span-1 bg-green-500 text-white p-3 rounded-lg text-center">正式ローンチ！</div>
+                    </div>
+                </div>
+                 <p class="text-center mt-10 font-bold text-2xl">主要マイルストーン：12ヶ月後の正式ローンチを目指す</p>
+            </div>
+            <div class="slide-footer">7</div>
+        </div>
+
+        <!-- Slide 9: Financial Plan -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">事業計画（3ヶ年）</div>
+                <h2 class="text-4xl font-bold text-center mb-6">売上・利益計画</h2>
+                <div class="grid grid-cols-2 gap-10 items-center h-full">
+                    <table class="w-full text-xl">
+                        <thead class="bg-gray-800 text-white"><tr><th class="p-4">指標</th><th class="p-4">1年目</th><th class="p-4">2年目</th><th class="p-4">3年目</th></tr></thead>
+                        <tbody class="text-center">
+                            <tr class="bg-gray-100"><td class="p-4 font-bold">目標会員数</td><td>1万人</td><td>3万人</td><td>5万人</td></tr>
+                            <tr class="bg-white"><td class="p-4 font-bold">売上高</td><td>¥3.5億</td><td>¥10.7億</td><td>¥17.8億</td></tr>
+                            <tr class="bg-gray-100"><td class="p-4 font-bold text-2xl">営業利益</td><td class="font-bold text-green-600 text-2xl">¥0.5億</td><td class="font-bold text-green-600 text-2xl">¥3.0億</td><td class="font-bold text-green-600 text-2xl">¥6.0億</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="w-full h-80 bg-white p-4 rounded-lg shadow-lg">
+                        <p class="font-bold text-center text-2xl">営業利益推移（億円）</p>
+                        <div class="flex items-end h-full w-full gap-8 justify-center pb-8">
+                            <div class="bg-green-300 w-1/4 text-center pt-2 font-bold text-xl" style="height: 8.3%;">0.5</div>
+                            <div class="bg-green-400 w-1/4 text-center pt-2 font-bold text-xl" style="height: 50%;">3.0</div>
+                            <div class="bg-green-500 w-1/4 text-center pt-2 font-bold text-xl" style="height: 100%;">6.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">8</div>
+        </div>
+
+        <!-- Slide 10: Success KPIs -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">成功の定義（KPI）</div>
+                <h2 class="text-5xl font-bold text-center mb-12">我々が目指す「成功」</h2>
+                <div class="grid grid-cols-2 gap-12">
+                    <div class="border-4 border-gray-400 border-dashed p-8 rounded-lg text-center">
+                        <h3 class="text-4xl font-bold mb-4">ヒット</h3>
+                        <p class="text-3xl font-bold">アクティブ会員数 <strong class="text-6xl text-orange-500 block my-2">10</strong> 万人</p>
+                        <p class="text-3xl font-bold">年間継続率 <strong class="text-6xl text-orange-500 block my-2">70</strong>% 以上</p>
+                        <p class="mt-4 text-xl text-gray-600">市場の主要プレイヤーとして認知され、事業の黒字化が確実となる状態。</p>
+                    </div>
+                    <div class="border-4 border-green-500 p-8 rounded-lg text-center bg-green-50">
+                        <h3 class="text-4xl font-bold mb-4 text-green-700">大ヒット</h3>
+                        <p class="text-3xl font-bold">アクティブ会員数 <strong class="text-6xl text-green-600 block my-2">30</strong> 万人</p>
+                        <p class="text-3xl font-bold">年間継続率 <strong class="text-6xl text-green-600 block my-2">80</strong>% 以上</p>
+                        <p class="mt-4 text-xl text-gray-600">市場を代表するブランドとなり、コミュニティが自律的に拡大する状態。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">9</div>
+        </div>
+
+        <!-- Slide 11: The Ask -->
+        <div class="slide image-bg" style="background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('https://image.pollinations.ai/prompt/A%20confident%20and%20happy%20Japanese%20child%20proudly%20holding%20up%20a%20strange%20and%20unique%20invention%20made%20of%20mismatched%20parts,%20cinematic%20photo,%20beautiful%20soft%20lighting,%20shallow%20depth%20of%20field,%20minimalist,%20warm%20colors,%20style%20of%20studio%20ghibli?w=1200&h=800&seed=123');">
+            <div class="slide-content text-center justify-center">
+                <h2 class="text-6xl font-bold text-gray-800 mb-12">ご提案・決裁依頼</h2>
+                <div class="space-y-10">
+                    <div class="bg-white/80 p-8 rounded-lg shadow-xl">
+                        <h3 class="text-4xl font-bold text-orange-600">1. 「クミタス」事業化の正式承認</h3>
+                    </div>
+                    <div class="bg-white/80 p-8 rounded-lg shadow-xl">
+                        <h3 class="text-4xl font-bold text-orange-600">2. 初期予算 XXXX万円の承認と<br>専門チーム（4名）の設置</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">10</div>
+        </div>
+        
+        <!-- Slide 12: Q&A -->
+        <div class="slide title-slide">
+            <div class="slide-content">
+                <h2 class="text-9xl font-black text-gray-800">ご清聴ありがとうございました</h2>
+                <p class="text-6xl font-bold text-orange-500 mt-10">Q & A</p>
+            </div>
+            <div class="slide-footer">11</div>
+        </div>
+
+    </div>
+
+    <button id="prev-btn" class="nav-button">‹</button>
+    <button id="next-btn" class="nav-button">›</button>
+
+    <script>
+        // JavaScript for presentation navigation
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        document.getElementById('next-btn').addEventListener('click', nextSlide);
+        document.getElementById('prev-btn').addEventListener('click', prevSlide);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>

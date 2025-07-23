@@ -6,39 +6,39 @@
     <title>生成AIの進化を探る：インタラクティブ・ジャーニー</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Strategic Slate -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Midnight Bloom -->
     <!-- Application Structure Plan: このSPAは、生成AIの進化を「旅」として体験できるよう設計されています。中心的なナビゲーションとして、画面上部に「進化の道筋」と名付けたインタラクティブなタイムラインを配置します。ユーザーはこの道筋上の各ステージ（例：「対話」「知識拡張」）をクリックすることで、ページ中央のコンテンツ表示エリアに対応する詳細情報を動的に読み込みます。この構造は、直線的なレポートの読書体験を、ユーザーが自由に関心のあるポイント間を移動できる、探索的な学習体験へと転換させるために選択されました。さらに、全体像を直感的に把握できるよう、AIの「自律性」と人間の「役割の抽象度」の相関関係を示すインタラクティブなチャートを導入し、マクロな視点とミクロな視点の両方から学びを深められるように設計しています。 -->
     <!-- Visualization & Content Choices: レポートの各概念を効果的に伝えるため、多様な表現手法を選択しました。進化の段階と人間の役割の変化という「関係性」を示すために、Chart.jsを用いた複合チャートを採用。これにより、AIの自律性向上と人間の役割の変化が連動していることを一目で理解できます。「RAG」や「CoT」のようなプロセスの「流れ」を説明する部分では、HTMLとTailwind CSSを駆使したシンプルなシーケンス図を用い、視覚的な理解を促進します。「ファインチューニング vs RAG」のような「比較」が重要な項目では、クリックで表示されるサイドバイサイドのテーブル形式を採用し、差異を明確に提示します。これらの選択はすべて、静的なテキスト情報を、ユーザーが操作し、発見し、理解を深めることができる対話的な要素へと転換することを目的としており、SVGやMermaid JSは一切使用していません。 -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: #F7FAFC;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+            color: #F9FAFB; /* text-gray-50 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 40vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
+            height: 100%;
         }
         .nav-item {
             transition: all 0.3s ease;
             cursor: pointer;
         }
         .nav-item.active {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            background-color: #4A5568;
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.5); /* blue-500 shadow */
+            background-color: #3B82F6; /* bg-blue-500 */
             color: white;
+        }
+        .nav-item:not(.active):hover {
+            transform: translateY(-3px);
+            background-color: #374151; /* bg-gray-700 */
         }
         .content-card {
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
@@ -54,32 +54,34 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #CBD5E0;
+            background-color: #4B5563; /* bg-gray-600 */
             z-index: -1;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-900 text-gray-100">
 
-    <div class="container mx-auto px-4 py-8 md:py-12">
-        <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">生成AIの進化とビジネス変革</h1>
-            <p class="text-md md:text-lg text-gray-600">プロンプトエンジニアリングからAIイノベーターへの潮流を探るインタラクティブ・ジャーニー</p>
-        </header>
+    <div class="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
+        <div class="w-full max-w-7xl h-full flex flex-col">
+            <header class="text-center mb-6 md:mb-10">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-100">生成AIの進化とビジネス変革</h1>
+                <p class="text-lg md:text-2xl text-gray-400 mt-3">プロンプトエンジニアリングからAIイノベーターへの潮流を探る</p>
+            </header>
 
-        <nav id="evolution-path" class="mb-12">
-            <h2 class="text-xl font-bold text-center mb-6 text-gray-700">進化の道筋：ステージを選択してください</h2>
-            <div class="relative w-full">
-                <div class="path-line"></div>
-                <div class="flex justify-between items-center relative">
-                    <!-- Navigation items will be injected here by JS -->
+            <nav id="evolution-path" class="mb-8 md:mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-300">進化の道筋：ステージを選択してください</h2>
+                <div class="relative w-full">
+                    <div class="path-line"></div>
+                    <div class="flex justify-between items-center relative">
+                        <!-- Navigation items will be injected here by JS -->
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
 
-        <main id="content-display" class="w-full">
-            <!-- Content will be injected here by JS -->
-        </main>
+            <main id="content-display" class="w-full flex-grow">
+                <!-- Content will be injected here by JS -->
+            </main>
+        </div>
     </div>
 
 <script>
@@ -88,18 +90,18 @@ const aiEvolutionData = {
         "title": "AIとの共進化時代へようこそ",
         "icon": "✨",
         "content": `
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">生成AIの進化が拓く未来</h3>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    生成AIは、単なるツールから自律的に思考・行動するパートナーへと劇的に進化しています。この潮流は、ビジネスのあらゆる側面を根底から変える可能性を秘めています。このダッシュボードは、その進化の軌跡を「対話」から「創造」までの7つのステージに分解し、各技術の本質とビジネスへのインパクトを探求するためのガイドです。
+            <div class="bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl h-full flex flex-col">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-100 mb-4">生成AIの進化が拓く未来</h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    生成AIは、単なるツールから自律的に思考・行動するパートナーへと劇的に進化しています。このダッシュボードは、その進化の軌跡を7つのステージに分解し、各技術の本質とビジネスへのインパクトを探求するためのガイドです。
                 </p>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    上部の「進化の道筋」から関心のあるステージを選択するか、下のチャートで、AIの自律性が向上するにつれて、人間に求められる指示の具体性がどのように変化するのかをご覧ください。このインタラクティブな旅を通じて、AI時代のビジネスリーダーに求められる羅針盤を手に入れましょう。
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    上部の「進化の道筋」から関心のあるステージを選択するか、下のチャートで、AIの自律性と人間に求められる指示の具体性がどのように変化するのかをご覧ください。
                 </p>
-                <div class="chart-container">
+                <div class="chart-container flex-grow">
                     <canvas id="evolutionChart"></canvas>
                 </div>
-                <p class="text-center text-sm text-gray-500 mt-2">チャート上のポイントをクリックしても、各ステージの詳細を閲覧できます。</p>
+                <p class="text-center text-base text-gray-500 mt-4">チャート上のポイントをクリックしても、各ステージの詳細を閲覧できます。</p>
             </div>
         `
     },
@@ -107,30 +109,30 @@ const aiEvolutionData = {
         "title": "対話",
         "icon": "💬",
         "content": `
-            <div class="content-card bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">ステージ1：対話の技術 - 生成AI活用の基盤</h3>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    生成AIとの協業は「対話」から始まります。AIの能力を最大限に引き出し、ビジネス価値へと転換するための最初のステップは、人間の意図を正確に伝え、望む結果を得るための技術、すなわち「プロンプトエンジニアリング」と「ファインチューニング」を習得することです。
+            <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-cyan-300 mb-4">ステージ1：対話の技術 - 生成AI活用の基盤</h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    生成AIとの協業は「対話」から始まります。AIの能力を最大限に引き出し、ビジネス価値へと転換するための最初のステップは、人間の意図を正確に伝え、望む結果を得るための技術を習得することです。
                 </p>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h4 class="font-bold text-lg mb-2">プロンプトエンジニアリング</h4>
-                        <p class="text-sm text-gray-600 mb-3">AIから望ましい出力を得るために、指示（プロンプト）を戦略的に設計・最適化するスキルです。優れたプロンプトはAIを強力なビジネスツールへと昇華させます。</p>
-                        <ul class="text-sm list-disc list-inside space-y-1 text-gray-700">
+                    <div class="bg-gray-900/70 p-6 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-xl text-gray-100 mb-2">プロンプトエンジニアリング</h4>
+                        <p class="text-base text-gray-400 mb-3">AIから望ましい出力を得るために、指示（プロンプト）を戦略的に設計・最適化するスキルです。</p>
+                        <ul class="text-base list-disc list-inside space-y-1 text-gray-300">
                             <li><strong>指示：</strong>実行してほしいタスクを具体的に示す。</li>
                             <li><strong>文脈：</strong>背景情報や制約条件を与える。</li>
                             <li><strong>入力データ：</strong>回答生成に直接利用する情報。</li>
                             <li><strong>出力形式：</strong>期待するアウトプットの形式を指定。</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h4 class="font-bold text-lg mb-2">ファインチューニング</h4>
-                        <p class="text-sm text-gray-600 mb-3">汎用的なAIモデルを、自社独自のデータセットで追加学習させ、特定の業界や業務に特化した「専属エキスパート」に育てる技術です。</p>
-                        <ul class="text-sm list-disc list-inside space-y-1 text-gray-700">
-                            <li>専門領域への特化（医療、法律など）。</li>
-                            <li>ブランドアイデンティティの体現。</li>
-                            <li>業務プロセスの最適化。</li>
-                            <li>コスト効率の改善。</li>
+                    <div class="bg-gray-900/70 p-6 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-xl text-gray-100 mb-2">ファインチューニング</h4>
+                        <p class="text-base text-gray-400 mb-3">汎用的なAIモデルを、自社独自のデータセットで追加学習させ、特定の業界や業務に特化した「専属エキスパート」に育てる技術です。</p>
+                        <ul class="text-base list-disc list-inside space-y-1 text-gray-300">
+                            <li>専門領域への特化</li>
+                            <li>ブランドアイデンティティの体現</li>
+                            <li>業務プロセスの最適化</li>
+                            <li>コスト効率の改善</li>
                         </ul>
                     </div>
                 </div>
@@ -141,28 +143,27 @@ const aiEvolutionData = {
         "title": "知識拡張",
         "icon": "📚",
         "content": `
-            <div class="content-card bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">ステージ2：知識の拡張 - 信頼性と専門性の獲得</h3>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    AIの初期の課題であった「知識の古さ」や「ハルシネーション（嘘をつくこと）」を克服し、回答に信頼性と専門性をもたらすのがこのステージです。外部知識を参照する「RAG」と、テキスト以外の情報を扱う「マルチモーダル」が鍵となります。
+            <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-emerald-300 mb-4">ステージ2：知識の拡張 - 信頼性と専門性の獲得</h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    AIの初期課題を克服し、回答に信頼性と専門性をもたらすのがこのステージです。外部知識を参照する「RAG」と、テキスト以外の情報を扱う「マルチモーダル」が鍵となります。
                 </p>
-                <div class="bg-blue-50 p-6 rounded-lg mb-6">
-                    <h4 class="font-bold text-lg mb-2 text-blue-800">RAG (検索拡張生成)</h4>
-                    <p class="text-sm text-gray-700 mb-4">LLMが回答を生成する前に、社内文書や最新のWebサイトなど、外部の信頼できる情報源を検索し、その内容を根拠として回答を生成する技術です。</p>
-                    <div class="flex flex-wrap justify-center items-center space-x-2 text-sm font-semibold">
-                        <div class="p-2 bg-white rounded-md shadow">質問受付</div>
-                        <div class="text-blue-500 font-bold">→</div>
-                        <div class="p-2 bg-blue-100 rounded-md shadow">外部DB検索</div>
-                        <div class="text-blue-500 font-bold">→</div>
-                        <div class="p-2 bg-blue-100 rounded-md shadow">情報追加</div>
-                        <div class="text-blue-500 font-bold">→</div>
-                        <div class="p-2 bg-white rounded-md shadow">回答生成</div>
+                <div class="bg-emerald-900/30 p-6 rounded-xl mb-6 border border-emerald-800">
+                    <h4 class="font-bold text-xl mb-2 text-emerald-200">RAG (検索拡張生成)</h4>
+                    <p class="text-base text-gray-300 mb-4">LLMが回答を生成する前に、外部の信頼できる情報源を検索し、その内容を根拠として回答を生成する技術です。</p>
+                    <div class="flex flex-wrap justify-center items-center space-x-2 text-base font-semibold text-gray-100">
+                        <div class="p-2 bg-gray-800 rounded-md shadow-md">質問受付</div>
+                        <div class="text-emerald-400 font-bold text-xl">→</div>
+                        <div class="p-2 bg-emerald-800/50 rounded-md shadow-md">外部DB検索</div>
+                        <div class="text-emerald-400 font-bold text-xl">→</div>
+                        <div class="p-2 bg-emerald-800/50 rounded-md shadow-md">情報追加</div>
+                        <div class="text-emerald-400 font-bold text-xl">→</div>
+                        <div class="p-2 bg-gray-800 rounded-md shadow-md">回答生成</div>
                     </div>
-                    <p class="text-xs text-center mt-2 text-gray-500">このプロセスにより、ハルシネーションを抑制し、根拠のある回答が可能になります。</p>
                 </div>
-                 <div class="bg-green-50 p-6 rounded-lg">
-                    <h4 class="font-bold text-lg mb-2 text-green-800">マルチモーダルAI</h4>
-                    <p class="text-sm text-gray-700">テキストだけでなく、画像、音声、動画、センサーデータなど、複数の異なる種類の情報（モダリティ）を統合的に処理・理解できるAIです。AIの認識能力を人間の五感に近づけ、活用シーンを物理世界へと広げます。</p>
+                 <div class="bg-sky-900/30 p-6 rounded-xl border border-sky-800">
+                    <h4 class="font-bold text-xl mb-2 text-sky-200">マルチモーダルAI</h4>
+                    <p class="text-base text-gray-300">テキスト、画像、音声など複数の異なる種類の情報（モダリティ）を統合的に処理・理解できるAIです。AIの認識能力を物理世界へと広げます。</p>
                 </div>
             </div>
         `
@@ -171,23 +172,23 @@ const aiEvolutionData = {
         "title": "思考",
         "icon": "🧠",
         "content": `
-            <div class="content-card bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">ステージ3：思考の深化 - AIの推論能力の飛躍</h3>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    AIが単なる情報生成ツールを超え、真に知的なパートナーとなるためには、複雑な問題に対して論理的な推論を行う「思考」能力が不可欠です。このステージでは、AIの思考法が直線的なものから、戦略的、反省的なものへと深化していきます。
+            <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-amber-300 mb-4">ステージ3：思考の深化 - AIの推論能力の飛躍</h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    AIが単なる情報生成ツールを超え、複雑な問題に対して論理的な推論を行う「思考」能力を獲得するステージです。AIの思考法が直線的なものから、戦略的、反省的なものへと深化します。
                 </p>
                 <div class="space-y-4">
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <h4 class="font-bold">思考の連鎖 (Chain of Thought, CoT)</h4>
-                        <p class="text-sm text-gray-600">最終的な答えだけでなく、そこに至る思考プロセスをステップ・バイ・ステップで生成させる技術。「段階的に考えよう」と促すことで、推論の精度と透明性を高めます。</p>
+                    <div class="p-4 bg-gray-900/70 rounded-lg border border-gray-700">
+                        <h4 class="font-bold text-xl text-gray-100">思考の連鎖 (Chain of Thought, CoT)</h4>
+                        <p class="text-base text-gray-400">思考プロセスをステップ・バイ・ステップで生成させ、推論の精度と透明性を高める技術。</p>
                     </div>
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <h4 class="font-bold">思考の木 (Tree of Thoughts, ToT)</h4>
-                        <p class="text-sm text-gray-600">一本道ではなく、複数の異なる思考パスを木のように分岐・探求し、最も有望なものを選択する、より戦略的な思考法。計画性が求められる問題に有効です。</p>
+                    <div class="p-4 bg-gray-900/70 rounded-lg border border-gray-700">
+                        <h4 class="font-bold text-xl text-gray-100">思考の木 (Tree of Thoughts, ToT)</h4>
+                        <p class="text-base text-gray-400">複数の思考パスを分岐・探求し、最も有望なものを選択する、より戦略的な思考法。</p>
                     </div>
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <h4 class="font-bold">自己修正 (Self-Correction)</h4>
-                        <p class="text-sm text-gray-600">AIが自ら生成した出力の誤りを検出し、訂正する能力。自律的にタスクを実行するAIエージェントの信頼性を担保する上で極めて重要です。</p>
+                    <div class="p-4 bg-gray-900/70 rounded-lg border border-gray-700">
+                        <h4 class="font-bold text-xl text-gray-100">自己修正 (Self-Correction)</h4>
+                        <p class="text-base text-gray-400">AIが自ら生成した出力の誤りを検出し、訂正する能力。自律性の信頼性を担保します。</p>
                     </div>
                 </div>
             </div>
@@ -195,22 +196,22 @@ const aiEvolutionData = {
     },
     "action": {
         "title": "自律実行",
-        "icon": "🚀",
+        "icon": "�",
         "content": `
-            <div class="content-card bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">ステージ4：自律的実行 - AIエージェントの台頭</h3>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    これまでの進化が結集し、AIは人間の指示を待つ受動的な存在から、自ら計画・実行する自律的な存在「AIエージェント」へと進化します。抽象的な目標に対し、ツールを駆使して能動的に行動する点が最大の特徴です。
+            <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-indigo-400 mb-4">ステージ4：自律的実行 - AIエージェントの台頭</h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    AIは人間の指示を待つ受動的な存在から、自ら計画・実行する自律的な存在「AIエージェント」へと進化します。抽象的な目標に対し、ツールを駆使して能動的に行動します。
                 </p>
-                <div class="bg-purple-50 p-6 rounded-lg">
-                    <h4 class="font-bold text-lg mb-2 text-purple-800">AIエージェントのワークフロー</h4>
-                    <p class="text-sm text-gray-700 mb-4">例えば「来週の東京出張を予約して」という目標に対し、AIエージェントは以下のように自律的にタスクを分解し、ツール（関数呼び出し）を使って実行します。</p>
-                    <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700">
-                        <li><strong>計画立案：</strong>必要なタスク（交通手段検索、宿泊先検索、スケジュール確保）をリストアップ。</li>
-                        <li><strong>ツール利用(1)：</strong><code>search_flights('TYO')</code>を呼び出し、フライト情報を検索。</li>
-                        <li><strong>ツール利用(2)：</strong><code>search_hotels('TYO')</code>を呼び出し、ホテル情報を検索。</li>
-                        <li><strong>ツール利用(3)：</strong><code>book_flight(...)</code>, <code>book_hotel(...)</code>を呼び出し、予約を確定。</li>
-                        <li><strong>ツール利用(4)：</strong><code>add_to_calendar(...)</code>を呼び出し、スケジュールをカレンダーに登録。</li>
+                <div class="bg-indigo-900/30 p-6 rounded-xl border border-indigo-800">
+                    <h4 class="font-bold text-xl mb-3 text-indigo-200">AIエージェントのワークフロー例</h4>
+                    <p class="text-base text-gray-300 mb-4">「来週の東京出張を予約して」という目標に対し、エージェントは自律的にタスクを分解し、ツールを使って実行します。</p>
+                    <ol class="list-decimal list-inside space-y-2 text-base text-gray-300">
+                        <li><strong>計画立案：</strong>必要なタスク（交通手段検索、宿泊先検索など）をリストアップ。</li>
+                        <li><strong>ツール利用(1)：</strong><code>search_flights('TYO')</code>でフライト情報を検索。</li>
+                        <li><strong>ツール利用(2)：</strong><code>search_hotels('TYO')</code>でホテル情報を検索。</li>
+                        <li><strong>ツール利用(3)：</strong><code>book_flight(...)</code>, <code>book_hotel(...)</code>で予約を確定。</li>
+                        <li><strong>ツール利用(4)：</strong><code>add_to_calendar(...)</code>でスケジュールを登録。</li>
                         <li><strong>報告：</strong>ユーザーに予約完了を報告。</li>
                     </ol>
                 </div>
@@ -221,20 +222,20 @@ const aiEvolutionData = {
         "title": "協調",
         "icon": "🤝",
         "content": `
-            <div class="content-card bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">ステージ5：協調と連携 - マルチエージェントシステム</h3>
-                <p class="text-gray-600 leading-relaxed mb-6">
-                    単一のAIエージェントが「優秀な個人」なら、マルチエージェントシステム（MAS）は「専門家集団からなるドリームチーム」です。複数の自律的AIエージェントが協調・連携することで、単独では解決不可能な、複雑で大規模な課題解決に挑みます。
+            <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-rose-400 mb-4">ステージ5：協調と連携 - マルチエージェントシステム</h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    単一のAIエージェントが「優秀な個人」なら、マルチエージェントシステム（MAS）は「専門家集団からなるドリームチーム」です。複数の自律的AIエージェントが協調・連携し、複雑で大規模な課題解決に挑みます。
                 </p>
-                 <div class="bg-yellow-50 p-6 rounded-lg">
-                    <h4 class="font-bold text-lg mb-2 text-yellow-800">MASによるレポート作成プロジェクト例</h4>
-                    <p class="text-sm text-gray-700 mb-4">「最新の半導体市場レポートを作成せよ」というタスクに対し、AIチームが自律的に協働します。</p>
-                    <ul class="list-none space-y-3">
-                        <li class="flex items-start"><span class="mr-3 text-lg">👨‍💼</span><div><strong>マネージャー・エージェント:</strong> タスクを分解し、各専門エージェントに指示を出す。</div></li>
-                        <li class="flex items-start"><span class="mr-3 text-lg">🕵️</span><div><strong>リサーチャー・エージェント:</strong> Webを検索し、関連ニュースや論文を収集。</div></li>
-                        <li class="flex items-start"><span class="mr-3 text-lg">📊</span><div><strong>アナリスト・エージェント:</strong> 財務データを分析し、インサイトを抽出。</div></li>
-                        <li class="flex items-start"><span class="mr-3 text-lg">✍️</span><div><strong>ライター・エージェント:</strong> 各情報を統合し、レポートを執筆。</div></li>
-                        <li class="flex items-start"><span class="mr-3 text-lg">🧐</span><div><strong>校正エージェント:</strong> 完成したレポートをレビュー・修正。</div></li>
+                 <div class="bg-rose-900/30 p-6 rounded-xl border border-rose-800">
+                    <h4 class="font-bold text-xl mb-3 text-rose-200">MASによるレポート作成プロジェクト例</h4>
+                    <p class="text-base text-gray-300 mb-4">「最新の半導体市場レポートを作成せよ」というタスクに対し、AIチームが自律的に協働します。</p>
+                    <ul class="list-none space-y-3 text-base text-gray-200">
+                        <li class="flex items-start"><span class="mr-3 text-xl">👨‍💼</span><div><strong>マネージャー:</strong> タスクを分解し、各専門エージェントに指示。</div></li>
+                        <li class="flex items-start"><span class="mr-3 text-xl">🕵️</span><div><strong>リサーチャー:</strong> Webを検索し、関連ニュースや論文を収集。</div></li>
+                        <li class="flex items-start"><span class="mr-3 text-xl">📊</span><div><strong>アナリスト:</strong> 財務データを分析し、インサイトを抽出。</div></li>
+                        <li class="flex items-start"><span class="mr-3 text-xl">✍️</span><div><strong>ライター:</strong> 各情報を統合し、レポートを執筆。</div></li>
+                        <li class="flex items-start"><span class="mr-3 text-xl">🧐</span><div><strong>校正:</strong> 完成したレポートをレビュー・修正。</div></li>
                     </ul>
                 </div>
             </div>
@@ -244,19 +245,19 @@ const aiEvolutionData = {
         "title": "創造",
         "icon": "💡",
         "content": `
-            <div class="content-card bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">ステージ6：未来の創造 - AIイノベーター</h3>
-                 <p class="text-gray-600 leading-relaxed mb-6">
-                    AI進化の最終目的地は、生産性の向上に留まりません。AIが自ら新しい知識や科学的仮説を生み出し、未知の領域を切り拓く「AIイノベーター」としての役割です。これはAIが、企業のR&Dプロセスを加速させ、イノベーションのあり方そのものを変革するフロンティアです。
+            <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-fuchsia-400 mb-4">ステージ6：未来の創造 - AIイノベーター</h3>
+                 <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    AI進化の最終目的地は、生産性の向上に留まりません。AIが自ら新しい知識や科学的仮説を生み出し、未知の領域を切り拓く「AIイノベーター」としての役割です。イノベーションのあり方そのものを変革します。
                 </p>
-                <div class="bg-red-50 p-6 rounded-lg">
-                    <h4 class="font-bold text-lg mb-2 text-red-800">AIイノベーターの応用分野</h4>
-                    <p class="text-sm text-gray-700 mb-4">AIが単なる実行者から、新たな価値を発見・創造する「発明家」へと進化します。</p>
-                    <div class="grid md:grid-cols-2 gap-4 text-sm">
-                        <div class="flex items-center space-x-3"><span class="text-2xl">💊</span><span><strong>創薬開発:</strong> 新薬の候補分子を予測・設計する。</span></div>
-                        <div class="flex items-center space-x-3"><span class="text-2xl">🔬</span><span><strong>新素材開発:</strong> 高効率なバッテリーや太陽電池の新素材を発見する。</span></div>
-                        <div class="flex items-center space-x-3"><span class="text-2xl">🧬</span><span><strong>ゲノム医療:</strong> 個人の遺伝子情報から最適な治療法を提案する。</span></div>
-                        <div class="flex items-center space-x-3"><span class="text-2xl">🔭</span><span><strong>基礎科学:</strong> 宇宙観測データから未知の法則を発見する。</span></div>
+                <div class="bg-fuchsia-900/30 p-6 rounded-xl border border-fuchsia-800">
+                    <h4 class="font-bold text-xl mb-3 text-fuchsia-200">AIイノベーターの応用分野</h4>
+                    <p class="text-base text-gray-300 mb-4">AIが単なる実行者から、新たな価値を発見・創造する「発明家」へと進化します。</p>
+                    <div class="grid md:grid-cols-2 gap-4 text-base text-gray-200">
+                        <div class="flex items-center space-x-3"><span class="text-2xl">💊</span><span><strong>創薬開発:</strong> 新薬の候補分子を予測・設計。</span></div>
+                        <div class="flex items-center space-x-3"><span class="text-2xl">🔬</span><span><strong>新素材開発:</strong> 高効率なバッテリーの新素材を発見。</span></div>
+                        <div class="flex items-center space-x-3"><span class="text-2xl">🧬</span><span><strong>ゲノム医療:</strong> 最適な治療法を提案。</span></div>
+                        <div class="flex items-center space-x-3"><span class="text-2xl">🔭</span><span><strong>基礎科学:</strong> データから未知の法則を発見。</span></div>
                     </div>
                 </div>
             </div>
@@ -266,28 +267,28 @@ const aiEvolutionData = {
         "title": "責任",
         "icon": "🛡️",
         "content": `
-             <div class="content-card bg-white p-6 md:p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">最終ステージ：未来への責任 - ガバナンス</h3>
-                 <p class="text-gray-600 leading-relaxed mb-6">
-                    AIが強力かつ自律的になるほど、その力が人間の意図や価値観から逸脱しないよう保証することが不可欠になります。技術の健全な発展と社会実装のため、「AIアライメント」と「AIガバナンス」という、車の両輪となる概念が重要です。
+             <div class="content-card bg-gray-800/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-3xl md:text-4xl font-bold text-orange-400 mb-4">最終ステージ：未来への責任 - ガバナンス</h3>
+                 <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    AIが強力かつ自律的になるほど、その力が人間の価値観から逸脱しないよう保証することが不可欠です。技術の健全な発展のため、「AIアライメント」と「AIガバナンス」が重要になります。
                 </p>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h4 class="font-bold text-lg mb-2">AIアライメント (技術論)</h4>
-                        <p class="text-sm text-gray-600 mb-3">AIの目標や行動を、人間の価値観や倫理と一致させるための技術的取り組み。「AIをどう作るか」という問い。</p>
-                        <ul class="text-sm list-disc list-inside space-y-1 text-gray-700">
-                            <li><strong>RLHF:</strong> 人間のフィードバックによる強化学習。</li>
-                            <li><strong>レッドチーミング:</strong> 脆弱性を突くテスト。</li>
-                            <li><strong>憲法的AI:</strong> AI自身による自己評価・修正。</li>
+                    <div class="bg-gray-900/70 p-6 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-xl text-gray-100 mb-2">AIアライメント (技術論)</h4>
+                        <p class="text-base text-gray-400 mb-3">AIの目標や行動を、人間の価値観や倫理と一致させる技術。「AIをどう作るか」という問い。</p>
+                        <ul class="text-base list-disc list-inside space-y-1 text-gray-300">
+                            <li>RLHF</li>
+                            <li>レッドチーミング</li>
+                            <li>憲法的AI</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h4 class="font-bold text-lg mb-2">AIガバナンス (組織論)</h4>
-                        <p class="text-sm text-gray-600 mb-3">AIを組織で安全かつ責任ある形で運用するための、制度、ルール、体制といった外部的な枠組み。「AIをどう使うか」という問い。</p>
-                         <ul class="text-sm list-disc list-inside space-y-1 text-gray-700">
-                            <li>全社的な利用ガイドラインの策定。</li>
-                            <li>AI倫理委員会の設置。</li>
-                            <li>AIの行動を監視・監査する仕組み。</li>
+                    <div class="bg-gray-900/70 p-6 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-xl text-gray-100 mb-2">AIガバナンス (組織論)</h4>
+                        <p class="text-base text-gray-400 mb-3">AIを安全かつ責任ある形で運用するための制度やルール。「AIをどう使うか」という問い。</p>
+                         <ul class="text-base list-disc list-inside space-y-1 text-gray-300">
+                            <li>利用ガイドラインの策定</li>
+                            <li>AI倫理委員会の設置</li>
+                            <li>監視・監査の仕組み</li>
                         </ul>
                     </div>
                 </div>
@@ -306,10 +307,10 @@ const renderNav = () => {
     stages.forEach(key => {
         const item = aiEvolutionData[key];
         navHtml += `
-            <div class="flex flex-col items-center">
-                <div id="nav-${key}" data-key="${key}" class="nav-item bg-white w-24 h-24 md:w-28 md:h-28 rounded-full shadow-md flex flex-col justify-center items-center p-2 text-center border-2 border-gray-200 hover:shadow-xl hover:border-gray-400">
-                    <span class="text-2xl md:text-3xl">${item.icon}</span>
-                    <span class="text-xs md:text-sm font-semibold">${item.title}</span>
+            <div class="flex flex-col items-center flex-1">
+                <div id="nav-${key}" data-key="${key}" class="nav-item bg-gray-800 w-24 h-24 md:w-32 md:h-32 rounded-full shadow-lg flex flex-col justify-center items-center p-2 text-center border-2 border-gray-700">
+                    <span class="text-3xl md:text-4xl">${item.icon}</span>
+                    <span class="text-base md:text-lg font-semibold mt-1">${item.title}</span>
                 </div>
             </div>
         `;
@@ -322,12 +323,10 @@ const renderContent = (key) => {
     const contentData = aiEvolutionData[key];
     contentDisplay.innerHTML = contentData.content;
     
-    // Activate nav item
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.toggle('active', item.dataset.key === key);
     });
 
-    // Special rendering for introduction chart
     if (key === 'introduction') {
         renderEvolutionChart();
     }
@@ -345,6 +344,9 @@ const renderEvolutionChart = () => {
         evolutionChart.destroy();
     }
 
+    const textColor = '#9CA3AF'; // text-gray-400
+    const gridColor = 'rgba(156, 163, 175, 0.1)'; // text-gray-400 with alpha
+
     evolutionChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -353,20 +355,28 @@ const renderEvolutionChart = () => {
                 {
                     label: 'AIの自律性',
                     data: aiAutonomyData,
-                    borderColor: '#6366F1',
-                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    borderColor: '#818CF8', // indigo-400
+                    backgroundColor: 'rgba(129, 140, 248, 0.2)',
                     yAxisID: 'y',
                     fill: true,
-                    tension: 0.3,
+                    tension: 0.4,
+                    pointBackgroundColor: '#818CF8',
+                    pointBorderColor: '#FFF',
+                    pointHoverBackgroundColor: '#FFF',
+                    pointHoverBorderColor: '#818CF8',
                 },
                 {
                     label: '必要な指示の具体性',
                     data: instructionSpecificityData,
-                    borderColor: '#10B981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderColor: '#34D399', // emerald-400
+                    backgroundColor: 'rgba(52, 211, 153, 0.2)',
                     yAxisID: 'y',
                     fill: true,
-                    tension: 0.3,
+                    tension: 0.4,
+                    pointBackgroundColor: '#34D399',
+                    pointBorderColor: '#FFF',
+                    pointHoverBackgroundColor: '#FFF',
+                    pointHoverBorderColor: '#34D399',
                 }
             ]
         },
@@ -386,12 +396,26 @@ const renderEvolutionChart = () => {
                     max: 110,
                     title: {
                         display: true,
-                        text: 'レベル (高/低)'
-                    }
+                        text: 'レベル (高/低)',
+                        color: textColor,
+                        font: { size: 16 }
+                    },
+                    ticks: { color: textColor, font: { size: 14 } },
+                    grid: { color: gridColor }
+                },
+                x: {
+                    ticks: { color: textColor, font: { size: 14 } },
+                    grid: { color: 'transparent' }
                 }
             },
             plugins: {
                 tooltip: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.8)', // bg-gray-900
+                    titleColor: '#FFF',
+                    bodyColor: '#FFF',
+                    borderColor: '#4B5563', // bg-gray-600
+                    borderWidth: 1,
+                    padding: 10,
                     callbacks: {
                         title: function(context) {
                             return '進化段階: ' + context[0].label;
@@ -399,7 +423,12 @@ const renderEvolutionChart = () => {
                     }
                 },
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        color: textColor,
+                        font: { size: 16 },
+                        padding: 25
+                    }
                 }
             },
             onClick: (event, elements) => {
@@ -429,3 +458,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+�

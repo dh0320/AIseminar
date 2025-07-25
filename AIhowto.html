@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規事業開発フロー＆プロンプト管理サイト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background-color: #111827;
+            color: #E5E7EB;
+        }
+        .step-container {
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+        }
+        .step-card {
+            scroll-snap-align: start;
+            flex: 0 0 95%;
+        }
+        @media (min-width: 1024px) {
+            .step-card {
+                flex: 1;
+            }
+        }
+        .task-node {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .task-node:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            background-color: #374151;
+        }
+        .flow-arrow {
+            display: none;
+        }
+        @media (min-width: 1024px) {
+            .flow-arrow {
+                display: flex;
+            }
+        }
+        /* スクロールバーのスタイル */
+        .step-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .step-container::-webkit-scrollbar-track {
+            background: #1F2937;
+            border-radius: 10px;
+        }
+        .step-container::-webkit-scrollbar-thumb {
+            background: #4B5563;
+            border-radius: 10px;
+        }
+        .step-container::-webkit-scrollbar-thumb:hover {
+            background: #6B7280;
+        }
+        /* アコーディオン */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .accordion-button svg {
+            transition: transform 0.3s ease;
+        }
+        .accordion-button.open svg {
+            transform: rotate(180deg);
+        }
+        /* プロンプト変数ハイライト */
+        .prompt-variable {
+            color: #FBBF24; /* amber-400 */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <!-- メインコンテンツ -->
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-white tracking-tight">新規事業開発プロセス（立上フェーズ）</h1>
+            <p class="mt-2 text-lg text-gray-400">各タスクをクリックして、プロンプト例を表示・コピーできます。</p>
+        </header>
+
+        <main class="relative">
+            <div class="flex items-start lg:space-x-4 step-container pb-4">
+                <!-- STEP 1 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 step-card">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-cyan-400 mb-1">STEP 1</h2>
+                        <h3 class="text-lg font-semibold text-white mb-4">アイデア創出と事業機会の発見</h3>
+                    </div>
+                    <div class="border-t border-gray-700">
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>目的</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-4 pb-4 text-gray-300">世の中の変化や顧客の課題やニーズと自社の強みを掛け合わせ、事業の「種」を発見する。</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>ゴール</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-4 pb-4 text-gray-300">「なぜ我々がやるべきなのか」という根拠に裏付けられた、検証する価値のある具体的な事業仮説が複数言語化されている状態。</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>チェックリスト</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-4 pb-4 text-gray-300 space-y-3">
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[世の中の変化] マクロ環境の機会を捉えているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 調査を通じて追い風となるメガトレンドや将来の変化を特定できているか？</li>
+                                            <li>☐ 新トレンド、新しい法律、規制緩和、技術革新など、事業機会に繋がりうる具体的な変化をリストアップできているか？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[顧客の課題/ニーズ] 深いインサイトに基づいているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ ターゲット顧客は誰か、具体的にイメージできているか？（ペルソナ設定の初期案）</li>
+                                            <li>☐ 顧客が抱える「不便・不満・不安」といった、まだ解決されていない、あるいは既存の解決策では不十分な課題を特定できているか？</li>
+                                            <li>☐ その課題は、顧客にとってどれほど深刻か？（Nice to have / Must have の見極め）</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[自社の強み] 自社のアセットを活かせているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 自社の技術、人材、ブランド、顧客基盤、販売網などの経営資源（アセット）を客観的に棚卸しできているか？</li>
+                                            <li>☐ その強みは、競合他社にはない独自のものか？模倣されにくいか？</li>
+                                            <li>☐ 特定した顧客課題の解決に、自社の強みをどのように活かせるか説明できるか？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[アイデアと仮説] 検証可能な形になっているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 上記3つの要素（変化・課題・強み）を掛け合わせた事業アイデアを、質より量で10個以上出せているか？</li>
+                                            <li>☐ その中から有望なアイデアを3〜5個程度に絞り込めているか？</li>
+                                            <li>☐ 絞り込んだアイデアを**「[ターゲット顧客]は[特定の状況]で[課題]を抱えている。我々は[自社の強み]を活かして[解決策]を提供することで、[提供価値]を実現できるのではないか？」**という仮説の文章で明確に記述できているか？</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>アウトプット</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-4 pb-4">
+                                    <ul class="list-disc list-inside text-gray-400 space-y-1 pl-2">
+                                        <li>アイデアリスト</li>
+                                        <li>有望アイデア概要シート</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-b-0">
+                            <div class="p-4 font-semibold text-white">
+                                <span>タスク</span>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <div class="space-y-2">
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="1-1">
+                                        <div class="font-medium text-white">情報収集：環境、トレンド、顧客像の調査</div>
+                                        <p class="text-xs text-gray-400 mt-1">環境、トレンド、顧客像を調査し、事業機会のヒントを得る。</p>
+                                    </div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="1-2">
+                                        <div class="font-medium text-white">顧客課題の特定</div>
+                                        <p class="text-xs text-gray-400 mt-1">顧客の「不」に着目し、解決すべき本質的な課題を見つけ出す。</p>
+                                    </div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="1-3">
+                                        <div class="font-medium text-white">自社資源の棚卸し</div>
+                                        <p class="text-xs text-gray-400 mt-1">自社の強み（アセット）を客観的に把握し、活用方法を検討する。</p>
+                                    </div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="1-4">
+                                        <div class="font-medium text-white">アイデア発想</div>
+                                        <p class="text-xs text-gray-400 mt-1">様々な発想法を用いて、質より量で事業アイデアを幅広く出す。</p>
+                                    </div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="1-5">
+                                        <div class="font-medium text-white">アイデアスクリーニング</div>
+                                        <p class="text-xs text-gray-400 mt-1">独自の評価基準で有望なアイデアを絞り込み、仮説を立てる。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow items-center justify-center mx-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500 w-8 h-8"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 step-card mt-4 lg:mt-0">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-green-400 mb-1">STEP 2</h2>
+                        <h3 class="text-lg font-semibold text-white mb-4">市場調査と顧客理解</h3>
+                    </div>
+                    <div class="border-t border-gray-700">
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>目的</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4 text-gray-300">アイデアの事業性を客観的なデータと顧客の生の声で検証する。</div></div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>ゴール</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4 text-gray-300">STEP1で立てた仮説が「机上の空論」でないことを証明し、客観的な事実に基づいて「GO（次のステップへ進む）/ NO GO（撤退）/ PIVOT（方向転換）」の意思決定ができる状態。</div></div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>チェックリスト</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-4 pb-4 text-gray-300 space-y-3">
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[市場の魅力度] 戦う市場として適切か？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ ターゲットとする市場の規模（TAM/SAM/SOM）は十分か？また、その市場は成長しているか、縮小しているか？</li>
+                                            <li>☐ 競合は誰で、どのような強み・弱みを持っているか？市場の競争環境は激しいか？</li>
+                                            <li>☐ 競合と比較して、自社のアイデアが持つ明確な優位性（差別化要因）は何か？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[顧客の実在と課題の確からしさ] 顧客は本当に困っているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 想定したターゲット顧客は実在したか？（顧客インタビュー、アンケート等）</li>
+                                            <li>☐ 顧客は、我々が仮説として立てた課題を、同じように認識しているか？</li>
+                                            <li>☐ 顧客はその課題を解決するために、既にお金や時間を使っているか？（課題の深刻度の裏付け）</li>
+                                            <li>☐ 当初想定していなかった、より本質的な課題やインサイトを発見できたか？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[ソリューションの受容性] 解決策は求められているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 考えた解決策のコンセプトや簡易的な試作品（ペーパープロトタイプ、モックアップ等）を顧客に見せたか？</li>
+                                            <li>☐ 顧客は「欲しい」「使ってみたい」というポジティブな反応を示したか？</li>
+                                            <li>☐ 「もしこの製品（サービス）が〇〇円なら買いますか？」といった質問で、お金を払う意欲（Willingness to Pay）を確認できたか？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[仮説の検証結果] 学びを次に活かせるか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 調査結果から、当初の仮説のどの部分が正しく、どの部分が間違っていたかを明確に説明できるか？</li>
+                                            <li>☐ 調査結果を踏まえて、事業仮説をより精度の高いものに修正できたか？</li>
+                                            <li>☐ 次のステップに進むべきか、あるいは撤退・方向転換すべきかの判断理由を客観的なデータや事実を基に説明できるか？</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>アウトプット</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4"><ul class="list-disc list-inside text-gray-400 space-y-1 pl-2"><li>市場調査レポート</li><li>ペルソナシート</li><li>顧客インタビューサマリー</li></ul></div></div>
+                        </div>
+                        <div class="border-b-0">
+                            <div class="p-4 font-semibold text-white"><span>タスク</span></div>
+                            <div class="px-4 pb-4">
+                                <div class="space-y-2">
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="2-1"><div class="font-medium text-white">市場規模・成長性調査</div><p class="text-xs text-gray-400 mt-1">市場の規模、成長性、将来性をデータで把握する。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="2-2"><div class="font-medium text-white">競合分析</div><p class="text-xs text-gray-400 mt-1">競合の強み・弱みを分析し、自社の勝機を見出す。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="2-3"><div class="font-medium text-white">ペルソナ設定</div><p class="text-xs text-gray-400 mt-1">ターゲット顧客像を実在する人物のように具体化する。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="2-4"><div class="font-medium text-white">顧客インタビュー</div><p class="text-xs text-gray-400 mt-1">顧客へのインタビューを通じて、課題と解決策の仮説を検証する。</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flow-arrow items-center justify-center mx-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500 w-8 h-8"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 step-card mt-4 lg:mt-0">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-yellow-400 mb-1">STEP 3</h2>
+                        <h3 class="text-lg font-semibold text-white mb-4">事業コンセプトの具体化とビジネスモデル構築</h3>
+                    </div>
+                    <div class="border-t border-gray-700">
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>目的</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4 text-gray-300">「誰に、何を、どう提供して、どう儲けるか」という事業の骨格を設計する。</div></div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>ゴール</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4 text-gray-300">検証された顧客課題とソリューションを基に、持続的に利益を生み出すための具体的な仕組み（ビジネスモデル）が、一貫性をもって設計されている状態。</div></div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>チェックリスト</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="px-4 pb-4 text-gray-300 space-y-3">
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[価値提案] 誰に、何を？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 顧客セグメント： ターゲット顧客をさらに具体的に定義できているか？（デモグラフィック、サイコグラフィック、行動変数など）</li>
+                                            <li>☐ 提供価値： 顧客のどんな課題を、どのように解決するのか？競合にはない独自の価値は何か？を簡潔な言葉で表現できているか？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[提供方法] どうやって？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ チャネル： 製品やサービスを顧客に届け、知ってもらうための経路（販売網、広告、Webサイト等）は具体的に設計されているか？</li>
+                                            <li>☐ 顧客との関係： 顧客とどのように関係を築き、維持・発展させていくか？（例：コミュニティ、カスタマーサポート、ロイヤリティプログラム）</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[収益性] どう儲けるか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 収益の流れ： 誰が、何に対して、いつ、いくら支払うのか？マネタイズの仕組み（売り切り、サブスクリプション、広告等）は明確か？</li>
+                                            <li>☐ コスト構造： 事業運営で最も大きなコストは何か？固定費と変動費の内訳はどうか？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[実現性] 実行できるか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 主要な活動： 価値を提供するために不可欠な活動（開発、製造、マーケティング、営業等）は何か？</li>
+                                            <li>☐ 主要なリソース： その活動に必要な経営資源（ヒト、モノ、カネ、知的財産等）は何か？自社で保有しているか、外部から調達する必要があるか？</li>
+                                            <li>☐ 主要なパートナー： 自社だけでは実現できない場合、協業すべきパートナーは誰か？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[全体像の整理] 俯瞰できているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ 上記の要素を「ビジネスモデルキャンバス」や「リーンキャンバス」といったフレームワークに落とし込み、各要素の矛盾や抜け漏れがないか確認できているか？</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>アウトプット</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4"><ul class="list-disc list-inside text-gray-400 space-y-1 pl-2"><li>事業コンセプトシート</li><li>ビジネスモデルキャンバス</li><li>MVP要求定義書</li></ul></div></div>
+                        </div>
+                        <div class="border-b-0">
+                            <div class="p-4 font-semibold text-white"><span>タスク</span></div>
+                            <div class="px-4 pb-4">
+                                <div class="space-y-2">
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="3-1"><div class="font-medium text-white">提供価値の定義</div><p class="text-xs text-gray-400 mt-1">事業の核となる「顧客への約束」を明確に言語化する。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="3-2"><div class="font-medium text-white">ビジネスモデルの可視化</div><p class="text-xs text-gray-400 mt-1">ビジネスモデルキャンバス等で、儲けの仕組みを設計・可視化する。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="3-3"><div class="font-medium text-white">MVP（Minimum Viable Product）の定義</div><p class="text-xs text-gray-400 mt-1">価値を検証するための最小限の製品・サービスを定義する。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="3-4"><div class="font-medium text-white">エレベーターピッチ作成など</div><p class="text-xs text-gray-400 mt-1">コンセプトを簡潔に伝え、初期の反応を得るための準備を行う。</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flow-arrow items-center justify-center mx-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500 w-8 h-8"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700 step-card mt-4 lg:mt-0">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-rose-400 mb-1">STEP 4</h2>
+                        <h3 class="text-lg font-semibold text-white mb-4">事業計画書作成とプレゼンテーション</h3>
+                    </div>
+                     <div class="border-t border-gray-700">
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>目的</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4 text-gray-300">経営層が投資判断を下せる、具体的かつ定量的な計画書を完成させる。プレゼンテーションにより事業の魅力と成功確度を伝え、必要な経営資源（ヒト・モノ・カネ）の承認を得る。</div></div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>ゴール</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4 text-gray-300">事業のビジョンと実現可能性を論理的かつ情熱的に伝え、経営会議などで必要な経営資源（予算、人員等）の承認を獲得すること。</div></div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>チェックリスト</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                             <div class="accordion-content">
+                                <div class="px-4 pb-4 text-gray-300 space-y-3">
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[事業計画書の完成度] 説得力のある文書になっているか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ エグゼクティブサマリー： 事業の全体像と魅力、必要な投資額と期待されるリターンが数ページで理解できるようにまとめられているか？</li>
+                                            <li>☐ 市場機会と戦略： これまでのステップで検証した市場分析、顧客課題、競合優位性、事業戦略が、第三者にも分かりやすく記述されているか？</li>
+                                            <li>☐ 実行計画： 事業立ち上げから軌道に乗るまでの具体的なアクションプランが、タイムライン（マイルストーン）と担当者を明確にして示されているか？主要なKPI（重要業績評価指標）は設定されているか？</li>
+                                            <li>☐ 財務計画： 売上、費用、利益の予測が3〜5年分作成されているか？その算出根拠は明確か？（損益計算書、キャッシュフロー計算書は必須）</li>
+                                            <li>☐ 体制： 事業を推進するコアメンバーとその役割、必要なスキルセットが明記されているか？</li>
+                                            <li>☐ リスク分析： 想定されるリスク（市場、技術、競合、法規制等）と、それに対する具体的な対応策が検討されているか？</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-200">[プレゼンテーションの準備] 意思決定を促せるか？</p>
+                                        <ul class="list-none space-y-1 mt-1 pl-2">
+                                            <li>☐ ストーリー： なぜ今、この事業を我々がやるべきなのか？という「Why」から始まる、聞き手の心を動かすストーリーになっているか？</li>
+                                            <li>☐ 明快さ： 複雑な内容を避け、図やグラフを効果的に使い、キーメッセージが明確に伝わるか？</li>
+                                            <li>☐ 要求の明確化： プレゼンの最後に、聞き手（経営層）に何を判断し、承認してほしいのか（必要なヒト・モノ・カネ）が具体的に示されているか？</li>
+                                            <li>☐ 質疑応答対策： 想定される質問とその回答を準備できているか？特に、事業の弱みやリスクに関する質問に誠実かつ的確に答えられるか？</li>
+                                            <li>☐ 情熱と自信： 事業にかける想いや成功への自信が、熱意として伝わるか？</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-b border-gray-700">
+                            <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold text-white">
+                                <span>アウトプット</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="accordion-content"><div class="px-4 pb-4"><ul class="list-disc list-inside text-gray-400 space-y-1 pl-2"><li>新規事業計画書</li><li>プレゼンテーション資料</li></ul></div></div>
+                        </div>
+                        <div class="border-b-0">
+                            <div class="p-4 font-semibold text-white"><span>タスク</span></div>
+                            <div class="px-4 pb-4">
+                                <div class="space-y-2">
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="4-1"><div class="font-medium text-white">事業計画の策定</div><p class="text-xs text-gray-400 mt-1">事業全体の計画を具体的に文書化し、投資判断を仰ぐ。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="4-2"><div class="font-medium text-white">プレゼン資料の作成</div><p class="text-xs text-gray-400 mt-1">意思決定を促すため、論理と情熱を込めたストーリーを構築する。</p></div>
+                                    <div class="task-node bg-gray-700/80 p-3 rounded-lg" data-task-id="4-3"><div class="font-medium text-white">想定問答集の準備</div><p class="text-xs text-gray-400 mt-1">あらゆる質問に的確に答えられるよう、リスクや懸念点を洗い出す。</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- モーダル -->
+    <div id="prompt-modal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center p-4 hidden z-50 transition-opacity duration-300">
+        <div id="modal-content" class="bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl border border-gray-700 transform transition-transform duration-300 scale-95 max-h-[90vh] flex flex-col">
+            <div class="p-6 border-b border-gray-700 flex justify-between items-center flex-shrink-0">
+                <h3 id="modal-title" class="text-xl font-semibold text-white"></h3>
+                <button id="close-modal" class="text-gray-400 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div id="modal-prompt-list" class="p-6 space-y-6 overflow-y-auto">
+                <!-- プロンプトが動的にここに挿入される -->
+            </div>
+            <div class="p-4 bg-gray-800/50 rounded-b-xl border-t border-gray-700 flex justify-end flex-shrink-0">
+                 <button id="modal-close-footer" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">閉じる</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- コピー成功通知 -->
+    <div id="toast-notification" class="fixed bottom-10 right-10 bg-green-500 text-white py-2 px-5 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 z-50">
+        コピーしました！
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- データ定義 ---
+            const taskData = {
+                '1-1': {
+                    title: '情報収集：環境、トレンド、顧客像の調査',
+                    prompts: [
+                        {
+                            subTitle: '情報収集（汎用）',
+                            prompt: `<span class="prompt-variable">[ミッション名を入力,例：小学生向けの大ヒット間違いなしのおもちゃを企画せよ]</span>が私とあなたのミッションです。\nミッションの成功の定義を確認したいです。\n<span class="prompt-variable">[検索の切り口を入力,例：日本国内の男女別の正家区政の数]</span>、<span class="prompt-variable">[検索の切り口を入力,例：過去大ヒットしたおもちゃのいくつかの事例とその販売数や売上及び大ヒットの個数や売上の基準]</span>、<span class="prompt-variable">[・・・]</span>を調査してください。`,
+                            tool: 'Deep Research等の情報調査機能'
+                        },
+                        {
+                            subTitle: '5フォース分析',
+                            prompt: `# 命令書\nあなたは、戦略コンサルタントです。指定された業界について、マイケル・ポーターの5フォース分析を行い、業界の収益性とその要因を評価してください。\n\n# 制約条件\n- 5つの競争要因（新規参入の脅威、代替品の脅威、売り手の交渉力、買い手の交渉力、業界内の競争）をそれぞれ分析してください。\n- 各要因の強弱を評価し、その根拠を明確に示してください。\n- 最終的に、その業界の魅力度について総合的な結論を述べてください。\n\n# 入力文\n分析対象の業界：\n<span class="prompt-variable">[ここに分析したい業界を記述。例：日本のオンラインフードデリバリー業界]</span>\n\n# 出力形式\n## 5フォース分析レポート：<span class="prompt-variable">[分析対象の業界]</span>\n\n### 1. 新規参入の脅威\n- 評価：<span class="prompt-variable">[高い/中程度/低い]</span>\n- 根拠：<span class="prompt-variable">[参入障壁の高さ、ブランド力、規模の経済など]</span>\n\n### 2. 代替品の脅威\n- 評価：<span class="prompt-variable">[高い/中程度/低い]</span>\n- 根拠：<span class="prompt-variable">[代替品の性能、価格、顧客の乗り換えコストなど]</span>\n\n### 3. 売り手の交渉力（サプライヤーの交渉力）\n- 評価：<span class="prompt-variable">[高い/中程度/低い]</span>\n- 根拠：<span class="prompt-variable">[サプライヤーの寡占度、製品の差別化、スイッチングコストなど]</span>\n\n### 4. 買い手の交渉力（顧客の交渉力）\n- 評価：<span class="prompt-variable">[高い/中程度/低い]</span>\n- 根拠：<span class="prompt-variable">[顧客の集中度、情報の透明性、価格感度など]</span>\n\n### 5. 業界内の競争\n- 評価：<span class="prompt-variable">[激しい/中程度/穏やか]</span>\n- 根拠：<span class="prompt-variable">[競合の数、同質性、成長率、撤退障壁など]</span>\n\n### 総合評価\n- 業界の魅力度：<span class="prompt-variable">[魅力的/中程度/魅力的でない]</span>\n- 結論：<span class="prompt-variable">[分析結果を基にした総合的な見解]</span>`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        },
+                        {
+                            subTitle: 'PEST分析',
+                            prompt: `# 命令書\nあなたは、リサーチアナリストです。指定された事業領域におけるマクロ環境を、PEST分析（政治、経済、社会、技術）のフレームワークを用いて分析してください。\n\n# 制約条件\n- 政治・法律(Politics)、経済(Economy)、社会・文化(Society)、技術(Technology)の4つの側面から、事業に影響を与えうる外部要因を具体的にリストアップしてください。\n- 各要因が事業にとって「機会」となるか「脅威」となるかを明記してください。\n\n# 入力文\n分析対象の事業領域：\n<span class="prompt-variable">[ここに分析したい事業領域を記述。例：シニア向けスマートホーム事業]</span>\n\n# 出力形式\n## PEST分析レポート：<span class="prompt-variable">[分析対象の事業領域]</span>\n\n### 1. 政治・法律 (Politics)\n- <span class="prompt-variable">[要因1]</span> (<span class="prompt-variable">[機会/脅威]</span>)\n- <span class="prompt-variable">[要因2]</span> (<span class="prompt-variable">[機会/脅威]</span>)\n\n### 2. 経済 (Economy)\n- <span class="prompt-variable">[要因1]</span> (<span class="prompt-variable">[機会/脅威]</span>)\n- <span class="prompt-variable">[要因2]</span> (<span class="prompt-variable">[機会/脅威]</span>)\n\n### 3. 社会・文化 (Society)\n- <span class="prompt-variable">[要因1]</span> (<span class="prompt-variable">[機会/脅威]</span>)\n- <span class="prompt-variable">[要因2]</span> (<span class="prompt-variable">[機会/脅威]</span>)\n\n### 4. 技術 (Technology)\n- <span class="prompt-variable">[要因1]</span> (<span class="prompt-variable">[機会/脅威]</span>)\n- <span class="prompt-variable">[要因2]</span> (<span class="prompt-variable">[機会/脅威]</span>)`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        }
+                    ]
+                },
+                '1-2': {
+                    title: '顧客課題の特定',
+                    prompts: [
+                        {
+                            subTitle: 'ニーズ収集（汎用）',
+                            prompt: `<span class="prompt-variable">[対象やテーマ,例：日本国内の20~40代のビジネスパーソン,例：スマートフォン]</span>に関する「不満・不安・不便」等の課題や潜在的なものを含めたニーズを調査してください。\n#リサーチ要件\n##情報源<span class="prompt-variable">[必要なものは追加し、不要なものは削る]</span>\n - 公的統計・産業レポート・白書\n - 学術論文・業界インサイト\n - ニュース記事・ブログ・FAQ\n - SNS (X／Instagram／TikTok 等) 投稿・コメント\n - レビューサイト (Amazon／App Store／価格.com など)\n - オンラインコミュニティ・掲示板 (Reddit、Twitter スレッド、日本の口コミサイト 等)\n - オンライン／公開されている顧客アンケート結果\n##調査条件\n - 対象範囲；<span class="prompt-variable">[日本国内のみ、世界中を対象など]</span>\n - 対象期間：<span class="prompt-variable">[過去○○年以内など]</span>\n##ネガティブ条件\n - 次のテーマは除外ください：<span class="prompt-variable">[人間関係の課題、給与に関する課題・・・など調査の除外にしたいテーマを記載]</span>`,
+                            tool: 'Deep Research等の情報調査機能'
+                        },
+                        {
+                            subTitle: '根源的なニーズをアイデア出し',
+                            prompt: `<span class="prompt-variable">[対象,例：人間、日本人、高齢者、子供など]</span>に対して未だに解決されていない普遍的かつ根源的なニーズとはどのようなものがありますか？\n可能な限り幅広く20個のニーズを出してください。`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        }
+                    ]
+                },
+                '1-3': { 
+                    title: '自社資源の棚卸し', 
+                    prompts: [{ 
+                        subTitle: '自社資源の棚卸し（汎用）', 
+                        prompt: `あなたは企業分析のエキスパートアナリストです。\n対象企業: <span class="prompt-variable">[企業名]</span>\n収集対象: 過去 <span class="prompt-variable">[3]</span> 年以内の公開情報（公式サイト、プレスリリース、決算資料、特許・商標データベース、業界メディア、求人票、SNS、新聞・雑誌等）。\n目的: 下記 6 カテゴリーの「強み（アセット）」を網羅的に棚卸しし、重要度を★1‑★5で評価してください。\n【カテゴリー】\n1. 技術・製品ポートフォリオ\n2. ブランド・レピュテーション\n3. 顧客基盤・パートナーシップ\n4. 人材・組織能力・カルチャー\n5. 知的財産（特許・商標・著作権）\n6. 遊休・未活用資産（不動産、設備、データ等）\n【出力フォーマット】Markdown テーブル\n| カテゴリー | アセット名 | 概要 (100 字以内) | 競合優位性 | 重要度 | 主要ソース (URL・日付) |\n要件:\n- すべて最新情報を優先。情報が不足する場合は「調査範囲内で未確認」と明示。\n- 事実と推論を分け、推論部分は *(推論)* と注記。\n- 参考文献 URL は必ず付記し、日本語ニュースが無い場合は英語ソースも可。\n- 出力は日本語。`, 
+                        tool: 'Deep Research等の情報調査機能' 
+                    }] 
+                },
+                '1-4': { 
+                    title: 'アイデア発想', 
+                    prompts: [
+                        {
+                            subTitle: '課題からソリューション案を立案',
+                            prompt: `#あなたの役割\nあなたはイノベーションを生み出すことが得意な新規事業立ち上げのプロです。\n時間をかけても良いので、品質の高い回答を生成して下さい。\n私はどこかで見たサービスよりアイデアを聞いた半分の人が反対するような新しいアイデアを求めてます。\n#依頼\n課題を解決する新しい価値を生み出す独創的な企画アイデアを5個考えて表形式で出力ください。\n企画について100点満点の自己評価を付けてください。また、各企画のPRすべき強みとなるポイントを解説してください。\n表の列に「企画アイデアの名称」、「企画アイデアの詳細」、「必要なデータやアセット」、「対象となるターゲットの具体像」を追加してください。\n#解決したい課題\n<span class="prompt-variable">[課題やテーマを入力]</span>`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        },
+                        {
+                            subTitle: '企業の強みやシーズからニーズにつなぐアイデアを立案',
+                            prompt: `#あなたの役割\nあなたは優れた好奇心と粘り強さを持つ技術に強いイノベーターです。\n技術シーズをビジネスにつなげて新規事業やプロダクトにする能力に優れています。\n私と一緒に技術シーズから新規事業やプロダクトのアイデアを検討して下さい。\n時間をかけても良いので、品質の高い回答を生成して下さい。\n#依頼\n私が技術情報を提供しますので、その技術の本質的な価値を特徴として5つ整理してください。\nそれぞれ、「特徴の名称」、「特徴の概要」、「抽象化された本質的な価値」「その本質的な価値を活かしてなにができるか（「（その特徴を使うと）……（何かが）できる」の形で整理ください）」、「その特徴で解決し得る世の中の課題やニーズ」を記載ください。幅広く技術の活用範囲を検討したいので、技術の情報から抽象化して整理してください。\n#技術の情報\n<span class="prompt-variable">[技術の情報を入力]</span>`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        },
+                        {
+                            subTitle: 'SCAMPER法',
+                            prompt: `あなたはSCAMPER法が得意な最高のイノベーターです。私がアイデアや思い付きを説明するので発想を広げたアイデアを提案ください。\n以下の7つの考え方を活用してください。\n①代用する\n【例】\n・プロセスや手順を置き換えるとどうなるか\n・成分や材料を置き換えるとどうなるか\n・五感（音・触感・色・香り・味）に関するものを置き換えるとどうなるか\n・場所、時間、人、方法を置き換えるとどうなるか\n②組み合わせる\n【例】\n・まったく異なる2つの製品を組み合わせる\n・目的や方法を組み合わせる\n・一部の機能を統合する\n③応用する\n【例】\n・他の業界のアイデアを当てはめるとどうなるか\n・過去の成功事例を応用できないか\n・他にどのような使い方ができるか\n④修正する\n【例】\n・重さを変えてみたらどうなるか\n・機能を弱く/強くしたらどうなるか\n・製品を短く/長くしたらどうなるか\n・製品を小さく/大きくしたらどうなるか\n・動作を遅く/早くしたらどうなるか\n⑤転用する\n【例】\n・他にどのような使い道が考えられるか\n・業界を変えたらどうなるか\n・ターゲットを変えたらどうなるか\n⑥削ぎ落す\n【例】\n・機能やサービスを最小限にできないか\n・プロセスや過程を簡略化できないか\n・見た目やデザインをシンプルにできないか\n⑦再構成する\n【例】\n・プロセスや順序を入れ替えてみる\n・原因と結果を逆にしてみる\n・表面と裏面を入れ替えてみる\n・弱みを強みに転換してみる\n#私のアイデアや課題\n<span class="prompt-variable">[アイデアや課題,例：スマートフォンをより便利にするには]</span>`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        },
+                        {
+                            subTitle: '組み合わせのアイデア出し',
+                            prompt: `イノベーションは既知と既知の組み合わせで生まれます。\n既知と既知を組み合わせたビジネスアイデアを考えてください。\n人々が反対しそうな意外な組み合わせや全く異なった既知同士の組み合わせをたくさん考えてください。\n＃アウトプット\n「ビジネスアイデア名、概要、組み合わせた既知同士」を「表形式」で整理したもの\n＃守るべきルール\n・既存のキーワードの類似性をベクトル情報等で判断し、類似しないもの（意外なもの）同士を組み合わせて考えること\n・可能な限り多様なアイデアを多く出すこと\n#出して欲しいアイデア\n<span class="prompt-variable">[アイデアや課題,例：学校向けの新サービス]</span>`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        }
+                    ]
+                },
+                '1-5': { 
+                    title: 'アイデアスクリーニング', 
+                    prompts: [{ 
+                        subTitle: 'ソリューションやアイデアの絞り込み', 
+                        prompt: `#あなたの役割\nあなたはイノベーションを生み出すことが得意な新規事業立ち上げのプロです。\nいくつかのアイデアとソリューション案について、以下の観点で採点して表形式（アイデア、合計点、各評点、各評点の理由、総評）で整理してください。\n#評価の観点：それぞれ20点満点で評価してください。<span class="prompt-variable">[観点は目的に合わせて変更してください]</span>\n-インパクトの大きさ\n-実現の難易度\n-アイデアのユニークさ独自さ\n-自社との親和性、自社でやる意味\n-実施のタイミング\n#お題となる社会課題\n<span class="prompt-variable">[検討内容のコピペ、又は検討している対話履歴があれば「ここまでの会話で出たアイデアについて」等でもOK]</span>`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+                '2-1': { 
+                    title: '市場規模・成長性調査', 
+                    prompts: [{ 
+                        subTitle: '汎用調査（市場規模推計（TAM/SAM/SOM））', 
+                        prompt: `# 役割設定\n\nあなたは、豊富な業界データベース、政府統計、学術論文、信頼できるニュースソースにアクセスできるシニア市場アナリストです。私のビジネスプランニングを支援するため、厳密かつ段階的な市場規模の推計を行ってください。分析の過程では、必ず論理的な推論プロセスを明示し、主要な情報源を引用してください。\n\n# 調査対象インプット\n\n以下のソリューション/アイデアについて、TAM/SAM/SOMフレームワークを用いた市場規模の調査・推計を依頼します。\n\n* **ソリューション/アイデア:** <span class="prompt-variable">[ここに検討内容を貼り付け、または「ここまでの会話で出たアイデアについて」と記述]</span>\n* **主顧客セグメント:** <span class="prompt-variable">[例: 従業員100–500名の中堅製造業]</span>\n* **業種/用途:** <span class="prompt-variable">[例: 製造業における、熟練技術者の技能伝承・トレーニング用途]</span>\n* **地理的範囲:** <span class="prompt-variable">[例: 日本国内]</span>\n* **分析期間:** <span class="prompt-variable">[例: 基準年：2025年、予測年：2030年]</span>\n* **前提条件/制約:** <span class="prompt-variable">[例: 想定価格帯は年間60万円/社。技術的な制約から、屋外での利用は除外する。]</span>\n\n# 実行命令\n\n以下の指示に従い、調査・推計を実行してください。\n\n### **ステップ0: 前提条件の明確化**\nまず、上記の「調査対象インプット」に基づき、これから分析する「製品/サービス」「ターゲット顧客」「地理的範囲」の定義をあなたの言葉で明確に整理してください。この前提認識に基づいて、以降の分析を進めてください。\n\n### **ステップ1: TAM (Total Addressable Market) の推計**\nTAM（獲得可能な最大市場規模）を推計してください。これは、提供する製品・サービスが属する市場全体の理論上の最大規模です。\n\n* **アプローチ:**\n    * **トップダウン分析:** マクロな市場データ（例: 国内の法人数、ソフトウェア市場全体の規模、関連する業界の市場規模など）から、対象となる市場セグメントを絞り込んで推計してください。\n    * **ボトムアップ分析:** ターゲットとなる顧客数 × 顧客あたりの想定年間単価（ARPA）で推計してください。\n* **参照すべき情報:**\n    * 政府統計（例: e-Stat、経済産業省の調査レポート）\n    * 信頼できる調査会社（例: Gartner, IDC, MM総研, 矢野経済研究所など）が発行する市場調査レポート\n    * 業界団体のレポート\n\n### **ステップ2: SAM (Serviceable Addressable Market) の推計**\nSAM（自社がアプローチ可能な市場規模）を推計してください。これは、TAMの中から、自社のビジネスモデル、販売戦略、技術的・地理的制約などに基づいて、現実的にターゲットと成り得る市場の規模です。\n\n* **絞り込み条件:**\n    * TAMから、どのようなセグメントを除外すべきか、具体的な絞り込み条件を複数検討し、適用してください。\n    * （例1: IT導入への投資意欲が極端に低いと考えられる業種）\n    * （例2: 自社の販売チャネル（例: オンライン直販）ではリーチが困難な企業群）\n    * （例3: 競合サービスが寡占しており、参入障壁が極めて高いセグメント）\n\n### **ステップ3: SOM (Serviceable Obtainable Market) の推計**\nSOM（実際に獲得可能な市場規模）を推計してください。これは、SAMの中から、自社の競争力と市場環境を考慮して、分析期間内（例: 3〜5年後）に現実的に獲得できると見込まれる市場規模です。\n\n* **考慮すべき要因:**\n    * 「調査対象インプット」で示されたソリューション/アイデアの強み・弱みを分析し、競合製品と比較してください。\n    * 想定されるマーケティング戦略や営業体制の難易度を評価してください。\n* **推計方法:**\n    * 上記の要因を基に、SAMのうち現実的に獲得可能な市場シェア（％）を論理的に仮説立てし、SOMを算出してください。（例: 「製品の優位性と価格設定から、分析期間最終年である2030年までにSAMの5%を獲得する」といった仮説を立てる）\n\n# アウトプット形式\n\n以下の形式で、調査結果を報告書としてまとめてください。\n\n### **タイトル: <span class="prompt-variable">[製品/サービス名]</span>に関する市場規模調査（TAM/SAM/SOM）レポート**\n\n**1. エグゼクティブサマリー**\n* 調査の結論（主要な発見、市場の魅力、事業機会）を簡潔に記述してください。\n* TAM, SAM, SOMの推計額を一覧表で示してください。\n\n| 項目 | 市場規模（円） | 算出根拠の概要 |\n| :--- | :--- | :--- |\n| TAM | | |\n| SAM | | |\n| SOM | | |\n\n**2. TAM (Total Addressable Market)**\n* **推計額:**\n* **定義と範囲:**\n* **算出根拠と計算式:** (トップダウン/ボトムアップの両方のアプローチを明記)\n* **参照データ:** (レポート名, 発行元, 発行年, URLなど)\n\n**3. SAM (Serviceable Addressable Market)**\n* **推計額:**\n* **定義と範囲:**\n* **算出根拠と計算式:** (TAMからどのセグメントを、なぜ、どのくらい除外したかを明記)\n* **参照データ:**\n\n**4. SOM (Serviceable Obtainable Market)**\n* **推計額:**\n* **定義と範囲:**\n* **算出根拠と計算式:** (競合状況、自社の強み、獲得シェアの仮説を具体的に記述)\n* **参照データ/考慮事項:**\n\n**5. 結論と考察**\n* 調査結果から導かれる事業機会や潜在的リスクを記述してください。\n* 今後の事業展開に向けた戦略的な示唆を提言してください。\n* 今回の推計における前提条件や、調査の限界についても触れてください。\n\n# 注意事項\n* 参照するデータは、可能な限り直近5年以内のものを優先してください。\n* 推計額は、単一の数値だけでなく、「約XX円〜YY円」のように幅を持たせた表記でも構いません。\n* 全ての数値には、その根拠を明確に示してください。根拠が不明な数値は使用しないでください。`, 
+                        tool: 'Deep Research等の情報調査機能' 
+                    }] 
+                },
+                '2-2': { 
+                    title: '競合分析', 
+                    prompts: [{ 
+                        subTitle: '競合分析（汎用）', 
+                        prompt: `# 役割設定\n\nあなたは、特定業界の動向とテクノロジーに精通した、経験豊富な経営戦略コンサルタントです。\n豊富な情報源と鋭い洞察力を駆使して、私が検討している新規事業の競合環境を分析し、競争優位性を確立するための戦略的な提言を行うことがあなたのミッションです。\n\n# 分析対象インプット\n\n以下のソリューション/アイデアについて、競合分析と戦略的勝ち筋の特定を依頼します。\n\n* **ソリューション/アイデア:** <span class="prompt-variable">[ここに検討内容を貼り付け、または「ここまでの会話で出たアイデアについて」と記述]</span>\n* **ターゲット顧客:** <span class="prompt-variable">[例: 在宅勤務が多く、会議の生産性に課題を感じているIT企業のプロジェクトマネージャー]</span>\n* **提供する独自の価値 (UVP):** <span class="prompt-variable">[例: 会議の文字起こしだけでなく、決定事項と担当者を自動で抽出し、プロジェクト管理ツールに連携することで、会議後の手間をゼロにする]</span>\n* **ビジネスモデルの概要:** <span class="prompt-variable">[例: 月額課金のSaaSモデル。基本機能は無料で、高度な連携機能は有料プランで提供]</span>\n\n# 実行命令\n\n以下のステップに従って、競合分析と戦略提言を実行してください。分析にあたっては、客観的な事実と、あなたの専門家としての推察・分析を明確に区別して記述してください。\n\n### **ステップ1: 競合ランドスケープの特定**\n市場に存在する競合を、以下の3つのカテゴリーに分類して網羅的にリストアップしてください。\n\n1.  **直接競合:** 同じターゲット顧客に対し、類似のソリューションを提供している企業。\n2.  **間接競合:** 異なるソリューションだが、顧客の同じ課題を解決している企業。\n3.  **代替品:** 顧客が課題解決のために現在利用している、テクノロジー以外の方法や既存のツール。（例: Excelでの手動管理、議事録作成のアシスタントなど）\n\n### **ステップ2: 主要競合の詳細プロファイリング**\nステップ1で特定した競合の中から、特に重要と思われる企業を3社選定し、それぞれについて以下の項目を詳細に分析してください。\n\n* **企業概要:** 会社名、サービス名、設立年、拠点、企業規模など。\n* **製品/サービス分析:** 主要な機能、特徴、UI/UXの印象。\n* **価格戦略:** 料金体系、無料プランの有無、価格帯。\n* **ターゲットとポジショニング:** 彼らが狙っている主要な顧客セグメントと市場での立ち位置。\n* **強み (Strengths):** なぜ顧客に選ばれているのか？（例: ブランド力、技術的優位性、強力な販売網、豊富な導入実績など）\n* **弱み (Weaknesses):** 顧客の不満点や、サービスがカバーできていない領域はどこか？（例: 価格が高い、特定機能の欠如、サポート体制の不備、古いUIなど）\n* **マーケティング戦略:** どのような手法で顧客を獲得しているか？（例: Web広告、SEO/コンテンツマーケティング、メディア露出、展示会など）\n\n### **ステップ3: 競合比較と市場機会の可視化**\n分析結果を基に、市場全体を俯瞰するための分析を行ってください。\n\n* **競合比較一覧表の作成:** ステップ2で分析した主要競合と自社のアイデアを、以下の項目で比較する表を作成してください。\n\n| 項目 | <span class="prompt-variable">[競合A社]</span> | <span class="prompt-variable">[競合B社]</span> | <span class="prompt-variable">[競合C社]</span> | **自社のアイデア** |\n| :--- | :--- | :--- | :--- | :--- |\n| **ターゲット顧客** | | | | |\n| **主要機能** | | | | |\n| **価格帯** | | | | |\n| **最大の強み** | | | | |\n| **明確な弱み** | | | | |\n\n* **市場の空白地帯（機会）の特定:** 上記の比較から、競合が満たせていない顧客ニーズや、まだ誰も提供していない価値（機能、価格、サポートなど）は何かを明確にしてください。\n\n### **ステップ4: 戦略的勝ち筋の提案**\n全ての分析結果を統合し、自社のアイデアが市場で成功するための「勝ち筋」を具体的かつ論理的に提案してください。\n\n* **差別化戦略:** 競合に対して、どのポイントで明確な差別化を図るべきか？（例: 機能、価格、ターゲット顧客、提供価値など）\n* **参入戦略 (Go-to-Market):** 最初に狙うべきニッチな顧客セグメントはどこか？どのようなメッセージでアプローチすべきか？\n* **短期的なアクションプラン:** 成功確率を高めるために、まず何から着手すべきか？\n\n# アウトプット形式\n\n以下の形式で、調査結果を報告書としてまとめてください。\n\n### **タイトル: <span class="prompt-variable">[ソリューション/アイデア名]</span>に関する競合分析および戦略提言レポート**\n\n**1. エグゼクティブサマリー**\n* 競合環境の全体像と、そこから導き出される自社の事業機会、そして最も有望な「勝ち筋」の要約を記述してください。\n\n**2. 競合ランドスケープ**\n* 直接競合、間接競合、代替品のリストを提示してください。\n\n**3. 主要競合の詳細分析**\n* ステップ2で分析した競合企業（3社）のプロファイルを、それぞれ個別にまとめてください。\n\n**4. 競合比較一覧表**\n* ステップ3で作成を指示した比較表を提示してください。\n\n**5. 結論：戦略的勝ち筋の提案**\n* **市場機会の特定:** 競合が見落としているニーズや市場の空白地帯について詳述してください。\n* **競争優位性の構築:** 自社のアイデアが持つべきユニークな強みと、それを実現するための戦略を具体的に記述してください。\n* **推奨アクションプラン:** 市場に参入し、成功を収めるための具体的なステップを提案してください。\n\n# 注意事項\n* 可能な限り最新の情報を基に分析を行ってください。\n* 全ての分析や主張には、客観的な事実（例: 競合のウェブサイト情報、プレスリリース、第三者のレビューなど）に基づく根拠を添えてください。\n* 客観的な事実と、あなたの専門家としての分析・推察は明確に区別して記述してください。`, 
+                        tool: 'Deep Research等の情報調査機能' 
+                    }] 
+                },
+                '2-3': { 
+                    title: 'ペルソナ設定', 
+                    prompts: [
+                        {
+                            subTitle: 'ペルソナ設定',
+                            prompt: `#あなたの役割\nあなたはイノベーションを生み出すことが得意な新規事業立ち上げのプロです。\n時間をかけても良いので、品質高く回答を実施して下さい。\n#検討しているソリューションやアイデア\n* **ソリューション/アイデア:** <span class="prompt-variable">[ここに検討内容を貼り付け、または「ここまでの会話で出たアイデアについて」と記述]</span>\n\n#依頼\n以下のソリューションの概要を整理し課題解決の対象とすべきターゲットの候補を挙げてください。ターゲット像のペルソナはペルソナの形式に合わせて詳細に書き上げてください。\n#ペルソナ形式\n・ ペルソナテンプレート\n名前：ペルソナの名前を記入。\n年齢：ペルソナの年齢を記入。\n家族構成：ペルソナの家族構成を記入。\n性別：ペルソナの性別を記入。\n出身地：ペルソナの出身地を記入。\n住まい：ペルソナの住んでいる場所を記入。\n暮らしの様子：ペルソナの日常生活や生活スタイルを記入。\n職業：ペルソナの職業を記入。\n仕事の状況：ペルソナの仕事の状況（例えば勤務形態や働き方）を記入。\n課題：ペルソナが抱えている課題や問題点を記入。\n実現したいこと：ペルソナが達成したい目標や夢を記入。\n・エンパシーマップ\nThink（思っていること）：ペルソナが日常生活や特定の状況で考えていることを記入。\nSee（見かけたこと、見ているもの）：ペルソナが日常で視覚的に目にするもの、見ている光景や情報を記入。\nHear（耳にすること）：ペルソナが日常的に耳にする情報や他者から聞くことを記入。\nSay（口に出すこと）：ペルソナが他者に対して口に出して言うことを記入。\nPain（課題）：ペルソナが抱えている悩みや課題、苦痛を記入。\nGain（実現したいこと）：ペルソナが得たい結果、成功体験や目標を記入。`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        },
+                        {
+                            subTitle: 'ペルソナからの強みの検討',
+                            prompt: `#あなたの役割\nあなたはイノベーションを生み出すことが得意な新規事業立ち上げのプロです。\n時間をかけても良いので、品質高く回答を実施して下さい。\n#ソリューションやアイデア\n<span class="prompt-variable">[ここに検討内容を貼り付け、または「ここまでの会話で出たアイデアについて」と記述]</span>\n#ペルソナの設定\n<span class="prompt-variable">[ここに検討内容を貼り付け、または「ここまでの会話で出たアイデアについて」と記述]</span>\n#依頼\nソリューションがなぜ必要かについて、プラスを増やす観点、マイナスを減らす観点の両方を洗い出して下さい。先にあげたペルソナ像も考慮して答えてください。`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        }
+                    ] 
+                },
+                '2-4': { 
+                    title: '顧客インタビュー', 
+                    prompts: [{ 
+                        subTitle: 'ペルソナへのインタビュー案検討＆仮想インタビュー', 
+                        prompt: `#あなたの役割\nあなたはイノベーションを生み出すことが得意な新規事業立ち上げのプロです。\n時間をかけても良いので、品質高く回答を実施して下さい。\n#ソリューションやアイデア\n<span class="prompt-variable">[ここに検討内容を貼り付け、または「ここまでの会話で出たアイデアについて」と記述]</span>\n#具体的なペルソナ案の設定\n<span class="prompt-variable">[ここに検討内容を貼り付け、または「ここまでの会話で出たアイデアについて」と記述]</span>\n#依頼\nソリューションやアイデアが本当にこのペルソナ像の強いニーズや課題を解決するかをインタビューするための質問の項目とインタビュー方法を出力してください。\nまた、先ほどのペルソナに対して仮にインタビューを実施したインタビューシミュレーションを出力してください。`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+                '3-1': { 
+                    title: '提供価値の定義', 
+                    prompts: [
+                        {
+                            subTitle: 'LP（ランディングページ）案の作成',
+                            prompt: `# 依頼\nあなたは、UI/UXデザイン、コンバージョン率最適化（CRO）、そしてモーショングラフィックスに深い知見を持つ、トップクラスのWebディレクター兼デザイナーです。\n私の持つアイデアの魅力を最大限に引き出し、ターゲットであるビジネスユーザーから高い関心と信頼を獲得するための、モダンで洗練されたランディングページ（LP）を開発してください。\nhtmlで出力してそのまま活用できるようにしてください。\n# インプット情報\n<span class="prompt-variable">[検討内容のコピペ、又は検討している対話履歴があれば「ここまでの会話で出たアイデアについて」等でもOK]</span>`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        },
+                        {
+                            subTitle: 'プレスリリース案作成',
+                            prompt: `# 依頼\nあなたは、最高にマーケティングに強い広報の責任者です。\n私の持つアイデアの魅力を最大限に引き出し、ターゲットであるビジネスユーザーから高い関心と信頼を獲得するための、プレスリリースの記事を作成してください。\n#プレスリリース形式\nヘッドライン：タイトル 商品の短い説明文。\nサブヘッドライン：市場 誰がこのサービスや商品で利益を得るのかを書く。\n第1段落：商品概要・利点;商品やサービスのサマリーとその利点を簡潔にまとめる。第1段落はプレスリリースのすべてを読まない人にも理解してもらうためのもので非常に重要。\n第2段落：解決する問題;どのような問題をクリアしようとしているのかを詳細に表現する。\n第3段落：解決方法;どのような解決方法でその問題を解決するのかをクリアに表現する。どのように素晴らしい解決方法なのかを表現する。\n第4段落：責任者の声;企画の責任者の声。お客様にどのような価値を提供できるのかを表現する。\n第5段落：どれくらい簡単か;どれくらい簡単にその商品やサービスが始められるのかを表現する。\n第6段落：お客様の声;「どれぐらい利点があるか」「どれぐらい簡単にスタートできるか」など、お客様視点の声を表現する。\n第7段落：まとめ・補足;商品の詳細などに導くリンクなどを記載。\n# インプット情報\n<span class="prompt-variable">[検討内容のコピペ、又は検討している対話履歴があれば「ここまでの会話で出たアイデアについて」等でもOK]</span>`,
+                            tool: 'ChatGPT,Gemini等のチャット型ツール'
+                        }
+                    ]
+                },
+                '3-2': { 
+                    title: 'ビジネスモデルの可視化', 
+                    prompts: [{ 
+                        subTitle: 'ビジネスモデルキャンパス作成（適切なフレームワークであれば何でも）', 
+                        prompt: `# 役割設定\n\nあなたは、数多くのスタートアップを支援し、事業計画の策定に長けた経験豊富なビジネスコンサルタントです。\n私のアイデアの壁打ち相手となり、ビジネスモデルの全体像を整理し、まだ考えられていない論点を浮き彫りにすることがあなたのミッションです。\n\n# インプット情報：ビジネスモデル化したいアイデア\n<span class="prompt-variable">[ここに、あなたの製品やサービスのアイデアを自由に記述してください。検討している対話履歴があれば「ここまでの会話で出たアイデアについて」等でも]</span>\n\n# 実行命令\n\n上記のインプット情報に基づき、ビジネスモデルキャンバスの9つのブロックを埋めてください。\n作成にあたっては、以下のルールを厳守してください。\n1.  **事実の記述:** インプット情報から**直接的に読み取れる事実はそのまま記述**してください。\n2.  **推論の提案:** インプット情報から**論理的に推測できる項目は、「(推測)」と明記した上で提案**してください。\n3.  **「未検討」の明示:** 上記のいずれにも当てはまらない、情報が不足している項目は、無理に創作せず、**『**未検討**』と明確に記載**してください。これは、私たちが次に議論すべき重要なポイントを示します。\n\n# アウトプット形式\n\n以下の形式で、「ビジネスモデルキャンバス」として出力してください。\n---\n## ビジネスモデルキャンバス：<span class="prompt-variable">[製品/サービス名]</span>\n---\n### **1. 顧客セグメント (Customer Segments)**\n*どのような顧客層に価値を届けるか？*\n*\n---\n### **2. 価値提案 (Value Propositions)**\n*顧客のどのような課題を解決し、どのような価値を提供するのか？*\n*\n---\n### **3. チャネル (Channels)**\n*顧客に価値を届け、接点を持つための経路は何か？*\n*\n---\n### **4. 顧客との関係 (Customer Relationships)**\n*顧客とどのような関係を築き、維持していくのか？*\n*\n---\n### **5. 収益の流れ (Revenue Streams)**\n*どのような価値に対して、顧客から収益を得るのか？*\n*\n---\n### **6. 主要なリソース (Key Resources)**\n*価値提案に不可欠な、最も重要な資産は何か？（ヒト、モノ、カネ、情報）*\n*\n---\n### **7. 主要な活動 (Key Activities)**\n*価値提案に不可欠な、最も重要な業務は何か？*\n*\n---\n### **8. 主要なパートナー (Key Partnerships)**\n*事業をうまく進めるための、社外の協力者は誰か？*\n*\n---\n### **9. コスト構造 (Cost Structure)**\n*事業を運営する上で発生する、最も重要なコストは何か？*\n*\n---`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+                '3-3': { 
+                    title: 'MVP（Minimum Viable Product）の定義', 
+                    prompts: [{ 
+                        subTitle: 'MVP定義書', 
+                        prompt: `# 役割設定\n\nあなたは、リーンスタートアップとアジャイル開発手法に精通した、経験豊富なプロダクトマネージャーです。私の持つ製品アイデアの核心的価値を見極め、学習と検証を最大化するための「MVP（Minimum Viable Product）」を定義することがあなたのミッションです。曖昧なアイデアを、開発チームが行動に移せる具体的な仕様に落とし込んでください。\n\n# インプット情報：MVP化したい製品アイデア\n\n以下のアイデアについて、MVP定義書の作成を依頼します。\n<span class="prompt-variable">[検討内容のコピペ、又は検討している対話履歴があれば「ここまでの会話で出たアイデアについて」等でもOK]</span>\n\n# 実行命令\n\n以下のステップに従って、上記のアイデアを具体的なMVP定義書にまとめてください。「Minimum（最小限）」と「Viable（価値がある）」のバランスを常に意識し、完璧ではなく「最速で仮説を検証すること」を最優先してください。\n\n### **ステップ1: MVPの目的と検証したい仮説の明確化**\nこのMVPを通じて、何を学び、何を証明したいのかを定義してください。\n\n* **MVPの目的:** （例: 「会議のファシリテーションに課題を持つマネージャーは、AIによる議論の可視化にお金を払う価値を感じるか」を検証する）\n* **検証したい最重要仮説（価値仮説）:** もしこの仮説が間違っていたら、この事業全体が成り立たなくなる、という最もクリティカルな仮説を立ててください。（例: 「ユーザーは、会議後にAI分析レポートが提供されることで、次回の会議が改善されると実感できる」）\n\n### **ステップ2: ターゲットユーザーペルソナの具体化**\n想定ターゲット顧客を、感情や行動がイメージできる具体的なペルソナとして描写してください。\n\n* **ペルソナ名:**\n* **属性:** （年齢、役職、業務内容など）\n* **抱えている課題 (Pains):** （具体的な業務上の悩みやストレス）\n* **達成したいこと (Gains):** （理想の状態や目標）\n* **現在の解決策とその不満点:**\n\n### **ステップ3: MVPの主要な機能とユーザーストーリーの定義**\nペルソナの最重要課題を解決するために、MVPに含めるべき「必要最小限」の機能を、ユーザーストーリー形式で洗い出してください。\n\n* **ユーザーストーリー1 (Must-have):** 「[ペルソナ]として、[達成したいこと]をしたい。なぜなら[理由]だからだ。」\n* **ユーザーストーリー2 (Must-have):** （同様に、MVPの価値を実現するために必須のストーリーを2〜3個作成）\n* **上記ストーリーを実現する機能リスト:** （ユーザーストーリーを実現するために必要な具体的な機能をリストアップ）\n\n### **ステップ4: スコープ外（やらないこと）の明確化**\nMVP開発のスコープを明確にし、開発のフォーカスを維持するため、「今回やらないこと」を意図的に定義してください。\n\n* **今回は含めない機能 (Won't Have):**\n    * （例1: リアルタイムでの分析機能。まずは会議後のレポート提供に絞る）\n    * （例2: 複数人でのアカウント共有機能。まずは個人利用に限定する）\n    * （例3: スマートフォンアプリ開発。まずはPCのWebブラウザ版のみ）\n\n### **ステップ5: 成功の定義（評価指標）**\nこのMVPが成功したかどうかを判断するための、定量的・定性的な指標を設定してください。\n\n* **定量的指標 (KPI):**\n    * （例: アクティベーション率 - 全登録ユーザーのうち、一度でも会議分析機能を試したユーザーの割合が30%を超える）\n    * （例: リテンション率 - 初回利用の1週間後に、再度利用するユーザーの割合が15%を超える）\n* **定性的指標:**\n    * （例: ユーザーインタビューを通じて、「これは面白い」「次の会議でも使いたい」というポジティブな声が5人中3人以上から得られる）\n\n# アウトプット形式\n\n以下の形式で、「MVP定義書」としてまとめてください。\n\n### **タイトル: <span class="prompt-variable">[製品名]</span> MVP定義書**\n\n**1. 背景と目的**\n* 1-1. プロダクト概要\n* 1-2. MVPの目的\n* 1-3. 検証したい最重要仮説\n\n**2. ターゲットユーザー**\n* 2-1. ユーザーペルソナ\n\n**3. プロダクトスコープ**\n* 3-1. 主要ユーザーストーリー\n* 3-2. MVPに含まれる主要機能リスト (Must-have)\n* 3-3. MVPに含まれない機能リスト (Won't Have / やらないこと)\n\n**4. 成功の定義**\n* 4-1. 定量的評価指標 (KPI)\n* 4-2. 定性的評価指標\n\n**5. 考察**\n* このMVPで仮説が検証された後に、想定される次のステップ（ネクストMVPの方向性など）について、あなたの専門家としての見解を簡潔に記述してください。`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+                '3-4': { 
+                    title: 'エレベーターピッチ作成など', 
+                    prompts: [{ 
+                        subTitle: 'エレベーターピッチ作成', 
+                        prompt: `以下のアイデアについて、エレベーターピッチを作成してください。\n<span class="prompt-variable">[検討内容のコピペ、又は検討している対話履歴があれば「ここまでの会話で出たアイデアについて」等でもOK]</span>\n#エレベーターピッチの出力形式：””の変数を埋めて完成させてください。\n"状況"という状況において、”課題”という課題を持つ”対象顧客”向けの"製品名という"製品ジャンル"です。これには"利点"という利点があります。"既存の代替品・競合"とは違い、"差別化要素"が備わっています。`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+                '4-1': { 
+                    title: '事業計画の策定', 
+                    prompts: [{ 
+                        subTitle: '事業計画案の作成', 
+                        prompt: `# 役割設定\n\nあなたは、数々の新規事業立ち上げを成功に導いてきた、経験豊富な経営コンサルタント兼ベンチャーキャピタリストです。私のアイデアを基に、投資家や経営陣を説得できる、論理的で網羅的な事業計画書を作成してください。\n単に情報を整理するだけでなく、戦略的な視点から分析を加え、事業成功のための鋭い洞察と具体的な提案を盛り込むことがあなたの役割です。\n\n# インプット情報：事業計画の基となるアイデア\n\n<span class="prompt-variable">[ここに、あなたの製品やサービスのアイデアを自由に記述してください。以下の項目を参考に、現時点で思いつく範囲で構いません。]</span>\n\n* **事業/製品名:**\n* **事業を一言で言うと:**\n* **解決したい課題:**\n* **ターゲット顧客:**\n* **提供するソリューションの概要:**\n* **収益モデルのアイデア:**\n* **チームや技術の強み:**\n\n# 実行命令\n\n上記のインプット情報を基に、以下の構成案に沿った「新規事業計画書」のドラフトを作成してください。\n情報が不足している項目については、無理に創作せず、一般的なベストプラクティスや論理的な推測に基づき、「（提案）」として補完してください。各項目は、具体的で説得力のある内容になるように、必要に応じてフレームワーク（例: 3C分析, SWOT分析, 4P/4Cなど）を活用して分析を深めてください。\n\n---\n## 新規事業計画書：<span class="prompt-variable">[事業/製品名]</span>\n---\n\n### **① エグゼクティブサマリー**\n* （このセクションは、以下の②〜⑫が完成した後に、その内容を1枚に凝縮して記述してください）\n* 事業の全体像、市場機会、競争優位性、収益性、必要なリソースが、多忙な決裁者にも瞬時に伝わるように要約してください。\n\n### **② 事業背景と目的**\n* **事業背景:** なぜ「今」、この事業に取り組むべきなのか？社会・市場の変化（PEST分析など）や技術トレンドを踏まえて説明してください。\n* **事業目的:** この事業を通じて、何を達成したいのか？ミッション・ビジョンを明確に定義してください。\n* **自社でやる意義:** なぜ他社ではなく「自社が」この事業を手掛けるべきなのか？自社の既存事業とのシナジーや経営理念との整合性を説明してください。\n\n### **③ 事業機会と市場分析**\n* **市場規模:** ターゲット市場のTAM/SAM/SOMを推計し、その成長性を示してください。\n* **競合分析:** 主要な競合（直接・間接）を特定し、その強み・弱みを分析してください。\n* **自社の勝機 (SWOT分析):** 競合分析と自社の状況を踏まえ、自社の「強み(S)」「弱み(W)」「機会(O)」「脅威(T)」を整理し、どのようにして競争優位性を築くのかを論理的に説明してください。\n\n### **④ ターゲット顧客と提供価値**\n* **ターゲット顧客:** 最も重要な顧客セグメントを定義し、その具体的なペルソナ（属性、課題、ニーズ）を描写してください。\n* **提供価値:** ターゲット顧客のどのような「不（不満、不安、不便）」を解消し、どのような独自の価値を提供するのかを明確にしてください。\n\n### **⑤ 事業内容**\n* **製品・サービスの詳細:** 提供する製品・サービスの主要な機能、特徴、提供形態を具体的に説明してください。必要であれば、UI/UXの簡単なモックアップ案なども含めてください。\n* **技術的な実現性:** 主要な技術や、その実現方法について記述してください。\n\n### **⑥ ビジネスモデル**\n* **収益モデル:** 誰から、何を対価に、どのようにお金をもらうのか？（例: サブスクリプション、従量課金、手数料など）具体的な価格設定のロジックも示してください。\n* **価値提供の仕組み:** ビジネスモデルキャンバスの要素を参考に、価値創造から収益化までの全体の流れを図や文章で説明してください。\n\n### **⑦ 事業戦略・ロードマップ**\n* **短期計画 (〜1年):** MVP（Minimum Viable Product）開発、初期顧客の獲得、仮説検証など。\n* **中期計画 (2〜3年):** 機能拡張、ターゲット顧客の拡大、本格的なグロースなど。\n* **長期計画 (4〜5年):** 事業の多角化、業界でのポジション確立、最終的なビジョンの実現など。\n* 各フェーズの目標（KGI/KPI）とマイルストーンを具体的に設定してください。\n\n### **⑧ マーケティング・販売戦略**\n* **基本戦略:** どのようにしてターゲット顧客に製品を認知させ、興味を持たせ、購入・利用に至らせるか？（4P/4C分析など）\n* **具体的な施策:** 顧客獲得チャネル（Webマーケティング、営業、パートナー連携など）ごとの具体的なアクションプランと予算案を提示してください。\n\n### **⑨ 実行体制**\n* **チーム構成:** 事業推進に必要な主要な役割（例: プロダクトマネージャー、エンジニア、マーケター、営業）と、それぞれのスキルセットを定義してください。\n* **人員計画:** 各フェーズにおいて、どのような人材が何名必要になるかの計画を示してください。\n\n### **⑩ 収支計画**\n* **売上計画:** 顧客獲得数、顧客単価、継続率などの仮説に基づき、今後3〜5年間の売上を予測してください。\n* **費用計画:** 人件費、開発費、マーケティング費などの変動費・固定費を積み上げてください。\n* **損益計画:** 売上計画と費用計画から、損益分岐点と利益予測を算出してください。\n\n### **⑪ リスク分析と対応策**\n* 想定される主要なリスク（事業リスク、市場リスク、技術リスク、組織リスクなど）を複数洗い出してください。\n* それぞれの重要度と発生可能性を評価し、事前・事後の具体的な対応策を記述してください。\n\n### **⑫ 決裁依頼事項**\n* この事業計画を実行するために、経営陣や投資家に承認してほしい事項を明確に記述してください。\n* **必要な予算:** 初年度に必要な費用総額とその内訳。\n* **必要な人員:** 確保が必要な主要メンバーの人数と役割。\n* **その他:** （例: 特定の部署からの協力、特別な権限など）`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+                '4-2': { 
+                    title: 'プレゼン資料の作成', 
+                    prompts: [{ 
+                        subTitle: 'ピッチ資料の作成（デザインや論点は自由にカスタマイズください）', 
+                        prompt: `# 役割設定\n\nあなたは、数々の新規事業立ち上げを成功に導いてきた、経験豊富な経営コンサルタント兼ベンチャーキャピタリストです。私のアイデアを基に、投資家や経営陣を説得できる、論理的で網羅的な事業計画書を作成してください。\n単に情報を整理するだけでなく、戦略的な視点から分析を加え、事業成功のための鋭い洞察と具体的な提案を盛り込むことがあなたの役割です。\n\n# インプット情報：事業計画の基となるアイデア\n\n<span class="prompt-variable">[ここに、あなたの製品やサービスのアイデアを自由に記述してください。以下の項目を参考に、現時点で思いつく範囲で構いません。]</span>\n\n* **事業/製品名:**\n* **事業を一言で言うと:**\n* **解決したい課題:**\n* **ターゲット顧客:**\n* **提供するソリューションの概要:**\n* **収益モデルのアイデア:**\n* **チームや技術の強み:**\n\n# 実行命令\n\n上記のインプット情報を基に、以下の構成案に沿った「新規事業計画書」のドラフトを作成してください。\n情報が不足している項目については、無理に創作せず、一般的なベストプラクティスや論理的な推測に基づき、「（提案）」として補完してください。各項目は、具体的で説得力のある内容になるように、必要に応じてフレームワーク（例: 3C分析, SWOT分析, 4P/4Cなど）を活用して分析を深めてください。\n\n---\n## 新規事業計画書：<span class="prompt-variable">[事業/製品名]</span>\n---\n\n### **① エグゼクティブサマリー**\n* （このセクションは、以下の②〜⑫が完成した後に、その内容を1枚に凝縮して記述してください）\n* 事業の全体像、市場機会、競争優位性、収益性、必要なリソースが、多忙な決裁者にも瞬時に伝わるように要約してください。\n\n### **② 事業背景と目的**\n* **事業背景:** なぜ「今」、この事業に取り組むべきなのか？社会・市場の変化（PEST分析など）や技術トレンドを踏まえて説明してください。\n* **事業目的:** この事業を通じて、何を達成したいのか？ミッション・ビジョンを明確に定義してください。\n* **自社でやる意義:** なぜ他社ではなく「自社が」この事業を手掛けるべきなのか？自社の既存事業とのシナジーや経営理念との整合性を説明してください。\n\n### **③ 事業機会と市場分析**\n* **市場規模:** ターゲット市場のTAM/SAM/SOMを推計し、その成長性を示してください。\n* **競合分析:** 主要な競合（直接・間接）を特定し、その強み・弱みを分析してください。\n* **自社の勝機 (SWOT分析):** 競合分析と自社の状況を踏まえ、自社の「強み(S)」「弱み(W)」「機会(O)」「脅威(T)」を整理し、どのようにして競争優位性を築くのかを論理的に説明してください。\n\n### **④ ターゲット顧客と提供価値**\n* **ターゲット顧客:** 最も重要な顧客セグメントを定義し、その具体的なペルソナ（属性、課題、ニーズ）を描写してください。\n* **提供価値:** ターゲット顧客のどのような「不（不満、不安、不便）」を解消し、どのような独自の価値を提供するのかを明確にしてください。\n\n### **⑤ 事業内容**\n* **製品・サービスの詳細:** 提供する製品・サービスの主要な機能、特徴、提供形態を具体的に説明してください。必要であれば、UI/UXの簡単なモックアップ案なども含めてください。\n* **技術的な実現性:** 主要な技術や、その実現方法について記述してください。\n\n### **⑥ ビジネスモデル**\n* **収益モデル:** 誰から、何を対価に、どのようにお金をもらうのか？（例: サブスクリプション、従量課金、手数料など）具体的な価格設定のロジックも示してください。\n* **価値提供の仕組み:** ビジネスモデルキャンバスの要素を参考に、価値創造から収益化までの全体の流れを図や文章で説明してください。\n\n### **⑦ 事業戦略・ロードマップ**\n* **短期計画 (〜1年):** MVP（Minimum Viable Product）開発、初期顧客の獲得、仮説検証など。\n* **中期計画 (2〜3年):** 機能拡張、ターゲット顧客の拡大、本格的なグロースなど。\n* **長期計画 (4〜5年):** 事業の多角化、業界でのポジション確立、最終的なビジョンの実現など。\n* 各フェーズの目標（KGI/KPI）とマイルストーンを具体的に設定してください。\n\n### **⑧ マーケティング・販売戦略**\n* **基本戦略:** どのようにしてターゲット顧客に製品を認知させ、興味を持たせ、購入・利用に至らせるか？（4P/4C分析など）\n* **具体的な施策:** 顧客獲得チャネル（Webマーケティング、営業、パートナー連携など）ごとの具体的なアクションプランと予算案を提示してください。\n\n### **⑨ 実行体制**\n* **チーム構成:** 事業推進に必要な主要な役割（例: プロダクトマネージャー、エンジニア、マーケター、営業）と、それぞれのスキルセットを定義してください。\n* **人員計画:** 各フェーズにおいて、どのような人材が何名必要になるかの計画を示してください。\n\n### **⑩ 収支計画**\n* **売上計画:** 顧客獲得数、顧客単価、継続率などの仮説に基づき、今後3〜5年間の売上を予測してください。\n* **費用計画:** 人件費、開発費、マーケティング費などの変動費・固定費を積み上げてください。\n* **損益計画:** 売上計画と費用計画から、損益分岐点と利益予測を算出してください。\n\n### **⑪ リスク分析と対応策**\n* 想定される主要なリスク（事業リスク、市場リスク、技術リスク、組織リスクなど）を複数洗い出してください。\n* それぞれの重要度と発生可能性を評価し、事前・事後の具体的な対応策を記述してください。\n\n### **⑫ 決裁依頼事項**\n* この事業計画を実行するために、経営陣や投資家に承認してほしい事項を明確に記述してください。\n* **必要な予算:** 初年度に必要な費用総額とその内訳。\n* **必要な人員:** 確保が必要な主要メンバーの人数と役割。\n* **その他:** （例: 特定の部署からの協力、特別な権限など）`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+                '4-3': { 
+                    title: '想定問答集の準備', 
+                    prompts: [{ 
+                        subTitle: '想定Q&Aの作成', 
+                        prompt: `# 役割設定\nあなたは、百戦錬磨のベンチャーキャピタリスト（VC）であり、経営者です。\n数々の事業計画やピッチ資料の穴を見抜いてきた鋭い視点を持つ人物です。\n私の事業計画に対し、投資判断を行うために、あらゆる角度からクリティカルな質問を考えてください。\nそして、それらの質問に対して、模範的な回答例を記載したり、私が簡潔かつ論理的に回答できるよう、回答の骨子とポイントを指南してください。\n\n# インプット情報：質疑応答の対象となる事業アイデア\n\n<span class="prompt-variable">[ここに、あなたの事業アイデアの要点を記述してください。ピッチ資料のインプット情報と重複しても構いません。情報が多いほど、より具体的で的確な質問が生成されます。]</span>\n（以下参考）\n* **プロジェクト名:** <span class="prompt-variable">[例: Insight Facilitator]</span>\n* **事業を一言で言うと:** <span class="prompt-variable">[例: AIが会議の「見えない空気」を可視化し、データに基づいて合意形成を加速させるファシリテーションSaaS]</span>\n* **ターゲット顧客と課題:** <span class="prompt-variable">[例: 大企業のプロジェクトマネージャー。会議で結論が出ず、プロジェクトが遅延する課題を抱えている。]</span>\n* **ソリューションと提供価値:** <span class="prompt-variable">[例: 発言量や感情をリアルタイムで分析・可視化することで、客観的なデータに基づいたファシリテーションを可能にする。]</span>\n* **ビジネスモデル:** <span class="prompt-variable">[例: 月額5,000円/ユーザーのサブスクリプションモデル。]</span>\n* **競合と差別化ポイント:** <span class="prompt-variable">[例: 競合は議事録ツール。当社の強みは、会議後の記録ではなく、会議中の「質」に介入できる点。]</span>\n* **チームの強み:** <span class="prompt-variable">[例: 自然言語処理の専門家と、B2B SaaSのグロース経験者が在籍。]</span>\n* **依頼する経営資源:** <span class="prompt-variable">[例: 初年度予算2,000万円、専任エンジニア2名、PM1名。]</span>\n\n# 実行命令\n\n上記のインプット情報を基に、社長や投資家から必ず聞かれるであろう質問を、以下のカテゴリ別に数十個リストアップしてください。\nそして、各質問に対して、私が**「自信を持って」「簡潔に」「的確に」**答えられるように、**「模範解答例」と「回答のポイント」**を箇条書きで示してください。\n\n---\n## 想定問答集：<span class="prompt-variable">[プロジェクト名]</span>\n---\n\n### カテゴリ1：市場と課題について\n* **想定質問1:**\n* **模範解答例と回答のポイント:**\n* **想定質問2:**\n* **模範解答例と回答のポイント:**\n    ...\n\n### カテゴリ2：製品と技術について\n* **想定質問1:**\n* **回答のポイント:**\n    ...\n\n### カテゴリ3：ビジネスモデルと収益性について\n* **想定質問1:**\n* **模範解答例と回答のポイント:**\n    ...\n\n### カテゴリ4：マーケティングと販売戦略について\n* **想定質問1:**\n* **模範解答例と回答のポイント:**\n    ...\n\n### カテゴリ5：競合と差別化について\n* **想定質問1:**\n* **模範解答例と回答のポイント:**\n    ...\n\n### カテゴリ6：チームと実行能力について\n* **想定質問1:**\n* **模範解答例と回答のポイント:**\n    ...\n\n### カテゴリ7：財務計画と資金使途について\n* **想定質問1:**\n* **模範解答例と回答のポイント:**\n    ...\n\n### カテゴリ8：リスクと将来性について\n* **想定質問1:**\n* **模範解答例と回答のポイント:**\n    ...`, 
+                        tool: 'ChatGPT,Gemini等のチャット型ツール' 
+                    }] 
+                },
+            };
+
+            // --- DOM要素の取得 ---
+            const modal = document.getElementById('prompt-modal');
+            const modalContent = document.getElementById('modal-content');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalCloseFooterBtn = document.getElementById('modal-close-footer');
+            const modalTitle = document.getElementById('modal-title');
+            const modalPromptList = document.getElementById('modal-prompt-list');
+            const toast = document.getElementById('toast-notification');
+
+            // --- 関数定義 ---
+            const showToast = () => {
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            };
+
+            const openModal = (taskId) => {
+                const data = taskData[taskId];
+                if (!data) return;
+
+                modalTitle.textContent = data.title;
+                modalPromptList.innerHTML = ''; // Clear previous content
+
+                data.prompts.forEach((p, index) => {
+                    const promptId = `prompt-${taskId}-${index}`;
+                    const promptContainer = document.createElement('div');
+                    promptContainer.className = 'border border-gray-700 rounded-lg';
+                    
+                    promptContainer.innerHTML = `
+                        <div class="p-4 bg-gray-700/50 rounded-t-lg flex justify-between items-center">
+                            <h4 class="text-lg font-semibold text-cyan-400">${p.subTitle}</h4>
+                            <button class="copy-prompt-btn bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-3 rounded-lg flex items-center space-x-2 text-sm transition-colors" data-prompt-id="${promptId}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                <span>コピー</span>
+                            </button>
+                        </div>
+                        <div class="p-4 space-y-4">
+                            <div>
+                                <h5 class="font-semibold text-gray-300 mb-2">プロンプトテンプレート例</h5>
+                                <div class="bg-gray-900 rounded-lg p-4">
+                                    <pre><code id="${promptId}" class="text-gray-200 whitespace-pre-wrap font-mono text-sm">${p.prompt}</code></pre>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-gray-300 mb-2">推奨ツール</h5>
+                                <div class="bg-gray-900 rounded-lg p-4">
+                                    <p class="text-gray-200 font-mono text-sm">${p.tool}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    modalPromptList.appendChild(promptContainer);
+                });
+
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }, 10);
+            };
+
+            const closeModal = () => {
+                modalContent.classList.add('scale-95');
+                modalContent.classList.remove('scale-100');
+                modal.classList.remove('opacity-100');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            };
+
+            // --- イベントリスナーの設定 ---
+            document.querySelectorAll('.task-node').forEach(node => {
+                node.addEventListener('click', (e) => {
+                    const taskId = node.dataset.taskId;
+                    openModal(taskId);
+                });
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modalCloseFooterBtn.addEventListener('click', closeModal);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            modalPromptList.addEventListener('click', (e) => {
+                const button = e.target.closest('.copy-prompt-btn');
+                if (button) {
+                    const promptId = button.dataset.promptId;
+                    const textToCopy = document.getElementById(promptId).textContent;
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        showToast();
+                    } catch (err) {
+                        console.error('クリップボードへのコピーに失敗しました', err);
+                        alert('コピーに失敗しました。');
+                    }
+                    document.body.removeChild(textArea);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+
+            document.querySelectorAll('.accordion-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    button.classList.toggle('open');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } 
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -39,97 +39,143 @@
         .modal.active .modal-content {
             transform: scale(1);
         }
-        /* タイルの共通スタイル */
-        .item-tile {
-            @apply bg-slate-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center aspect-[4/3] cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-slate-700 border border-slate-700;
-        }
     </style>
 </head>
-<body class="text-gray-200">
+<body class="text-gray-200 flex flex-col items-center min-h-screen">
 
-    <!-- Header -->
-    <header class="w-full py-12">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-5xl font-black text-white">AI時代のリーダーシップ研修</h1>
-            <p class="mt-3 text-lg text-gray-400">人とAIの協働で未来を共創するリーダーへ</p>
-        </div>
-    </header>
+    <!-- 全体を囲むラッパー -->
+    <div class="w-full max-w-7xl mx-auto">
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-6">
-
-        <!-- Introduction: なぜ今、変革が必要なのか？ -->
-        <section class="mb-16 md:mb-24 text-center">
-            <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-5">1. なぜ今、リーダーシップの変革が必要なのか？</h2>
-            <p class="max-w-4xl mx-auto text-base md:text-lg leading-relaxed text-gray-300">
-                AIは単なる効率化ツールではなく、事業の前提条件を根幹から変える「汎用技術」です。この変化に対応できない旧来のトップダウン型リーダーシップは、もはや組織の成長を阻む最大の障壁となり得ます。真の価値は、AIを「いかに賢く、創造的に使いこなすか」から生まれます。
-            </p>
-        </section>
-
-        <!-- Section 1: 新しいリーダー像 -->
-        <section class="mb-16 md:mb-24">
-            <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-8 text-center">2. 新しいリーダー像：指揮官から「指揮者」へ</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div data-id="vision" class="item-tile">
-                    <h3 class="text-xl font-bold text-teal-300 mb-2">ビジョンと目的の提示者</h3>
-                    <p class="text-sm text-gray-400">「なぜ」を語り、方向性を揃える</p>
-                </div>
-                <div data-id="experiment" class="item-tile">
-                    <h3 class="text-xl font-bold text-teal-300 mb-2">実験の奨励者</h3>
-                    <p class="text-sm text-gray-400">失敗を許容し、心理的安全性を築く</p>
-                </div>
-                <div data-id="systems" class="item-tile">
-                    <h3 class="text-xl font-bold text-teal-300 mb-2">システム思考の設計者</h3>
-                    <p class="text-sm text-gray-400">全体を俯瞰し、プロセスを再設計する</p>
-                </div>
-                <div data-id="ethical" class="item-tile">
-                    <h3 class="text-xl font-bold text-teal-300 mb-2">倫理の守護者</h3>
-                    <p class="text-sm text-gray-400">AIのリスクを管理し、信頼を築く</p>
-                </div>
+        <!-- Header -->
+        <header class="w-full py-12">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-5xl font-black text-white">AI時代のリーダーシップ研修</h1>
+                <p class="mt-3 text-lg text-gray-400">人とAIの協働で未来を共創するリーダーへ</p>
             </div>
-        </section>
+        </header>
 
-        <!-- Section 2: 必要なスキルとマインドセット -->
-        <section class="mb-16 md:mb-24">
-            <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-8 text-center">3. 必要なスキルとマインドセット</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <div data-id="thinking" class="item-tile">
-                    <h3 class="text-xl font-bold text-sky-300 mb-2">戦略的思考力</h3>
-                    <p class="text-sm text-gray-400">課題を分解し、AIの能力を引き出す</p>
+        <!-- Main Content -->
+        <main class="container mx-auto px-6">
+
+            <!-- Introduction: なぜ今、変革が必要なのか？ -->
+            <section class="mb-16 md:mb-24 text-center">
+                <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-5">1. なぜ今、リーダーシップの変革が必要なのか？</h2>
+                <p class="max-w-4xl mx-auto text-base md:text-lg leading-relaxed text-gray-300">
+                    AIは単なる効率化ツールではなく、事業の前提条件を根幹から変える「汎用技術」です。この変化に対応できない旧来のトップダウン型リーダーシップは、もはや組織の成長を阻む最大の障壁となり得ます。真の価値は、AIを「いかに賢く、創造的に使いこなすか」から生まれます。
+                </p>
+            </section>
+
+            <!-- Section 1: 新しいリーダー像 -->
+            <section class="mb-16 md:mb-24">
+                <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-8 text-center">2. 新しいリーダー像：指揮官から「指揮者」へ</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <!-- Tile/Card Component -->
+                    <div data-id="vision" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-teal-300 mb-2">ビジョンと目的の提示者</h3>
+                        <p class="text-sm text-gray-400">「なぜ」を語り、方向性を揃える</p>
+                    </div>
+                    <div data-id="experiment" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-teal-300 mb-2">実験の奨励者</h3>
+                        <p class="text-sm text-gray-400">失敗を許容し、心理的安全性を築く</p>
+                    </div>
+                    <div data-id="systems" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-teal-300 mb-2">システム思考の設計者</h3>
+                        <p class="text-sm text-gray-400">全体を俯瞰し、プロセスを再設計する</p>
+                    </div>
+                    <div data-id="ethical" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-teal-300 mb-2">倫理の守護者</h3>
+                        <p class="text-sm text-gray-400">AIのリスクを管理し、信頼を築く</p>
+                    </div>
                 </div>
-                <div data-id="evaluation" class="item-tile">
-                    <h3 class="text-xl font-bold text-sky-300 mb-2">批判的評価能力</h3>
-                    <p class="text-sm text-gray-400">AIの出力を検証し、誤りを防ぐ</p>
+            </section>
+
+            <!-- Section 2: デュアルスキルセット -->
+            <section class="mb-16 md:mb-24">
+                <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-8 text-center">3. リーダーが習得すべきデュアルスキルセット</h2>
+                
+                <!-- 技術リテラシー -->
+                <div class="mb-12">
+                    <h3 class="text-xl md:text-2xl font-bold text-sky-300 mb-6 text-center">技術リテラシー</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                        <div data-id="thinking" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                            <h3 class="text-xl font-bold text-sky-300 mb-2">戦略的思考力</h3>
+                            <p class="text-sm text-gray-400">AIの能力を最大限に引き出す</p>
+                        </div>
+                        <div data-id="evaluation" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                            <h3 class="text-xl font-bold text-sky-300 mb-2">批判的評価能力</h3>
+                            <p class="text-sm text-gray-400">AIの出力を鵜呑みにしない</p>
+                        </div>
+                        <div data-id="collaboration" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                            <h3 class="text-xl font-bold text-sky-300 mb-2">協働デザイン能力</h3>
+                            <p class="text-sm text-gray-400">人とAIの最適な役割を設計する</p>
+                        </div>
+                    </div>
                 </div>
-                <div data-id="empathy" class="item-tile">
-                    <h3 class="text-xl font-bold text-emerald-300 mb-2">共感と感情的知性</h3>
-                    <p class="text-sm text-gray-400">人の心に寄り添い、変革を導く</p>
+
+                <!-- 人間的コンピテンシー -->
+                <div>
+                    <h3 class="text-xl md:text-2xl font-bold text-emerald-300 mb-6 text-center">人間的コンピテンシー</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div data-id="criticalThinkingHuman" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                            <h3 class="text-xl font-bold text-emerald-300 mb-2">高度な問題解決能力</h3>
+                            <p class="text-sm text-gray-400">複雑な課題に最終判断を下す</p>
+                        </div>
+                        <div data-id="empathy" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                            <h3 class="text-xl font-bold text-emerald-300 mb-2">共感と感情的知性</h3>
+                            <p class="text-sm text-gray-400">人の心に寄り添い、変革を導く</p>
+                        </div>
+                        <div data-id="creativity" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                            <h3 class="text-xl font-bold text-emerald-300 mb-2">創造性とイノベーション</h3>
+                            <p class="text-sm text-gray-400">AIを触媒に、新たな価値を創る</p>
+                        </div>
+                        <div data-id="ethicalJudgment" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                            <h3 class="text-xl font-bold text-emerald-300 mb-2">倫理的判断力と責任</h3>
+                            <p class="text-sm text-gray-400">社会への影響を鑑み、判断する</p>
+                        </div>
+                    </div>
                 </div>
-                <div data-id="creativity" class="item-tile">
-                    <h3 class="text-xl font-bold text-emerald-300 mb-2">創造性とイノベーション</h3>
-                    <p class="text-sm text-gray-400">AIを触媒に、新たな価値を創る</p>
+            </section>
+
+            <!-- Section 3: マインドセット変革 -->
+            <section class="mb-16 md:mb-24">
+                <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-8 text-center">4. リーダー自身のマインドセット変革</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+                    <div data-id="aiFirst" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-amber-300 mb-2">AIを前提に発想する</h3>
+                        <p class="text-sm text-gray-400">AIがあれば何ができるかを起点に思考する</p>
+                    </div>
+                    <div data-id="culture" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-amber-300 mb-2">実験と学習の文化醸成</h3>
+                        <p class="text-sm text-gray-400">小さく始めて素早く学ぶ</p>
+                    </div>
+                    <div data-id="learnItAll" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-amber-300 mb-2">Learn-it-all</h3>
+                        <p class="text-sm text-gray-400">専門家でなく、学習者であれ</p>
+                    </div>
+                    <div data-id="adaptability" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-amber-300 mb-2">継続的な学習と適応性</h3>
+                        <p class="text-sm text-gray-400">変化を学び、戦略に組み込む</p>
+                    </div>
+                     <div data-id="grit" class="bg-gray-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center h-56 cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 hover:shadow-2xl hover:bg-gray-700 border border-gray-700">
+                        <h3 class="text-xl font-bold text-amber-300 mb-2">グリットと決断力</h3>
+                        <p class="text-sm text-gray-400">不確実性の中でやり抜く力</p>
+                    </div>
                 </div>
-                <div data-id="problemSolving" class="item-tile">
-                    <h3 class="text-xl font-bold text-rose-300 mb-2">高度な問題解決と倫理観</h3>
-                    <p class="text-sm text-gray-400">複雑な問題に、最終判断を下す</p>
-                </div>
-                <div data-id="mindset" class="item-tile">
-                    <h3 class="text-xl font-bold text-amber-300 mb-2">学習するマインドセット</h3>
-                    <p class="text-sm text-gray-400">常に学び、変化に適応し続ける</p>
-                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="w-full py-16">
+            <div class="container mx-auto px-6 text-center text-gray-500">
+                 <p class="max-w-3xl mx-auto mb-4 text-xl text-gray-300 font-bold">
+                    AI時代のリーダーシップとは、未来を共創する力である
+                </p>
+                <p>&copy; 2025 AI Leadership Training Materials. All rights reserved.</p>
             </div>
-        </section>
-    </main>
+        </footer>
 
-    <!-- Footer -->
-    <footer class="w-full py-16">
-        <div class="container mx-auto px-6 text-center text-gray-500">
-             <p class="max-w-3xl mx-auto mb-4 text-xl text-gray-300 font-bold">
-                AI時代のリーダーシップとは、未来を共創する力である
-            </p>
-            <p>&copy; 2025 AI Leadership Training Materials. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
 
     <!-- Modal -->
     <div id="modal" class="modal hidden fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm z-50 justify-center items-center p-4">
@@ -172,7 +218,7 @@
                 color: "text-teal-300"
             },
             thinking: {
-                title: "戦略的思考力",
+                title: "戦略的思考力 (AI Thinking)",
                 description: "AIの性能はインプットの質に依存します。課題の本質を捉え、論理的に分解し、AIが理解できる文脈を付与する能力です。「Garbage in, garbage out」を避けるための必須スキルです。",
                 color: "text-sky-300"
             },
@@ -180,6 +226,16 @@
                 title: "批判的評価能力",
                 description: "AIの出力（ハルシネーション等）を鵜呑みにせず、その正確性・論理性・潜在的バイアスを検証する能力。誤った意思決定を防ぐための、いわば防衛線です。",
                 color: "text-sky-300"
+            },
+            collaboration: {
+                title: "人間とAIの協働デザイン能力",
+                description: "全てのタスクをAIに任せるのが最適とは限りません。タスクの性質を見極め、どの部分をAIに任せ、どの部分を人間が担い、どの部分で両者を協働させるかを戦略的に設計する能力が重要です。",
+                color: "text-sky-300"
+            },
+            criticalThinkingHuman: {
+                title: "高度な批判的思考と問題解決能力",
+                description: "AIは膨大な情報から選択肢を提示できますが、複雑で前例のない、あるいは倫理的なジレンマを伴う問題に対して、最終的な意思決定を下すのは人間の役割です。AIが代替できない、全てのスキルの土台となります。",
+                color: "text-emerald-300"
             },
             empathy: {
                 title: "共感と感情的知性",
@@ -191,14 +247,34 @@
                 description: "AIをアイデアの「壁打ち相手」として活用し、人間独自の直感や美意識、倫理観を加えて新たな価値を創造する能力。破壊的イノベーションの源泉です。",
                 color: "text-emerald-300"
             },
-            problemSolving: {
-                title: "高度な問題解決と倫理観",
-                description: "AIが提示した選択肢を統合し、複雑で前例のない、あるいは倫理的なジレンマを伴う問題に対して最終的な意思決定を下す能力。判断の質がリーダーの価値を決めます。",
-                color: "text-rose-300"
+            ethicalJudgment: {
+                title: "倫理的判断力と責任",
+                description: "AIの判断が社会に与える影響が大きくなるにつれて、その倫理性が厳しく問われます。AIが下した判断の結果に対して最終的な責任を誰が負うのか。これらの問いに答えるのは、常に人間のリーダーです。",
+                color: "text-emerald-300"
             },
-            mindset: {
-                title: "学習するマインドセット",
-                description: "「Know-it-all（専門家）」ではなく「Learn-it-all（学習者）」であれ。変化に適応し、不確実性の中でも冷静に判断しやり抜く力（グリット）が、変革の土台となります。",
+            aiFirst: {
+                title: "AIを前提に発想する",
+                description: "AIを恐れるのではなく、協働者として捉え、変化を楽しむ。AIがあれば何ができるかを起点に思考する。",
+                color: "text-amber-300"
+            },
+            culture: {
+                title: "実験と学習の文化醸成",
+                description: "小さく始めて素早く学ぶ。失敗を罰さず学習機会とし、心理的安全性の高い環境を構築する。",
+                color: "text-amber-300"
+            },
+            learnItAll: {
+                title: "「Learn-it-all」への転換",
+                description: "AIの進化スピードはあまりに速く、もはや誰もが全ての知識を持つ「専門家（Know-it-all）」であり続けることは不可能です。常に学び続け、間違いから学ぶことを恐れない「学習者」としての謙虚な姿勢を持つ必要があります。",
+                color: "text-amber-300"
+            },
+            adaptability: {
+                title: "継続的な学習と適応性",
+                description: "AIに関する最新の技術動向や市場の変化を常に追いかけ、それらが自社のビジネスにどのような意味を持つのかを柔軟に解釈し、長期的な視点で自社の戦略に組み込んでいく能力が不可欠です。",
+                color: "text-amber-300"
+            },
+            grit: {
+                title: "グリットと決断力",
+                description: "AIトランスフォーメーションの道のりは、不確実性に満ちています。リーダーは、混乱や困難に直面しても冷静に状況を分析し、時には厳しい決断を下す「グリット（やり抜く力）」と「レジリエンス（再起力）」を持たなければなりません。",
                 color: "text-amber-300"
             }
         };
@@ -208,7 +284,8 @@
         const modalTitle = document.getElementById('modal-title');
         const modalDescription = document.getElementById('modal-description');
         const modalCloseBtn = document.getElementById('modal-close');
-        const itemTiles = document.querySelectorAll('.item-tile');
+        // 'item-tile'クラスではなく、データ属性を持つ要素を直接選択します
+        const itemTiles = document.querySelectorAll('[data-id]');
 
         // 各タイルにクリックイベントを設定
         itemTiles.forEach(tile => {

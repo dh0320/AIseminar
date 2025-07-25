@@ -6,10 +6,10 @@
     <title>AI時代に人間が大切にすべき創造性の核</title>
     <!-- Tailwind CSSを読み込みます -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google FontsからInterフォントを読み込みます -->
+    <!-- Google FontsからInterとNoto Sans JPフォントを読み込みます -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* 日本語フォントと英語フォントを適切に設定します */
         body {
@@ -17,18 +17,14 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* カードの裏面のスタイルを設定します */
-        .card-back {
-            transform: rotateY(180deg);
+
+        /* モーダルの表示・非表示アニメーション */
+        #modal {
+            transition: opacity 0.3s ease-in-out;
         }
-        /* カードの前面と背面に共通のスタイルを設定します */
-        .card-front, .card-back {
-            backface-visibility: hidden;
-            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-        }
-        /* カードコンテナにホバーした際にカードを回転させます */
-        .card-container:hover .card {
-            transform: rotateY(180deg);
+
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -49,155 +45,180 @@
             <!-- 16:9のアスペクト比を持つカードグリッド -->
             <main class="grid grid-cols-3 gap-5 aspect-video w-full">
                 
+                <!-- 各カードにdata属性で解説文と詳細を追加 -->
                 <!-- カード 1: つながりと関係性 -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <!-- カード表面 -->
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-teal-400 mb-2">つながりと関係性</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">作品背後の物語や作り手との情緒的な絆を求める。</p>
-                        </div>
-                        <!-- カード裏面（解説） -->
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-teal-300">人間同士のつながりと関係性</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">アートは何千年ものあいだ、人々を結び付ける役割を担ってきた。AIが最高のパフォーマンスを提供できても、人々は“人間のチェスプレイヤー”や“人間のシェフ”との関係性を求める。背景にある物語や経験、作り手への情緒的なつながりが、人間の創作物の価値を高める。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="人間同士のつながりと関係性"
+                     data-color-class="text-teal-300"
+                     data-description="音楽やアートは何千年ものあいだ、人々を結び付ける役割を担ってきた。AIが最高のパフォーマンスを提供できても、人々は依然として“人間のチェスプレイヤー”や“人間のシェフ”との関係性を求める。背景にある物語や経験、作り手への情緒的なつながりが、人間の創作物の価値を高める。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>宇多田「人間は、人間が作ったものを求めなくなるなんてことはあり得ないと思います。」</p><p class='mt-2'>ハラリ「AIの方が優れたチェスを指せると誰もが知っていますが、それでも人間はチェスの名人を応援します。人々が求めているのは、天才的なプレイヤーではなく、他の人間との『関係性』なのです。」</p><p class='mt-2'>宇多田「人は物語が大好きですよね。マーケティングでも『あなたの物語は何ですか？』と聞かれます。それが一番大事なんです。」</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-teal-400 mb-2">つながりと関係性</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">作品背後の物語や作り手との情緒的な絆を求める。</p>
                 </div>
 
                 <!-- カード 2: 苦闘と脆弱性 -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-emerald-400 mb-2">苦闘と脆弱性</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">完璧ではない、人間らしい苦闘の物語に共感する。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-emerald-300">苦闘と脆弱性が生む物語</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">創作過程での苦闘や失敗、そして再起の物語は、受け手に強い共感を呼ぶ。陸上選手が車より遅いと知りつつ感動を誘うのは、人間の脆さが困難に挑む姿にある。AIが完璧でも、人間の予測不可能で不完全な側面が深い魅力を生む。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="苦闘と脆弱性が生む物語"
+                     data-color-class="text-emerald-300"
+                     data-description="創作過程での苦闘や失敗、そして再起の物語は、受け手に強い共感を呼ぶ。オリンピックの陸上競技が車より遅いと知りつつ感動を誘うのは、人間の脆さが困難に挑む姿にある。AIが完璧を実現できても、人間の予測不可能で不完全な側面が深い魅力を生む。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>ハラリ「人を惹きつけるのは、まさに『苦闘』の物語です。ある背景を持つチェス名人が、大きな困難や失敗を乗り越えて再起する物語に、人々は心を動かされます。自動車が陸上選手より速いと知っていても、私たちがオリンピックに感動するのは、脆く、傷つきやすい人間が挑戦する姿を見るからです。」</p><p class='mt-2'>宇多田「AIと人間のパフォーマンスを比べると、人間はとても脆くて、予測不可能で、いつも正解を出せるわけではありません。その部分にこそ魅力があるのかもしれません。」</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-emerald-400 mb-2">苦闘と脆弱性</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">完璧ではない、人間らしい苦闘の物語に共感する。</p>
                 </div>
 
                 <!-- カード 3: 自己への誠実さ -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-amber-400 mb-2">自己への誠実さ</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">内面から湧き出る偽りのない信念や感情が価値を生む。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-amber-300">自己への誠実さと正直さ</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">真摯な創作は、アーティストが自分に正直であるところから生まれる。歌詞や言葉が「心から信じていない」ものは、受け手には偽物と映る。人間の創作は、内面の信念や感情への裏打ちが重視される。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="自己への誠実さと正直さ"
+                     data-color-class="text-amber-300"
+                     data-description="真摯な創作は、アーティストが自分自身に正直であるところから生まれる。歌詞や言葉が「心から信じていない」ものであれば、受け手には偽物と映る。人間の創作は、内面の信念や感情に裏打ちされていることが重視される。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>宇多田「私にとって音楽制作の目的は、自分自身に対して可能な限り正直であることです。もし書いた歌詞が、心の底から信じていることでなければ、それは作品には残せません。それは偽物だと感じるからです。」</p><p class='mt-2'>宇多田「自分の内面の奥深くから正直に出てきたものであれば、それは普遍的な真実となり、誰でも共感できるものになると信じています。」</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-amber-400 mb-2">自己への誠実さ</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">内面から湧き出る偽りのない信念や感情が価値を生む。</p>
                 </div>
 
                 <!-- カード 4: 内的な発見 -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-cyan-400 mb-2">内的な発見</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">自己を探求する「自己中心的」な旅が普遍的な真実につながる。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-cyan-300">内的発見と自己中心的な目的</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">創作活動は、自分自身や世界についての発見を求める“自己中心的”な衝動から始まることが多い。「歌詞の最後の１行」を探すプロセスのように、過程そのものが価値となる。この内省の旅が、結果として普遍的真実へつながる。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="内的発見と自己中心的な目的"
+                     data-color-class="text-cyan-300"
+                     data-description="創作活動は、自分自身や世界についての発見を求める“自己中心的”な衝動から始まることが多い。宇多田ヒカルが「歌詞の最後の１行」を探すプロセスのように、過程そのものが価値となる。この内省の旅が、結果として普遍的な真実へとつながる。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>宇多田「私の音楽制作の目的は、完全に『自己中心的』なものです。自分自身や、自分の周りの世界について何かを発見するための行為なのです。」</p><p class='mt-2'>宇多田「曲作りで最も重要なのは、その過程で何が起こったかということです。完成した曲は、ある意味で副産物のようなものです。」</p><p class='mt-2'>ハラリ氏の著書『Nexus』の謝辞にある「あなたが本を読むとき、私たちの精神がつながる」という一節に、宇多田氏は深く共感。創作とは、自己と向き合うことで世界とつながる行為であると語る。</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-cyan-400 mb-2">内的な発見</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">自己を探求する「自己中心的」な旅が普遍的な真実につながる。</p>
                 </div>
 
                 <!-- カード 5: 忍耐と手放すこと -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-rose-400 mb-2">忍耐と手放すこと</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">インスピレーションを待ち、予期せぬ出来事に魔法を見出す。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-rose-300">忍耐と「手放す」こと</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">インスピレーションは強制できず、心に余白をつくることで潜在意識のアイデアが浮上する。漁師が獲物を待つように、創作には忍耐と余裕が不可欠。予期せぬ困難や“うまくいかないこと”にこそ、創作の魔法が宿る。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="忍耐と「手放す」こと"
+                     data-color-class="text-rose-300"
+                     data-description="インスピレーションは強制できず、心に余白をつくることで潜在意識のアイデアが浮上する。漁師が獲物を待つように、創作には忍耐と余裕が不可欠。予期せぬ困難や“うまくいかないこと”にこそ、創作の魔法が宿る。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>宇多田「創造性において重要なもう一つの側面は、『忍耐』と『手放す』ことです。私はよく、自分をボートに座っている漁師に例えます。インスピレーションは強制できず、ただ辛抱強く、それが来るのを信じて待つしかないのです。」</p><p class='mt-2'>宇多田「潜在意識のアイデアは、心に余裕があるとき、何かに気を取られているときにこそ、ふと表面に浮かび上がってくるものです。」</p><p class='mt-2'>宇多田氏は、うまくいかないことや予期せぬアクシデントにこそ、創作の魔法が宿ると語る。</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-rose-400 mb-2">忍耐と手放すこと</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">インスピレーションを待ち、予期せぬ出来事に魔法を見出す。</p>
                 </div>
                 
                 <!-- カード 6: 直感と本能 -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-indigo-400 mb-2">直感と本能</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">論理（脳）だけでなく、感情的な反応（胃）を信じる。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-indigo-300">「脳と胃の障壁」―直感の重要性</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">AIの進化を論理的に理解できても、人間には本能的な「直感（gut feelings）」や「腹落ち」が存在する。論理と感情のギャップが、人間ならではの判断や創造性を形づくる。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="「脳と胃の障壁」―直感の重要性"
+                     data-color-class="text-indigo-300"
+                     data-description="AIの進化を論理的に理解できても、人間には本能的な「直感（gut feelings）」が存在する。論理と感情のギャップが、人間ならではの判断や創造性を形づくる。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>ハラリ「私はそれを『脳と胃の障壁』のようなものだと考えています。頭では何が起きているか理解できても、胃がそれを消化するのを拒むのです。私たちの本能は、論理的な脳ではなく、腹の底から湧き上がる直感（gut feelings）に根差しています。」</p><p class='mt-2'>宇多田「論理的に物事がどう進んでいるか理解はできます。でも、心の奥深くにある何かが、『人間が人間製のものを求めなくなるはずがない』と思わせるのです。」</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-indigo-400 mb-2">直感と本能</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">論理（脳）だけでなく、感情的な反応（胃）を信じる。</p>
                 </div>
 
                 <!-- カード 7: 沈黙と空間 -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-fuchsia-400 mb-2">沈黙と空間</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">「何を取り除くか」という選択が深い意味を生み出す。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-fuchsia-300">沈黙と「取り除く」ことの価値</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">音楽や言語では、「何を言わないか」「何を取り除くか」が深い意味を生む。建築が空間を削り出すように、“沈黙”が感情を際立たせる。混沌の中から本質を抽出・洗練する能力が、人間の創作の核となる。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="沈黙と「取り除く」ことの価値"
+                     data-color-class="text-fuchsia-300"
+                     data-description="音楽や言語では、「何を言わないか」「何を取り除くか」が深い意味を生む。建築が空間を削り出すように、音楽の“沈黙”がグルーヴや感情を際立たせる。混沌の中から本質を抽出・洗練する能力が、人間の創作の核となる。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>宇多田「音楽を洗練させる上で重要なのは、何を『取り除く』かということです。何を入れないか、という選択は、何を入れるかということ以上に重要だと思います。」</p><p class='mt-2'>宇多田「音楽におけるグルーヴは、音と音の間にある、ほんの少しの『沈黙』が生み出します。そして、一曲の音楽が終わった後の沈黙は、曲が始まる前の沈黙とは質が変わっているように感じるのです。」</p><p class='mt-2'>言語においても同様に、詩的な表現では特に「何を言わないか」が、より多くの意味を持つことがあると語られた。</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-fuchsia-400 mb-2">沈黙と空間</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">「何を取り除くか」という選択が深い意味を生み出す。</p>
                 </div>
 
                 <!-- カード 8: 意識と感情 -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-lime-400 mb-2">意識と感情</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">喜びや痛みといった「感じる」能力が創造性の源泉となる。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-lime-300">意識と感情</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">AIは感情を模倣できても、実際に「感じる」意識は持たない。喜びや愛、痛みなどの感情は、人間独自の創造性の源泉。最終的に他者や作品に感情を見出すのは、人間同士の関係性と社会的認識による。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="意識と感情"
+                     data-color-class="text-lime-300"
+                     data-description="AIは感情を模倣できても、実際に「感じる」意識は持たない。喜びや愛、痛みなどの感情は、人間独自の創造性の源泉。最終的に他者や作品に感情を見出すのは、人間同士の関係性と社会的認識による。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>ハラリ「知性とはゴールを追求し問題を解決する能力、意識とは喜びや愛、痛みなどを『感じる』能力です。AIはすでに人間より知性的ですが、何も感じてはいません。」</p><p class='mt-2'>ハラリ「AIは、人間の感情というピアノを演奏する方法を学び、人間以上に巧みに喜びや悲しみを『作り出す』ことができるようになるでしょう。」</p><p class='mt-2'>宇多田「AIが本当に何かを創りたいと『望んで』いるのかどうか。その欲望の有無が、一つのテストになるかもしれません。」</p><p class='mt-2'>しかし、他者の意識の有無は証明不可能であり、最終的には社会的な合意（人間関係）によって認識されるものだとハラリ氏は指摘する。</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-lime-400 mb-2">意識と感情</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">喜びや痛みといった「感じる」能力が創造性の源泉となる。</p>
                 </div>
 
                 <!-- カード 9: 好奇心 -->
-                <div class="card-container w-full h-full [perspective:1000px]">
-                    <div class="card relative w-full h-full [transform-style:preserve-3d]">
-                        <div class="card-front absolute w-full h-full flex flex-col justify-center items-center bg-gray-800 rounded-xl p-4 text-center shadow-lg">
-                            <h2 class="text-xl lg:text-3xl font-bold text-orange-400 mb-2">好奇心</h2>
-                            <p class="text-gray-300 text-base lg:text-lg">未知への恐れを好奇心で乗り越え、探求し続ける。</p>
-                        </div>
-                        <div class="card-back absolute w-full h-full bg-gray-800 backdrop-blur-sm rounded-xl p-4 lg:p-6 flex items-center justify-center text-left shadow-2xl overflow-y-auto">
-                            <div>
-                                <h3 class="font-bold text-lg lg:text-xl mb-2 text-orange-300">恐れを凌駕する好奇心</h3>
-                                <p class="text-gray-200 text-base lg:text-lg leading-relaxed">AIによる変化を恐れるのではなく、好奇心で向き合う姿勢が重要。未知の未来を受け入れ、AIとの共存を探求することで、新たな発見と適応が生まれる。</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-item bg-gray-800 rounded-xl p-4 text-center shadow-lg flex flex-col justify-center items-center cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+                     data-title="恐れを凌駕する好奇心"
+                     data-color-class="text-orange-300"
+                     data-description="AIによる変化を恐れるのではなく、好奇心で向き合う姿勢が重要。未知の未来を受け入れ、AIとの共存を探求することで、新たな発見と適応が生まれる。"
+                     data-details="<strong class='text-gray-100'>対談からの抜粋:</strong><p class='mt-2'>宇多田「どんなことであれ、私の好奇心は、不安や恐れといった他の感情に打ち勝ちます。」</p><p class='mt-2'>ハラリ「私たちはこのジェットコースターのような変化を止めることはできません。楽しむ方法を見つけるしかないのです。」</p><p class='mt-2'>宇多田「私にとって、そのツールは、恐れを乗り越えて楽しむための『好奇心』です。」</p>">
+                    <h2 class="text-xl lg:text-3xl font-bold text-orange-400 mb-2">好奇心</h2>
+                    <p class="text-gray-300 text-base lg:text-lg">未知への恐れを好奇心で乗り越え、探求し続ける。</p>
                 </div>
 
             </main>
         </div>
     </div>
+
+    <!-- モーダル（ポップアップ）ウィンドウ -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm items-center justify-center p-8 z-50">
+        <div class="modal-content bg-gray-800 bg-opacity-80 border border-gray-700 rounded-2xl shadow-2xl p-12 max-w-4xl w-full relative transform scale-95 overflow-y-auto max-h-[90vh]">
+            <!-- 閉じるボタン -->
+            <button id="modal-close-btn" class="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <!-- モーダルの内容 -->
+            <h3 id="modal-title" class="font-bold text-4xl lg:text-5xl mb-6"></h3>
+            <p id="modal-description" class="text-gray-200 text-xl lg:text-2xl leading-relaxed"></p>
+            <!-- 詳細表示エリア -->
+            <div id="modal-details" class="mt-8 pt-6 border-t border-gray-600 text-gray-300 text-lg lg:text-xl leading-relaxed">
+                <!-- ここに詳細が挿入されます -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM要素を取得
+        const cardItems = document.querySelectorAll('.card-item');
+        const modal = document.getElementById('modal');
+        const modalContent = document.querySelector('.modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const modalDetails = document.getElementById('modal-details');
+        const closeModalBtn = document.getElementById('modal-close-btn');
+
+        // 各カードにクリックイベントを追加
+        cardItems.forEach(card => {
+            card.addEventListener('click', () => {
+                // カードのdata属性から情報を取得
+                const title = card.dataset.title;
+                const description = card.dataset.description;
+                const colorClass = card.dataset.colorClass;
+                const details = card.dataset.details;
+
+                // モーダルの内容を設定
+                modalTitle.textContent = title;
+                modalDescription.textContent = description;
+                modalDetails.innerHTML = details;
+                // タイトルの色クラスを動的に変更
+                modalTitle.className = `font-bold text-4xl lg:text-5xl mb-6 ${colorClass}`;
+
+                // モーダルを表示
+                modal.classList.remove('hidden', 'opacity-0');
+                modal.classList.add('flex', 'opacity-100');
+                // 表示アニメーション
+                setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+            });
+        });
+
+        // モーダルを閉じる関数
+        const closeModal = () => {
+            modalContent.classList.add('scale-95');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300); // アニメーションの時間と合わせる
+        };
+
+        // 閉じるボタンにクリックイベントを追加
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // モーダルの背景をクリックしたときに閉じる
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Escapeキーでモーダルを閉じる
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
 
 </body>
 </html>

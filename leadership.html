@@ -9,6 +9,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        /*
+         * --- 全体設定 ---
+         * 大画面でのプレゼンテーション向けに、全体的なタイポグラフィとレイアウトを調整。
+         * 可読性を最大限に高めるため、フォントサイズにCSSのclamp()とビューポート単位(vw)を導入。
+         * これにより、画面幅に応じてフォントサイズが滑らかに拡大・縮小され、
+         * どんな16:9スクリーンでも最適な表示を維持します。
+        */
+        :root {
+            /* フォントサイズをCSS変数で定義し、一元管理 */
+            --font-size-p: clamp(1.5rem, 1.8vw, 2.4rem); /* 本文 */
+            /* --- 変更点：h3のフォントサイズを大きくしました --- */
+            --font-size-h3: clamp(2.5rem, 3.2vw, 4.2rem);  /* 小見出し */
+            --font-size-h2: clamp(3rem, 4.2vw, 5.5rem);  /* 中見出し */
+            --font-size-h1: clamp(4.5rem, 6.5vw, 8rem);  /* 大見出し */
+        }
+
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             background-color: #0A192F;
@@ -22,7 +38,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            padding: 3rem 5rem;
+            /* コンテンツの余白を拡大 */
+            padding: 5rem 7rem;
             opacity: 0;
             transition: opacity 0.6s ease-in-out;
             background: radial-gradient(circle at top left, rgba(29, 78, 216, 0.15), transparent 40%),
@@ -42,38 +59,42 @@
         h1 {
             font-family: 'Noto Sans JP', sans-serif;
             font-weight: 900;
-            /* フォントサイズをさらに拡大 */
-            font-size: 5.5rem;
+            font-size: var(--font-size-h1); /* 変数を適用 */
             line-height: 1.2;
             background: linear-gradient(90deg, #64FFDA, #38BDF8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         h2 {
             font-family: 'Noto Sans JP', sans-serif;
             font-weight: 700;
-            /* フォントサイズをさらに拡大 */
-            font-size: 3.5rem;
+            font-size: var(--font-size-h2); /* 変数を適用 */
             color: #CCD6F6;
-            border-left: 5px solid #64FFDA;
-            padding-left: 1.5rem;
-            margin-bottom: 2.5rem;
+            border-left: 6px solid #64FFDA;
+            padding-left: 2rem;
+            margin-bottom: 3rem;
         }
         h3 {
             font-family: 'Noto Sans JP', sans-serif;
             font-weight: 700;
-            /* フォントサイズをさらに拡大 */
-            font-size: 2rem;
+            font-size: var(--font-size-h3); /* 変数を適用 */
             color: #64FFDA;
             margin-top: 1.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
         p, li {
-            /* フォントサイズと行の高さをさらに調整 */
-            font-size: 1.4rem;
+            font-size: var(--font-size-p); /* 変数を適用 */
             line-height: 1.9;
             color: #CBD5E1;
+            max-width: 90ch; /* 読みやすさのため、一行の最大長を制限 */
+        }
+        ul {
+            list-style-position: outside;
+            padding-left: 1.5em; /* list-discとのスペースを確保 */
+        }
+        li {
+            padding-left: 0.5em;
         }
         strong {
             color: #64FFDA;
@@ -81,7 +102,7 @@
         }
         .highlight {
             background-color: rgba(100, 255, 218, 0.1);
-            padding: 0.2rem 0.5rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 0.3rem;
             font-weight: bold;
             color: #64FFDA;
@@ -90,7 +111,7 @@
             background-color: rgba(17, 34, 64, 0.7);
             border: 1px solid rgba(56, 189, 248, 0.2);
             border-radius: 0.75rem;
-            padding: 1.75rem;
+            padding: 2.5rem; /* カード内の余白を拡大 */
             backdrop-filter: blur(10px);
             transition: transform 0.3s, box-shadow 0.3s;
             height: 100%;
@@ -102,10 +123,10 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .icon {
-            width: 2rem;
-            height: 2rem;
+            width: 2.5rem; /* アイコンサイズを拡大 */
+            height: 2.5rem;
             stroke-width: 2;
-            margin-right: 0.75rem;
+            margin-right: 1rem;
         }
         .citation-icon {
             display: inline-block;
@@ -120,8 +141,9 @@
             border: 1px solid rgba(56, 189, 248, 0.3);
             color: #E2E8F0;
             border-radius: 9999px;
-            width: 3rem;
-            height: 3rem;
+            /* ボタンサイズを拡大 */
+            width: 3.5rem;
+            height: 3.5rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -137,7 +159,7 @@
             position: absolute;
             bottom: 2rem;
             right: 5rem;
-            font-size: 1rem;
+            font-size: 1.2rem; /* カウンターの文字サイズを拡大 */
             color: #94A3B8;
         }
         .fade-in-up {
@@ -165,9 +187,9 @@
     <div id="slide-1" class="slide active">
         <div class="slide-content text-center justify-center">
             <div class="fade-in-up">
-                <p class="text-2xl text-cyan-400 mb-4">研修資料</p>
+                <p class="text-cyan-400 mb-6" style="font-size: clamp(1.8rem, 2.2vw, 3rem);">研修資料</p>
                 <h1 class="text-7xl">AI時代の新リーダーシップ論</h1>
-                <p class="text-4xl mt-6 text-slate-300">AIを「道具」から「協働者」へ<br>変革を導くためのAI観とデュアルスキルセット</p>
+                <p class="mt-8 text-slate-300" style="font-size: clamp(2.2rem, 3.2vw, 4.5rem); line-height: 1.4;">AIを「道具」から「協働者」へ<br>変革を導くためのAI観とデュアルスキルセット</p>
             </div>
         </div>
     </div>
@@ -176,10 +198,10 @@
     <div id="slide-2" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">なぜ今、AI観の変革が必要か？</h2>
-            <div class="mt-8 space-y-6 stagger-children">
-                <p style="animation-delay: 0.2s;">生成AIは、単なる業務効率化ツールではありません。<br>それは、ビジネスのあらゆる側面に浸透し、<strong class="text-3xl">新たな価値創造を可能にする汎用技術</strong>です。</p>
+            <div class="mt-8 space-y-8 stagger-children">
+                <p style="animation-delay: 0.2s;">生成AIは、単なる業務効率化ツールではありません。<br>それは、ビジネスのあらゆる側面に浸透し、<strong style="font-size: clamp(2rem, 2.5vw, 3.5rem);">新たな価値創造を可能にする汎用技術</strong>です。</p>
                 <p style="animation-delay: 0.4s;">産業構造そのものを再定義するほどのインパクトを持つAI時代において、従来のスキルセットやマインドセットのままでは、変化の波に乗り遅れるリスクがあります。</p>
-                <p style="animation-delay: 0.6s;">本研修では、AIの本質を理解し、リーダーとビジネスパーソンが未来を切り拓くための新しい<strong class="text-3xl">「AI観」</strong>と、それを支える具体的なスキルセットを学びます。</p>
+                <p style="animation-delay: 0.6s;">本研修では、AIの本質を理解し、リーダーとビジネスパーソンが未来を切り拓くための新しい<strong style="font-size: clamp(2rem, 2.5vw, 3.5rem);">「AI観」</strong>と、それを支える具体的なスキルセットを学びます。</p>
             </div>
         </div>
     </div>
@@ -188,8 +210,8 @@
     <div id="slide-3" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">2025年 生成AIの最新動向</h2>
-            <p class="mb-8 fade-in-up" style="animation-delay: 0.2s;">AIの進化は「能力の進化」と「自律性の向上」の二軸で加速しています。</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+            <p class="mb-10 fade-in-up" style="animation-delay: 0.2s;">AIの進化は「能力の進化」と「自律性の向上」の二軸で加速しています。</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger-children">
                 <div class="card" style="animation-delay: 0.4s;">
                     <h3>マルチモーダルAI</h3>
                     <p>テキスト、画像、音声、動画、3Dなど、複数の情報形式を統合的に処理・生成。より人間に近い形で世界を理解します。</p>
@@ -210,23 +232,23 @@
     <div id="slide-4" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">AIの進化段階：「道具」から「イノベーター」へ</h2>
-            <div class="mt-8 space-y-4 stagger-children">
+            <div class="mt-8 space-y-6 stagger-children">
                 <div class="flex items-center p-4 rounded-lg" style="animation-delay: 0.2s;">
-                    <span class="text-4xl font-bold text-cyan-400 mr-6">1</span>
+                    <span class="font-bold text-cyan-400 mr-8" style="font-size: clamp(3rem, 5vw, 6rem);">1</span>
                     <div>
                         <h3 class="mt-0 text-cyan-300">AIエージェント (デジタルワーカー)</h3>
                         <p>与えられた目標に基づき、自ら計画を立て、Web検索、データ分析、ファイル操作などを<strong class="highlight">自律的に実行</strong>します。</p>
                     </div>
                 </div>
                 <div class="flex items-center p-4 rounded-lg" style="animation-delay: 0.4s;">
-                    <span class="text-4xl font-bold text-green-400 mr-6">2</span>
+                    <span class="font-bold text-green-400 mr-8" style="font-size: clamp(3rem, 5vw, 6rem);">2</span>
                     <div>
                         <h3 class="mt-0 text-green-300">マルチエージェントシステム (MAS)</h3>
                         <p>複数のAIエージェントが<strong class="highlight">相互に通信し、協調・交渉</strong>しながら、より複雑な目標を達成します。</p>
                     </div>
                 </div>
                 <div class="flex items-center p-4 rounded-lg" style="animation-delay: 0.6s;">
-                    <span class="text-4xl font-bold text-purple-400 mr-6">3</span>
+                    <span class="font-bold text-purple-400 mr-8" style="font-size: clamp(3rem, 5vw, 6rem);">3</span>
                     <div>
                         <h3 class="mt-0 text-purple-300">AIイノベーター (創造者)</h3>
                         <p>人間には思いつかないような新しい知識、科学的仮説、アイデアを<strong class="highlight">自ら生み出す</strong>段階へと進化します。</p>
@@ -240,7 +262,7 @@
     <div id="slide-5" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">マインドセット変革：指揮官から指揮者へ</h2>
-            <div class="grid grid-cols-2 gap-8 mt-8 stagger-children">
+            <div class="grid grid-cols-2 gap-10 mt-10 stagger-children">
                 <div class="card border-red-500/50" style="animation-delay: 0.2s;">
                     <h3 class="text-red-400">旧来：指揮官 (Commander)</h3>
                     <p>個々の楽器（従業員）に演奏方法を細かく指示するマイクロマネジメント。AIを管理・統制の対象と見なす。</p>
@@ -250,7 +272,7 @@
                     <p>オーケストラ全体（組織）が調和の取れた美しい音楽（価値）を奏でられるよう、<strong class="highlight">ビジョンを示し、環境を整え、導く</strong>。AIを協働者と捉える。</p>
                 </div>
             </div>
-            <p class="mt-8 text-center text-2xl fade-in-up" style="animation-delay: 0.6s;">AIトランスフォーメーション最大の障壁は、技術ではなく<strong class="text-3xl">リーダー自身の準備不足</strong>と旧来の組織モデルです。</p>
+            <p class="mt-12 text-center fade-in-up" style="animation-delay: 0.6s; font-size: clamp(1.8rem, 2.2vw, 3rem);">AIトランスフォーメーション最大の障壁は、技術ではなく<strong style="font-size: clamp(2rem, 2.5vw, 3.5rem);">リーダー自身の準備不足</strong>と旧来の組織モデルです。</p>
         </div>
     </div>
 
@@ -258,7 +280,7 @@
     <div id="slide-6" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">指揮者に求められる4つのマインドセット</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 stagger-children">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 stagger-children">
                 <div class="card" style="animation-delay: 0.2s;">
                     <h3>1. "Know-it-all" → "Learn-it-all"</h3>
                     <p>全てを知っている必要はない。常に学び続け、間違いから学ぶ謙虚な姿勢を持つ。（Microsoft サティア・ナデラ）<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="citation-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></p>
@@ -283,18 +305,18 @@
     <div id="slide-7" class="slide">
         <div class="slide-content items-center">
             <h2 class="fade-in-up text-center">習得すべきデュアルスキルセット</h2>
-            <p class="text-center mb-10 fade-in-up" style="animation-delay: 0.2s;">AIを効果的に活用し組織を成功に導くためには、二つのスキルセットを両輪として駆動させる必要があります。</p>
-            <div class="flex items-center justify-center space-x-8 stagger-children">
-                <div class="card text-center w-96" style="animation-delay: 0.4s;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64FFDA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4"><path d="M12 8V4H8"/><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M14 2v2"/><path d="M14 20v2"/></svg>
-                    <h3 class="text-2xl mt-0">技術リテラシー</h3>
-                    <p class="text-lg">AIを「使う」から「使いこなす」へ</p>
+            <p class="text-center mb-12 fade-in-up" style="animation-delay: 0.2s;">AIを効果的に活用し組織を成功に導くためには、二つのスキルセットを両輪として駆動させる必要があります。</p>
+            <div class="flex items-center justify-center space-x-12 stagger-children">
+                <div class="card text-center w-1/3" style="animation-delay: 0.4s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#64FFDA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-6"><path d="M12 8V4H8"/><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M14 2v2"/><path d="M14 20v2"/></svg>
+                    <h3 class="mt-0">技術リテラシー</h3>
+                    <p>AIを「使う」から「使いこなす」へ</p>
                 </div>
-                <div class="text-6xl font-bold text-slate-500" style="animation-delay: 0.6s;">+</div>
-                <div class="card text-center w-96" style="animation-delay: 0.8s;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64FFDA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <h3 class="text-2xl mt-0">人間的コンピテンシー</h3>
-                    <p class="text-lg">AIに代替されない普遍的価値</p>
+                <div class="font-bold text-slate-500" style="animation-delay: 0.6s; font-size: clamp(5rem, 8vw, 10rem);">+</div>
+                <div class="card text-center w-1/3" style="animation-delay: 0.8s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#64FFDA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <h3 class="mt-0">人間的コンピテンシー</h3>
+                    <p>AIに代替されない普遍的価値</p>
                 </div>
             </div>
         </div>
@@ -304,22 +326,22 @@
     <div id="slide-8" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">技術リテラシー：AIを「使いこなす」思考と技術</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 stagger-children">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 stagger-children">
                 <div class="card" style="animation-delay: 0.2s;">
                     <h3>戦略的思考力 (AI Thinking)</h3>
-                    <ul class="list-disc list-inside mt-2 space-y-1 text-lg">
-                        <li><strong>メタクラリティ:</strong> 課題の本質を自問する</li>
-                        <li><strong>体系的分解:</strong> 課題をAIが処理可能な単位に分ける</li>
-                        <li><strong>文脈の付与:</strong> AIが持たない背景情報を提供する</li>
+                    <ul class="list-disc mt-2 space-y-2">
+                        <li><strong>メタクラリティ:</strong><br>課題の本質を自問する</li>
+                        <li><strong>体系的分解:</strong><br>課題をAIが処理可能な単位に分ける</li>
+                        <li><strong>文脈の付与:</strong><br>AIが持たない背景情報を提供する</li>
                     </ul>
                 </div>
                 <div class="card" style="animation-delay: 0.4s;">
                     <h3>批判的評価能力</h3>
-                    <p class="text-lg">AIの出力は<strong class="highlight">「ハルシネーション（もっともらしい嘘）」</strong>やバイアスを含む可能性がある。鵜呑みにせず、論理的整合性、正確性、バイアスを常に検証する。</p>
+                    <p>AIの出力は<strong class="highlight">「ハルシネーション（もっともらしい嘘）」</strong>やバイアスを含む可能性がある。鵜呑みにせず、論理的整合性、正確性、バイアスを常に検証する。</p>
                 </div>
                 <div class="card" style="animation-delay: 0.6s;">
                     <h3>人間とAIの協働デザイン能力</h3>
-                    <p class="text-lg">どのタスクをAIに任せ、人間が何を担うか。業務プロセス全体をゼロから再設計するシステム思考が求められる。</p>
+                    <p>どのタスクをAIに任せ、人間が何を担うか。業務プロセス全体をゼロから再設計するシステム思考が求められる。</p>
                 </div>
             </div>
         </div>
@@ -329,23 +351,23 @@
     <div id="slide-9" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">人間的コンピテンシー：AI時代の競争優位の源泉</h2>
-            <p class="mb-6 fade-in-up" style="animation-delay: 0.2s;">競争優位の源泉は、模倣困難な<strong class="text-3xl">「組織固有の人間性 (Proprietary Humanity)」</strong>へ。</p>
-            <div class="grid grid-cols-2 grid-rows-2 gap-5 stagger-children">
+            <p class="mb-8 fade-in-up" style="animation-delay: 0.2s;">競争優位の源泉は、模倣困難な<strong style="font-size: clamp(2rem, 2.5vw, 3.5rem);">「組織固有の人間性 (Proprietary Humanity)」</strong>へ。</p>
+            <div class="grid grid-cols-2 grid-rows-2 gap-8 stagger-children">
                 <div class="card" style="animation-delay: 0.4s;">
                     <h3>1. 高度な批判的思考と問題解決</h3>
-                    <p class="text-lg">AIが提示する選択肢から、倫理的ジレンマを含む複雑で前例のない問題に対し、最終的な意思決定を下す。</p>
+                    <p>AIが提示する選択肢から、倫理的ジレンマを含む複雑で前例のない問題に対し、最終的な意思決定を下す。</p>
                 </div>
                 <div class="card" style="animation-delay: 0.6s;">
                     <h3>2. 共感と感情的知性</h3>
-                    <p class="text-lg">AI導入に伴う従業員の不安に寄り添い、信頼を築く。顧客とのより深い人間的な対話でロイヤルティを高める。</p>
+                    <p>AI導入に伴う従業員の不安に寄り添い、信頼を築く。顧客とのより深い人間的な対話でロイヤルティを高める。</p>
                 </div>
                 <div class="card" style="animation-delay: 0.8s;">
                     <h3>3. 創造性とイノベーション</h3>
-                    <p class="text-lg">AIをアイデアの「壁打ち相手」とし、人間ならではの直感、美意識、倫理観を加えて、未来を創造する。</p>
+                    <p>AIをアイデアの「壁打ち相手」とし、人間ならではの直感、美意識、倫理観を加えて、未来を創造する。</p>
                 </div>
                 <div class="card" style="animation-delay: 1.0s;">
                     <h3>4. 倫理的判断力と責任</h3>
-                    <p class="text-lg">AIのバイアスやプライバシー問題から目を背けず、明確な倫理的ガバナンス体制を構築し、主導する。</p>
+                    <p>AIのバイアスやプライバシー問題から目を背けず、明確な倫理的ガバナンス体制を構築し、主導する。</p>
                 </div>
             </div>
         </div>
@@ -355,7 +377,7 @@
     <div id="slide-10" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">事例：創造性とイノベーションの実践</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 stagger-children">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 stagger-children">
                 <div class="card" style="animation-delay: 0.2s;">
                     <h3 class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-cyan-400"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12a10 10 0 0 0 10 10V12H12z"/></svg>
@@ -380,9 +402,9 @@
     <div id="slide-11" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">AIの創造性への道筋：Deep Dive</h2>
-            <p class="mt-8 text-2xl fade-in-up" style="animation-delay: 0.2s;">
+            <p class="mt-8 fade-in-up" style="animation-delay: 0.2s;">
                 AIが人間のような創造性やイノベーションを起こすには、単なるデータ量の拡大やモデルの巨大化だけでは不十分です。<br>
-                鍵は、人間の認知能力に近づくための<strong class="text-3xl">「未知の状況に対処する能力」</strong>の獲得にあります。
+                鍵は、人間の認知能力に近づくための<strong style="font-size: clamp(2rem, 2.5vw, 3.5rem);">「未知の状況に対処する能力」</strong>の獲得にあります。
             </p>
         </div>
     </div>
@@ -391,7 +413,7 @@
     <div id="slide-12" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">鍵となる概念①：流動的知能と適応</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 stagger-children">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 stagger-children">
                 <div class="card" style="animation-delay: 0.2s;">
                     <h3>流動的汎用知能</h3>
                     <p>一度も見たことのない問題をその場で理解し、対応する能力。既存のLLMが得意な、記憶されたスキル（静的知能）とは根本的に異なります。</p>
@@ -409,8 +431,8 @@
         <div class="slide-content">
             <h2 class="fade-in-up">鍵となる概念②：知能の再定義と測定</h2>
             <div class="mt-8 stagger-children">
-                <p class="text-center text-3xl mb-8" style="animation-delay: 0.2s;">知能とは、決められたルートを走る「道路網」ではなく、<br>新しい道を作り出す<strong class="text-4xl">「道路建設会社」</strong>のようなものである。</p>
-                <div class="card" style="animation-delay: 0.4s;">
+                <p class="text-center mb-10" style="animation-delay: 0.2s; font-size: clamp(2rem, 2.5vw, 3.5rem);">知能とは、決められたルートを走る「道路網」ではなく、<br><strong style="font-size: clamp(2.5rem, 3.2vw, 4.2rem);">「道路建設会社」</strong>のようなものである。</p>
+                <div class="card max-w-5xl mx-auto" style="animation-delay: 0.4s;">
                     <p>この「新しい状況に対処する能力」を測定するため、<strong class="highlight">ARC (Abstraction Reasoning Corpus)</strong> のような新しいベンチマークが開発されています。特に、人間は得意だがAIには困難な<strong class="highlight">組成的汎化（compositional generalization）</strong>能力を評価することに焦点が当てられています。</p>
                 </div>
             </div>
@@ -421,8 +443,8 @@
     <div id="slide-14" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">鍵となる概念③：2種類の抽象化の統合</h2>
-            <p class="mb-8 fade-in-up" style="animation-delay: 0.2s;">イノベーションの鍵は、性質の異なる2つの抽象化を組み合わせることにあります。</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-children">
+            <p class="mb-10 fade-in-up" style="animation-delay: 0.2s;">イノベーションの鍵は、性質の異なる2つの抽象化を組み合わせることにあります。</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 stagger-children">
                 <div class="card" style="animation-delay: 0.4s;">
                     <h3 class="text-cyan-400">タイプ1：価値中心型 (直感)</h3>
                     <p>連続的なドメインで機能。知覚、パターン認識、直感など。現代の深層学習（Transformer）が得意とする領域。</p>
@@ -440,8 +462,8 @@
         <div class="slide-content">
             <h2 class="fade-in-up">実践的アプローチ：深層学習＋プログラム探索</h2>
             <div class="mt-8 stagger-children">
-                <p class="mb-6" style="animation-delay: 0.2s;">人間が直感（タイプ1）で選択肢を絞り込み、論理（タイプ2）で最善手を見つけるように、AIもこの2つを組み合わせる必要があります。</p>
-                <div class="card" style="animation-delay: 0.4s;">
+                <p class="mb-8" style="animation-delay: 0.2s;">人間が直感（タイプ1）で選択肢を絞り込み、論理（タイプ2）で最善手を見つけるように、AIもこの2つを組み合わせる必要があります。</p>
+                <div class="card max-w-5xl mx-auto" style="animation-delay: 0.4s;">
                     <h3 class="mt-0">Tendiaの研究アプローチ<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="citation-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></h3>
                     <p>深層学習による<strong class="highlight">直感</strong>を用いて、組み合わせ爆発を起こしやすい<strong class="highlight">プログラム探索</strong>の範囲を限定し、効率化する。「プログラマーのようなメタラーナー」を構築し、その場でタスクに適応したプログラムを合成する。</p>
                 </div>
@@ -453,8 +475,8 @@
     <div id="slide-16" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">AIが拓く「未知の大陸」</h2>
-            <p class="mb-8 fade-in-up" style="animation-delay: 0.2s;">AIは、人間が探求し尽くしたと思われた領域でさえ、全く新しい発見をする可能性を秘めています。</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-children">
+            <p class="mb-10 fade-in-up" style="animation-delay: 0.2s;">AIは、人間が探求し尽くしたと思われた領域でさえ、全く新しい発見をする可能性を秘めています。</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-children">
                 <div class="card" style="animation-delay: 0.4s;">
                     <h3>パターンの破壊と創造</h3>
                     <p>囲碁の定石など、人間が数千年かけて築いたパターンを認識し、それを超える「人間には思いつかなかった手」を発見する。</p>
@@ -471,19 +493,19 @@
     <div id="slide-17" class="slide">
         <div class="slide-content">
             <h2 class="fade-in-up">AI時代の組織設計と人材育成</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 stagger-children">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 stagger-children">
                 <div style="animation-delay: 0.2s;">
                     <h3>新しい組織構造の設計</h3>
                     <p>人間とAIが協働するハイブリッドな業務フローを前提に、AIエージェントを<strong class="highlight">「デジタルな従業員」</strong>としてチームに組み込む。人間はより創造的で判断力が求められる役割に集中する。</p>
-                    <div class="card mt-4">
+                    <div class="card mt-6">
                         <p class="font-bold text-slate-300">DeNAの戦略<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="citation-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></p>
-                        <p class="text-lg">「AI活用で半分の人員で現業を成長させ、残りの半分を新規事業に振り向ける」</p>
+                        <p>「AI活用で半分の人員で現業を成長させ、残りの半分を新規事業に振り向ける」</p>
                     </div>
                 </div>
                 <div style="animation-delay: 0.4s;">
                     <h3>人材育成戦略 (McKinsey)<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="citation-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></h3>
                     <p>全従業員を対象に、役割に応じたAI関連スキルセットの獲得を主眼に置いた育成戦略が必要。</p>
-                    <ul class="list-disc list-inside mt-2 space-y-1 text-lg">
+                    <ul class="list-disc mt-4 space-y-2">
                         <li><strong>経営層:</strong> 価値を主導する</li>
                         <li><strong>技術専門家:</strong> モデルを構築・展開する</li>
                         <li><strong>各分野の専門家:</strong> 特定領域で価値を付加する</li>
@@ -499,14 +521,14 @@
         <div class="slide-content text-center justify-center">
             <div class="fade-in-up">
                 <h2 class="border-none text-center">まとめ：未来のリーダーへのメッセージ</h2>
-                <p class="text-4xl mt-8 text-slate-300 max-w-5xl mx-auto">
+                <p class="mt-10 text-slate-300 max-w-6xl mx-auto" style="font-size: clamp(2.2rem, 3vw, 4rem); line-height: 1.6;">
                     AI時代のリーダーは、単なる管理者ではなく<strong class="text-cyan-400">「変革者」</strong>です。<br><br>
                     技術リテラシーと人間的コンピテンシーを両輪とし、<br>
                     AIを<strong class="text-cyan-400">信頼できる協働者</strong>として受け入れ、<br>
                     人間ならではの強みを最大限に発揮することで、<br>
                     まだ見ぬ<strong class="text-cyan-400">新たな価値</strong>を創造していきましょう。
                 </p>
-                <p class="text-6xl mt-16 font-bold text-white">ご清聴ありがとうございました</p>
+                <p class="mt-20 font-bold text-white" style="font-size: clamp(4rem, 6vw, 7rem);">ご清聴ありがとうございました</p>
             </div>
         </div>
     </div>
@@ -515,11 +537,11 @@
     <!-- Navigation -->
     <div class="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-4">
         <button id="prevBtn" class="nav-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <span id="slideCounter" class="text-xl font-mono text-slate-400">1 / 18</span>
+        <span id="slideCounter" class="text-2xl font-mono text-slate-400 w-24 text-center">1 / 18</span>
         <button id="nextBtn" class="nav-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </button>
     </div>
 
@@ -558,7 +580,9 @@
                 prevBtn.disabled = index === 0;
                 nextBtn.disabled = index === totalSlides - 1;
                 prevBtn.style.opacity = index === 0 ? '0.5' : '1';
+                prevBtn.style.cursor = index === 0 ? 'not-allowed' : 'pointer';
                 nextBtn.style.opacity = index === totalSlides - 1 ? '0.5' : '1';
+                nextBtn.style.cursor = index === totalSlides - 1 ? 'not-allowed' : 'pointer';
             }
 
             function nextSlide() {
@@ -579,9 +603,11 @@
             prevBtn.addEventListener('click', prevSlide);
 
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                    e.preventDefault();
                     nextSlide();
-                } else if (e.key === 'ArrowLeft') {
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    e.preventDefault();
                     prevSlide();
                 }
             });

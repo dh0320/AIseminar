@@ -20,6 +20,10 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+    /* Initially hide the workshop samples section */
+    #workshop-samples {
+      display: none;
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -78,8 +82,21 @@
         </div>
       </section>
 
-      <!-- Section 2: Workshop Samples -->
-      <section>
+      <!-- Section 2: Password Gate for Workshop Samples -->
+      <section id="password-section" class="mb-16">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-rose-400 pl-4 mb-8">ワークショップ成果物（参考例）</h2>
+        <div class="bg-gray-800/50 border border-white/10 rounded-xl p-8 max-w-md mx-auto">
+            <p class="text-center text-gray-300 mb-4">この先のコンテンツを表示するにはパスワードを入力してください。</p>
+            <form id="password-form" class="flex flex-col sm:flex-row gap-4">
+                <input type="password" id="password-input" class="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-rose-400" placeholder="パスワード">
+                <button type="submit" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-6 rounded-md transition-colors duration-300">表示</button>
+            </form>
+            <p id="error-message" class="text-red-400 text-center mt-4 h-6"></p>
+        </div>
+      </section>
+
+      <!-- Section 3: Workshop Samples (Initially Hidden) -->
+      <section id="workshop-samples">
         <h2 class="text-3xl font-bold text-white border-l-4 border-rose-400 pl-4 mb-8">ワークショップ成果物（参考例）</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Card 5: Workshop Samples -->
@@ -110,7 +127,6 @@
           </a>
         </div>
       </section>
-
     </main>
 
     <!-- Footer -->
@@ -118,6 +134,33 @@
       <p class="text-gray-500 text-sm">&copy; 2025 ProtoPlay. All Rights Reserved.</p>
     </footer>
   </div>
+
+  <script>
+    // Password protection script
+    document.getElementById('password-form').addEventListener('submit', function(event) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // --- IMPORTANT: Set your password here ---
+      const correctPassword = 'proto_workshop';
+      // -----------------------------------------
+
+      const passwordInput = document.getElementById('password-input');
+      const enteredPassword = passwordInput.value;
+      const errorMessage = document.getElementById('error-message');
+
+      if (enteredPassword === correctPassword) {
+        // If the password is correct, hide the password form and show the workshop samples
+        document.getElementById('password-section').style.display = 'none';
+        document.getElementById('workshop-samples').style.display = 'block';
+      } else {
+        // If the password is incorrect, show an error message
+        errorMessage.textContent = 'パスワードが違います。';
+        // Clear the password input field
+        passwordInput.value = '';
+      }
+    });
+  </script>
 
 </body>
 </html>

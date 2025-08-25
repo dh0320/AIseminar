@@ -1,177 +1,148 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>研修資料参考ページ</title>
-  
-  <!-- Tailwind CSS for styling -->
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Google Fonts for a modern look -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-  
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet"/>
+
   <style>
-    /* Apply the loaded fonts */
     body {
       font-family: 'Inter', 'Noto Sans JP', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-    /* Initially hide the workshop samples section */
-    #workshop-samples {
-      display: none;
-    }
+    :root { color-scheme: dark; }
   </style>
 </head>
 <body class="bg-gray-900 text-white">
-
   <div class="flex flex-col min-h-screen">
-    <!-- Header Section -->
+    <!-- Header -->
     <header class="w-full py-16 md:py-24 bg-gray-900">
       <div class="container mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight">研修サブコンテンツ</h1>
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight">研修サブコンテンツ</h1>
         <p class="mt-4 text-lg text-gray-400">これからの時代をリードするための知識を、ここから学び始めましょう。</p>
       </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="flex-grow container mx-auto px-6 pb-16">
-      
       <!-- Section 1: Learning Contents -->
       <section class="mb-16">
-        <h2 class="text-3xl font-bold text-white border-l-4 border-sky-400 pl-4 mb-8">学習用コンテンツ</h2>
+        <h2 class="text-3xl font-bold border-l-4 border-sky-400 pl-4 mb-8">学習用コンテンツ</h2>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <!-- Card 1: AI History -->
           <a href="./history.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-sky-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">AIの進化の流れ</h3>
+            <h3 class="text-xl font-bold mb-2">AIの進化の流れ</h3>
             <p class="text-gray-400">AIがどのように発展してきたか、その歴史的背景と重要なブレークスルーを辿ります。</p>
           </a>
 
           <!-- Card 2: AI & Creativity -->
           <a href="./creative.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-purple-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path><path d="M2 8c0-2.2.7-4.3 2-6"></path><path d="M22 8a10 10 0 0 0-2-6"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M2 8c0-2.2.7-4.3 2-6"/><path d="M22 8a10 10 0 0 0-2-6"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">AIと創造性</h3>
+            <h3 class="text-xl font-bold mb-2">AIと創造性</h3>
             <p class="text-gray-400">AIと創造のテーマで何が重要かを探ります。</p>
           </a>
 
           <!-- Card 3: AI & Leadership -->
           <a href="./leadership.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-emerald-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">AI時代のリーダーシップ</h3>
+            <h3 class="text-xl font-bold mb-2">AI時代のリーダーシップ</h3>
             <p class="text-gray-400">技術が進化する中で、組織を導くリーダーに求められる新たなスキルと視点を学びます。</p>
           </a>
 
           <!-- Card 4: AI for New Business -->
           <a href="./AIhowto.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-orange-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">新規事業におけるAIの活用方法</h3>
+            <h3 class="text-xl font-bold mb-2">新規事業におけるAIの活用方法</h3>
             <p class="text-gray-400">AIを活用して新しいビジネスチャンスを創出するための具体的なステップと事例を解説します。</p>
           </a>
-        </div>
-      </section>
 
-      <!-- Card 5: Agent AI  -->
+          <!-- Card 5: Agent AI -->
           <a href="./AIAgent.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-orange-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">AIエージェントの参考資料</h3>
+            <h3 class="text-xl font-bold mb-2">AIエージェントの参考資料</h3>
             <p class="text-gray-400">AIエージェント活用のポイント等を解説します。</p>
           </a>
         </div>
       </section>
-      
-      <!-- Section 2: Password Gate for Workshop Samples -->
-      <section id="password-section" class="mb-16">
-        <h2 class="text-3xl font-bold text-white border-l-4 border-rose-400 pl-4 mb-8">ワークショップ成果物（参考例）</h2>
-        <div class="bg-gray-800/50 border border-white/10 rounded-xl p-8 max-w-md mx-auto">
-            <p class="text-center text-gray-300 mb-4">この先のコンテンツを表示するにはパスワードを入力してください。</p>
-            <form id="password-form" class="flex flex-col sm:flex-row gap-4">
-                <input type="password" id="password-input" class="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-rose-400" placeholder="パスワード">
-                <button type="submit" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-6 rounded-md transition-colors duration-300">表示</button>
-            </form>
-            <p id="error-message" class="text-red-400 text-center mt-4 h-6"></p>
-        </div>
-      </section>
 
-      <!-- Section 3: Workshop Samples (Initially Hidden) -->
-      <section id="workshop-samples">
-        <h2 class="text-3xl font-bold text-white border-l-4 border-rose-400 pl-4 mb-8">ワークショップ成果物（参考例）</h2>
+      <!-- Section 2: Workshop Samples (always visible) -->
+      <section id="workshop-samples" class="mb-16">
+        <h2 class="text-3xl font-bold border-l-4 border-rose-400 pl-4 mb-8">ワークショップ成果物（参考例）</h2>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Card 5: Workshop Samples -->
+          <!-- Card: Workshop Samples -->
           <a href="./sample.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-rose-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">ワークショップの成果サンプル</h3>
+            <h3 class="text-xl font-bold mb-2">ワークショップの成果サンプル(8/8)</h3>
             <p class="text-gray-400">成果物（アイデアのランディングページ）のサンプルをご覧いただけます。</p>
           </a>
-          
-          <!-- Card 6: Workshop Samples 2 -->
+
+          <!-- Card: Workshop Samples 2 -->
           <a href="./sample2.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-cyan-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M9 15h6"></path><path d="M12 12v6"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 15h6"/><path d="M12 12v6"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">ワークショップの成果サンプル2</h3>
+            <h3 class="text-xl font-bold mb-2">ワークショップの成果サンプル2(8/8)</h3>
             <p class="text-gray-400">別の成果物（ピッチ資料）のサンプルをご覧いただけます。</p>
           </a>
 
-          <!-- Card 7: Workshop History -->
+          <!-- Card: Workshop History -->
           <a href="./howto.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
             <div class="text-yellow-400 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:scale-110"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">ワークショップの検討履歴のサンプル</h3>
+            <h3 class="text-xl font-bold mb-2">ワークショップの検討履歴のサンプル</h3>
             <p class="text-gray-400">議論やアイデア出しの過程を記録したドキュメントのサンプルです。</p>
           </a>
         </div>
       </section>
     </main>
 
+          <!-- Card: Workshop Samples 3 -->
+          <a href="./sample3.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
+            <div class="text-cyan-400 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 15h6"/><path d="M12 12v6"/></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">ワークショップの作業内容サンプル(8/25)</h3>
+            <p class="text-gray-400">生成で作成した未来の兆しカード量産サンプルをご覧いただけます。</p>
+          </a>    
+    
+              <!-- Card: Workshop Samples 4 -->
+          <a href="./sample4.html" class="group block bg-gray-800/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-lg hover:bg-gray-700/60 hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
+            <div class="text-cyan-400 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="transition-transform duration-300 group-hover:scale-110" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 15h6"/><path d="M12 12v6"/></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">ワークショップの作業内容サンプル(8/25)</h3>
+            <p class="text-gray-400">生成で作成した未来のシナリオのサンプルをご覧いただけます。</p>
+          </a>    
+
     <!-- Footer -->
     <footer class="w-full text-center py-8 mt-auto">
       <p class="text-gray-500 text-sm">&copy; 2025 ProtoPlay. All Rights Reserved.</p>
     </footer>
   </div>
-
-  <script>
-    // Password protection script
-    document.getElementById('password-form').addEventListener('submit', function(event) {
-      // Prevent the default form submission behavior
-      event.preventDefault();
-
-      // --- IMPORTANT: Set your password here ---
-      const correctPassword = 'proto_workshop';
-      // -----------------------------------------
-
-      const passwordInput = document.getElementById('password-input');
-      const enteredPassword = passwordInput.value;
-      const errorMessage = document.getElementById('error-message');
-
-      if (enteredPassword === correctPassword) {
-        // If the password is correct, hide the password form and show the workshop samples
-        document.getElementById('password-section').style.display = 'none';
-        document.getElementById('workshop-samples').style.display = 'block';
-      } else {
-        // If the password is incorrect, show an error message
-        errorMessage.textContent = 'パスワードが違います。';
-        // Clear the password input field
-        passwordInput.value = '';
-      }
-    });
-  </script>
-
 </body>
 </html>

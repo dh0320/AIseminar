@@ -27,6 +27,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        details > summary {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -36,6 +39,37 @@
             <h1 class="text-4xl md:text-5xl font-bold mb-2">未来の兆し<span class="highlight">カード</span></h1>
             <p class="text-gray-500">自社が対策すべき未来の兆しを検討するためのアイデアボード</p>
         </header>
+
+        <!-- 参考プロンプト -->
+        <div class="mb-12">
+            <details class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                <summary class="p-4 font-semibold text-lg text-gray-700">このカードを生成した参考プロンプト</summary>
+                <div class="p-6 border-t border-gray-200 bg-gray-50">
+                    <p class="mb-4 text-gray-600">以下は未来の兆しカードというディスラプターとなり得るテクノロジーカードです。
+                    私は任天堂という会社なのですが、同じような発想で中長期の観点で非線形にテクノロジーが発展した場合を含めたカードを他にも生成ください。</p>
+                    <div class="bg-white p-4 rounded border border-gray-200 text-sm text-gray-800">
+                        <h4 class="font-bold text-base mb-2">未来の兆しカード ディスラプター</h4>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>
+                                <strong class="font-semibold">インダストリアルIoT</strong>
+                                <ul class="pl-5 mt-1 space-y-1 text-xs text-gray-600">
+                                    <li><strong>説明:</strong> 工場内のあらゆる機器、センサー、作業員がネットワークに接続され、生産状況、エネルギー消費量、在庫状況などのデータがリアルタイムに収集・可視化することで、データに基づいた迅速な意思決定、コスト削減を行えます。</li>
+                                    <li><strong>未来へのヒント:</strong> 製造コストの低減により高収益化が行われる。コスト削減を行えない企業は製品価格が高くなり、価格競争に負け淘汰されます。余剰人員を別部署などで利活用することで、適切な人員配置により企業全体として高収益となります。</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong class="font-semibold">工場内作業ロボット</strong>
+                                <ul class="pl-5 mt-1 space-y-1 text-xs text-gray-600">
+                                    <li><strong>説明:</strong> 組み立てや搬送などの単純作業や、高温・高圧環境での危険な作業をロボットが代替し、労働災害の低減、24時間365日稼働による生産性の向上となります。</li>
+                                    <li><strong>未来へのヒント:</strong> 従業員は、設備の保守・管理、生産プロセスの改善提案など、より創造的で付加価値の高い業務に従事できるようになり、働きがいを感じられるようになります。生産ラインの稼働率を最大化し、納期短縮と生産量の増大することで売上高の向上が行われます。少子高齢化に伴う労働人口の減少に対応できます。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+        </div>
+
 
         <!-- フィルターボタン -->
         <div id="filters" class="flex flex-wrap justify-center gap-2 mb-10">
@@ -55,156 +89,84 @@
                 category: "インタラクションの非線形化（ヒト×ゲーム）",
                 color: "blue",
                 items: [
-                    {
-                        title: "非侵襲BCI（脳波/近赤外）",
-                        description: "集中・情動・覚醒度などの状態推定をプレイに反映。入力そのもの/難易度/演出が動的に最適化。",
-                        hint: "アクセシビリティの飛躍、“感情に寄り添うゲーム”で独自ポジション。倫理・年齢配慮設計が競争優位に。"
-                    },
-                    {
-                        title: "筋電・視線・表情入力",
-                        description: "手指以外（前腕/顔/目線）を使う直感的UI。",
-                        hint: "Joy-Con的発明の拡張。家族/初心者でも遊べる新インタラクションの再定義。"
-                    },
-                    {
-                        title: "空中＆装着ハプティクス（超音波/EMS/温冷）",
-                        description: "触感・圧感・温度など多感覚を同期提示。",
-                        hint: "IP没入感と“物語に触れる”価値。安全規格・皮膚負荷設計が参入障壁。"
-                    },
-                    {
-                        title: "環境出力（風/香り/照明）",
-                        description: "居間全体を舞台化する“周辺機器”。",
-                        hint: "リビング・エンタメの覇権争いで差別化。コスト/設置容易性が量産カギ。"
-                    }
+                    { title: "非侵襲BCI（脳波/近赤外）", description: "集中・情動・覚醒度などの状態推定をプレイに反映。入力そのもの/難易度/演出が動的に最適化。", hint: "アクセシビリティの飛躍、“感情に寄り添うゲーム”で独自ポジション。倫理・年齢配慮設計が競争優位に。" },
+                    { title: "筋電・視線・表情入力", description: "手指以外（前腕/顔/目線）を使う直感的UI。", hint: "Joy-Con的発明の拡張。家族/初心者でも遊べる新インタラクションの再定義。" },
+                    { title: "空中＆装着ハプティクス（超音波/EMS/温冷）", description: "触感・圧感・温度など多感覚を同期提示。", hint: "IP没入感と“物語に触れる”価値。安全規格・皮膚負荷設計が参入障壁。" },
+                    { title: "環境出力（風/香り/照明）", description: "居間全体を舞台化する“周辺機器”。", hint: "リビング・エンタメの覇権争いで差別化。コスト/設置容易性が量産カギ。" }
                 ]
             },
             {
                 category: "生成AI×ゲーム制作（制作プロセスの非線形化）",
                 color: "green",
                 items: [
-                    {
-                        title: "マルチモーダル生成（背景/音/ボイス）",
-                        description: "道具化された生成AIがアセット制作を高速化、試作～量産の反復回数を激増。",
-                        hint: "開発リードタイム短縮と“試す量”の爆増。著作権・権利処理体制が差に。"
-                    },
-                    {
-                        title: "自律型NPC（エージェント）",
-                        description: "状況理解し目的追求するNPCで、毎回異なる emergent 体験。",
-                        hint: "運営型ゲームの継続率向上。言動安全・チート対策・観測ロギングが要。"
-                    },
-                    {
-                        title: "プロシージャル×生成のハイブリッド",
-                        description: "ルール生成＋学習生成の組み合わせで“手触り”を維持しつつ変化。",
-                        hint: "パーソナライズと“任天堂らしさ”の両立。QAは自動探索/エージェントQAへ。"
-                    },
-                    {
-                        title: "自動ローカライズ＆文化適応",
-                        description: "翻訳＋表現チューニングを半自動化。",
-                        hint: "グローバル同発の負荷軽減。地域規制/年齢レーティングへの適合を内製化。"
-                    }
+                    { title: "マルチモーダル生成（背景/音/ボイス）", description: "道具化された生成AIがアセット制作を高速化、試作～量産の反復回数を激増。", hint: "開発リードタイム短縮と“試す量”の爆増。著作権・権利処理体制が差に。" },
+                    { title: "自律型NPC（エージェント）", description: "状況理解し目的追求するNPCで、毎回異なる emergent 体験。", hint: "運営型ゲームの継続率向上。言動安全・チート対策・観測ロギングが要。" },
+                    { title: "プロシージャル×生成のハイブリッド", description: "ルール生成＋学習生成の組み合わせで“手触り”を維持しつつ変化。", hint: "パーソナライズと“任天堂らしさ”の両立。QAは自動探索/エージェントQAへ。" },
+                    { title: "自動ローカライズ＆文化適応", description: "翻訳＋表現チューニングを半自動化。", hint: "グローバル同発の負荷軽減。地域規制/年齢レーティングへの適合を内製化。" }
                 ]
             },
             {
                 category: "デバイス＆インフラ（体験の土台の非線形化）",
                 color: "purple",
                 items: [
-                    {
-                        title: "超低消費オンデバイスAI（NPU/圧縮LLM）",
-                        description: "端末内で知能が常駐、オフラインで個人最適化。",
-                        hint: "プライバシー×家族安心を武器に“携帯機の再解釈”。保護者機能の高度化。"
-                    },
-                    {
-                        title: "表示革新（マイクロLED/ライトフィールド/可変焦点）",
-                        description: "屋外視認性・没入感・酔い低減を同時達成。",
-                        hint: "長時間快適性で遊び方が拡張。サプライチェーン/歩留まりが勝負。"
-                    },
-                    {
-                        title: "Chiplet/3D積層・HBM",
-                        description: "帯域と電力効率を非線形に引き上げ、物理的ボトルネックを緩和。",
-                        hint: "小型・静音・省電力な据置/携帯の両立。特定ファウンドリ依存リスクに備え多元調達。"
-                    },
-                    {
-                        title: "次世代電池（固体電池 等）",
-                        description: "高エネルギー密度と安全性で携帯時間↑。",
-                        hint: "屋外/旅先プレイの体験差。充電/熱設計の全体最適が鍵。"
-                    },
-                    {
-                        title: "エッジ＆LEO衛星接続",
-                        description: "低遅延の広域常時接続で“どこでもオンライン”。",
-                        hint: "クラウド連携と“瞬間配信”の標準化。地方/海外新興市場の到達性アップ。"
-                    }
+                    { title: "超低消費オンデバイスAI（NPU/圧縮LLM）", description: "端末内で知能が常駐、オフラインで個人最適化。", hint: "プライバシー×家族安心を武器に“携帯機の再解釈”。保護者機能の高度化。" },
+                    { title: "表示革新（マイクロLED/ライトフィールド/可変焦点）", description: "屋外視認性・没入感・酔い低減を同時達成。", hint: "長時間快適性で遊び方が拡張。サプライチェーン/歩留まりが勝負。" },
+                    { title: "Chiplet/3D積層・HBM", description: "帯域と電力効率を非線形に引き上げ、物理的ボトルネックを緩和。", hint: "小型・静音・省電力な据置/携帯の両立。特定ファウンドリ依存リスクに備え多元調達。" },
+                    { title: "次世代電池（固体電池 等）", description: "高エネルギー密度と安全性で携帯時間↑。", hint: "屋外/旅先プレイの体験差。充電/熱設計の全体最適が鍵。" },
+                    { title: "エッジ＆LEO衛星接続", description: "低遅延の広域常時接続で“どこでもオンライン”。", hint: "クラウド連携と“瞬間配信”の標準化。地方/海外新興市場の到達性アップ。" }
                 ]
             },
             {
                 category: "IP・コミュニティ・経済圏（ファン接点の非線形化）",
                 color: "red",
                 items: [
-                    {
-                        title: "デジタルヒューマン/常時稼働キャラ",
-                        description: "公式キャラが24/7で会話・遊び・学びを提供。",
-                        hint: "日次接触頻度とLTV向上。人格ガバナンス/キャラ一貫性がブランド護持の肝。"
-                    },
-                    {
-                        title: "UGC×AI（安心安全な創作環境）",
-                        description: "誰でも簡単に“任天堂らしい”二次創作を生成・配布。",
-                        hint: "創作熱量の経済化。審査/権利/収益分配の“気持ちよい枠組み”が参入障壁。"
-                    },
-                    {
-                        title: "アカウントバウンド実績・アイテム（非投機型）",
-                        description: "実績や思い出の“携帯性”を高める安全な証明。",
-                        hint: "世代/機種を越える思い出資産でロックイン。詐欺・転売抑止の設計が前提。"
-                    },
-                    {
-                        title: "ライブ運営×パーソナライズ",
-                        description: "行動/嗜好に応じてイベントや報酬が変わる“日常化された遊園地”。",
-                        hint: "復帰率と継続率の非線形成長。運営のAI化で小規模でも高頻度更新。"
-                    }
+                    { title: "デジタルヒューマン/常時稼働キャラ", description: "公式キャラが24/7で会話・遊び・学びを提供。", hint: "日次接触頻度とLTV向上。人格ガバナンス/キャラ一貫性がブランド護持の肝。" },
+                    { title: "UGC×AI（安心安全な創作環境）", description: "誰でも簡単に“任天堂らしい”二次創作を生成・配布。", hint: "創作熱量の経済化。審査/権利/収益分配の“気持ちよい枠組み”が参入障壁。" },
+                    { title: "アカウントバウンド実績・アイテム（非投機型）", description: "実績や思い出の“携帯性”を高める安全な証明。", hint: "世代/機種を越える思い出資産でロックイン。詐欺・転売抑止の設計が前提。" },
+                    { title: "ライブ運営×パーソナライズ", description: "行動/嗜好に応じてイベントや報酬が変わる“日常化された遊園地”。", hint: "復帰率と継続率の非線形成長。運営のAI化で小規模でも高頻度更新。" }
                 ]
             },
             {
                 category: "データ・プライバシー・信頼（“安心して遊べる”の非線形化）",
                 color: "yellow",
                 items: [
-                    {
-                        title: "個人AIエージェント×年齢適正",
-                        description: "家族/子どもごとに適切な難易度・時間・表現を提案・制御。",
-                        hint: "保護者満足度の差別化。透明性の高い制御UIが鍵。"
-                    },
-                    {
-                        title: "フェデレーテッド学習/差分プライバシー",
-                        description: "個人データを端末から出さずに学習。",
-                        hint: "パーソナライズ×安心の両立。規制強化に強い基盤。"
-                    },
-                    {
-                        title: "合成コンテンツの真正性（透かし/署名）",
-                        description: "公式/安全な生成物の“正統性”を機械判定。",
-                        hint: "なりすまし/偽情報対策でブランド毀損を未然防止。"
-                    }
+                    { title: "個人AIエージェント×年齢適正", description: "家族/子どもごとに適切な難易度・時間・表現を提案・制御。", hint: "保護者満足度の差別化。透明性の高い制御UIが鍵。" },
+                    { title: "フェデレーテッド学習/差分プライバシー", description: "個人データを端末から出さずに学習。", hint: "パーソナライズ×安心の両立。規制強化に強い基盤。" },
+                    { title: "合成コンテンツの真正性（透かし/署名）", description: "公式/安全な生成物の“正統性”を機械判定。", hint: "なりすまし/偽情報対策でブランド毀損を未然防止。" }
                 ]
             },
             {
                 category: "サプライチェーン＆サステナ（モノづくりの非線形化）",
                 color: "indigo",
                 items: [
-                    {
-                        title: "分散製造（地域3Dプリント/オンデマンド）",
-                        description: "限定周辺機器やパーツを需要地で生産。",
-                        hint: "発売初動の在庫最適化と“長い尻尾”対応。品質・監査の新標準が要。"
-                    },
-                    {
-                        title: "モジュール化＆リペアビリティ",
-                        description: "交換・修理しやすい設計で寿命延伸。",
-                        hint: "規制対応と中古市場健全化でブランド価値↑。原価バランスの妙が勝負。"
-                    },
-                    {
-                        title: "バイオ素材/再生材の高度活用",
-                        description: "触感・耐久と環境性能を両立する新材料。",
-                        hint: "親和的ブランド印象とESG評価。塗装/表示の経年変化設計が鍵。"
-                    },
-                    {
-                        title: "パッケージ＆物流のAI最適化",
-                        description: "軽量・強度・積載効率を生成設計で自動最適化。",
-                        hint: "CO₂/送料の持続的削減。小売との共同最適でチャネル優位。"
-                    }
+                    { title: "分散製造（地域3Dプリント/オンデマンド）", description: "限定周辺機器やパーツを需要地で生産。", hint: "発売初動の在庫最適化と“長い尻尾”対応。品質・監査の新標準が要。" },
+                    { title: "モジュール化＆リペアビリティ", description: "交換・修理しやすい設計で寿命延伸。", hint: "規制対応と中古市場健全化でブランド価値↑。原価バランスの妙が勝負。" },
+                    { title: "バイオ素材/再生材の高度活用", description: "触感・耐久と環境性能を両立する新材料。", hint: "親和的ブランド印象とESG評価。塗装/表示の経年変化設計が鍵。" },
+                    { title: "パッケージ＆物流のAI最適化", description: "軽量・強度・積載効率を生成設計で自動最適化。", hint: "CO₂/送料の持続的削減。小売との共同最適でチャネル優位。" }
+                ]
+            },
+            {
+                category: "ウェルネス＆ライフスタイル（遊びの非線形化）",
+                color: "pink",
+                items: [
+                    { title: "睡眠・メンタルヘルスゲーミフィケーション", description: "生体センサーで睡眠の質やストレスを計測し、ゲーム内の天候やキャラクターの状態に反映。日々のコンディションを遊びながら改善。", hint: "「健康を遊ぶ」新市場の創造。Vitalityセンサーの再来。データプライバシーと医学的監修が信頼の鍵。" },
+                    { title: "食・栄養のパーソナライズ連携", description: "食事管理アプリやスマート家電と連携し、現実の栄養バランスがゲーム内アイテムやキャラクター育成に影響。", hint: "遊びを日常生活に溶け込ませるエコシステム戦略。他業種とのアライアンスが重要に。" }
+                ]
+            },
+            {
+                category: "教育＆創造性（学びの非線形化）",
+                color: "teal",
+                items: [
+                    { title: "適応型学習プラットフォーム", description: "プレイヤーの理解度や集中度に応じて、ゲーム内の課題（算数、プログラミング等）の難易度やヒントがリアルタイムに変化。", hint: "「個別最適化された学び」のエンタメ化。教育機関との連携でブランド価値向上。教育的効果の証明が参入障壁。" },
+                    { title: "物理⇔デジタル連携トイ", description: "粘土やブロックで造ったモノを3Dスキャンし、AIが動きや特性を付与してゲーム内に登場させる。現実の創作がデジタルの遊びに直結。", hint: "Laboやamiiboの進化形。創造性を刺激する唯一無二の体験。高度な画像認識と生成AI技術が核。" }
+                ]
+            },
+            {
+                category: "社会・コミュニケーション（繋がりの非線形化）",
+                color: "orange",
+                items: [
+                    { title: "AI媒介コミュニケーション", description: "リアルタイム翻訳はもちろん、プレイスタイルや性格から相性の良い仲間を推薦したり、ポジティブな交流を促すAIファシリテーター。", hint: "「誰もが安心して楽しめる」オンライン空間の実現。コミュニティの健全性が競争優位に。" },
+                    { title: "世代間共創プラットフォーム", description: "祖父母と孫などが一緒に遊ぶことを前提に、各々の能力や役割に応じて操作や難易度が自動調整される非対称な協力プレイ。", hint: "高齢化社会における新たな需要の開拓。「家族の絆」という価値の提供。" }
                 ]
             }
         ];
@@ -219,76 +181,95 @@
             red: { bg: 'bg-red-100', border: 'border-red-500', text: 'text-red-800', btn: 'bg-red-500 hover:bg-red-600' },
             yellow: { bg: 'bg-yellow-100', border: 'border-yellow-500', text: 'text-yellow-800', btn: 'bg-yellow-500 hover:bg-yellow-600' },
             indigo: { bg: 'bg-indigo-100', border: 'border-indigo-500', text: 'text-indigo-800', btn: 'bg-indigo-500 hover:bg-indigo-600' },
+            pink: { bg: 'bg-pink-100', border: 'border-pink-500', text: 'text-pink-800', btn: 'bg-pink-500 hover:bg-pink-600' },
+            teal: { bg: 'bg-teal-100', border: 'border-teal-500', text: 'text-teal-800', btn: 'bg-teal-500 hover:bg-teal-600' },
+            orange: { bg: 'bg-orange-100', border: 'border-orange-500', text: 'text-orange-800', btn: 'bg-orange-500 hover:bg-orange-600' },
         };
 
         // データを元にカードとフィルターボタンを生成
-        cardData.forEach(group => {
-            // フィルターボタンの生成
-            const filterBtn = document.createElement('button');
-            filterBtn.className = `filter-btn ${colorClasses[group.color].btn} text-white px-4 py-2 rounded-full text-sm font-semibold shadow transition`;
-            filterBtn.textContent = group.category.split('（')[0]; // （）の前だけ表示
-            filterBtn.dataset.filter = group.category;
-            filtersContainer.appendChild(filterBtn);
+        function renderContent() {
+            cardContainer.innerHTML = '';
+            // 「すべて」ボタン以外のフィルターをクリア
+            const existingFilters = filtersContainer.querySelectorAll('button:not([data-filter="all"])');
+            existingFilters.forEach(btn => btn.remove());
 
-            // カードの生成
-            group.items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = `card ${colorClasses[group.color].bg} border-l-4 ${colorClasses[group.color].border} rounded-r-lg p-6 shadow-md flex flex-col`;
-                card.dataset.category = group.category;
+            cardData.forEach(group => {
+                // フィルターボタンの生成
+                const filterBtn = document.createElement('button');
+                filterBtn.className = `filter-btn ${colorClasses[group.color].btn} text-white px-4 py-2 rounded-full text-sm font-semibold shadow transition`;
+                filterBtn.textContent = group.category.split('（')[0]; // （）の前だけ表示
+                filterBtn.dataset.filter = group.category;
+                filtersContainer.appendChild(filterBtn);
 
-                card.innerHTML = `
-                    <div class="flex-grow">
-                        <p class="text-sm ${colorClasses[group.color].text} font-semibold mb-2">${group.category}</p>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">${item.title}</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed mb-4"><strong>説明:</strong> ${item.description}</p>
-                    </div>
-                    <div>
-                        <div class="bg-white/60 rounded-lg p-4">
-                            <p class="text-sm font-bold ${colorClasses[group.color].text} mb-2">未来へのヒント</p>
-                            <p class="text-gray-700 text-sm leading-relaxed">${item.hint.replace(/\*“([^”]+)”\*/g, '<strong class="font-bold text-gray-900">“$1”</strong>')}</p>
+                // カードの生成
+                group.items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = `card ${colorClasses[group.color].bg} border-l-4 ${colorClasses[group.color].border} rounded-r-lg p-6 shadow-md flex flex-col`;
+                    card.dataset.category = group.category;
+
+                    card.innerHTML = `
+                        <div class="flex-grow">
+                            <p class="text-sm ${colorClasses[group.color].text} font-semibold mb-2">${group.category}</p>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">${item.title}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4"><strong>説明:</strong> ${item.description}</p>
                         </div>
-                    </div>
-                `;
-                cardContainer.appendChild(card);
+                        <div>
+                            <div class="bg-white/60 rounded-lg p-4">
+                                <p class="text-sm font-bold ${colorClasses[group.color].text} mb-2">未来へのヒント</p>
+                                <p class="text-gray-700 text-sm leading-relaxed">${item.hint.replace(/\*“([^”]+)”\*/g, '<strong class="font-bold text-gray-900">“$1”</strong>')}</p>
+                            </div>
+                        </div>
+                    `;
+                    cardContainer.appendChild(card);
+                });
             });
-        });
+            addFilterListeners();
+        }
 
         // フィルター機能の実装
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.card');
+        function addFilterListeners() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.card');
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // アクティブなボタンのスタイルを更新
-                filterButtons.forEach(btn => {
-                    btn.classList.remove('active', 'bg-blue-600');
-                    if (!btn.dataset.filter.startsWith('all')) {
-                         const color = cardData.find(g => g.category === btn.dataset.filter).color;
-                         btn.classList.add(colorClasses[color].btn);
-                    }
-                });
-                button.classList.add('active');
-                if (button.dataset.filter === 'all') {
-                    button.classList.add('bg-blue-600');
-                } else {
-                    const color = cardData.find(g => g.category === button.dataset.filter).color;
-                    button.classList.remove(colorClasses[color].btn);
-                    button.classList.add('bg-blue-600');
-                }
-
-
-                const filter = button.dataset.filter;
-
-                // カードの表示・非表示を切り替え
-                cards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.style.display = 'flex';
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // アクティブなボタンのスタイルを更新
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active', 'bg-blue-600');
+                        if (!btn.dataset.filter.startsWith('all')) {
+                            const colorGroup = cardData.find(g => g.category === btn.dataset.filter);
+                            if(colorGroup) {
+                                btn.classList.add(colorClasses[colorGroup.color].btn);
+                            }
+                        }
+                    });
+                    button.classList.add('active');
+                    if (button.dataset.filter === 'all') {
+                        button.classList.add('bg-blue-600');
                     } else {
-                        card.style.display = 'none';
+                         const colorGroup = cardData.find(g => g.category === button.dataset.filter);
+                         if(colorGroup) {
+                            button.classList.remove(colorClasses[colorGroup.color].btn);
+                            button.classList.add('bg-blue-600');
+                         }
                     }
+
+                    const filter = button.dataset.filter;
+
+                    // カードの表示・非表示を切り替え
+                    cards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
             });
-        });
+        }
+        
+        // 初期表示
+        renderContent();
     </script>
 </body>
 </html>
